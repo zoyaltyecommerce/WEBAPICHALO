@@ -1,0 +1,1181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CH_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_FIRSTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="USER_LASTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="USER_EMAILID" Type="varchar" MaxLength="200" />
+          <Property Name="USER_MOBILE" Type="varchar" MaxLength="200" />
+          <Property Name="USER_USERNAME" Type="varchar" MaxLength="200" />
+          <Property Name="USER_PASSWORD" Type="varchar" MaxLength="200" />
+          <Property Name="USER_DEVICEID" Type="varchar" MaxLength="200" />
+          <Property Name="USER_REGISTERTYPE" Type="int" />
+          <Property Name="USER_STAUS" Type="int" />
+          <Property Name="USER_CREATEDBY" Type="int" />
+          <Property Name="USER_CREATEDATE" Type="datetime" />
+          <Property Name="USER_MODIFIEDBY" Type="int" />
+          <Property Name="USER_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="DRIVERS">
+          <Key>
+            <PropertyRef Name="DRIVER_ID" />
+          </Key>
+          <Property Name="DRIVER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DRIVER_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_MOBILE" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_EMAILID" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_ALTERNATENUMBER" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_ADDRESS" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_USERNAME" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_PASSWORD" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_LICENSENUMBER" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_PANCARD" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVER_VENDORID" Type="int" />
+          <Property Name="DRIVER_STATUS" Type="int" />
+          <Property Name="DRIVER_CREATEDBY" Type="int" />
+          <Property Name="DRIVER_CREATEDDATE" Type="datetime" />
+          <Property Name="DRIVER_MODIFIEDBY" Type="int" />
+          <Property Name="DRIVER_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LATLONGS">
+          <Key>
+            <PropertyRef Name="LL_ID" />
+          </Key>
+          <Property Name="LL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LL_ROUTE_ID" Type="int" />
+          <Property Name="LL_LAT" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="LL_LONG" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="LL_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="LL_CREATEDBY" Type="int" />
+          <Property Name="LL_CREATEDDATE" Type="datetime" />
+          <Property Name="LL_MODIFIEDBY" Type="int" />
+          <Property Name="LL_MODIFIEDDATE" Type="datetime" />
+          <Property Name="LATLONG_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="MASTERSTATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SATUS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_CREATEDBY" Type="int" />
+          <Property Name="STATUS_CREATEDDATE" Type="datetime" />
+          <Property Name="STATUS_MODIFIEDBY" Type="int" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PAYMENTTYPE">
+          <Key>
+            <PropertyRef Name="PAYMENTTYPE_ID" />
+          </Key>
+          <Property Name="PAYMENTTYPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PAYMENTTYPE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="PAYMENTTYPE_CREATEDBY" Type="int" />
+          <Property Name="PAYMENTTYPE_CREATEDDATE" Type="datetime" />
+          <Property Name="PAYMENT_MODIFIEDBY" Type="int" />
+          <Property Name="PAYMENT_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ROUTES">
+          <Key>
+            <PropertyRef Name="ROUTE_ID" />
+          </Key>
+          <Property Name="ROUTE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ROUTE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="ROUTE_FROMNAME" Type="varchar" MaxLength="200" />
+          <Property Name="ROUTE_TONAME" Type="varchar" MaxLength="200" />
+          <Property Name="ROUTE_VIANAME" Type="varchar" MaxLength="200" />
+          <Property Name="ROUTE_FROMLAT" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_TOLAT" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_VIALAT" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_FROMLONG" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_TOLONG" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_VIALONG" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_CREATEDBY" Type="int" />
+          <Property Name="ROUTE_CREATEDDATE" Type="datetime" />
+          <Property Name="ROUTE_MODIFIEDBY" Type="int" />
+          <Property Name="ROUTE_MODIFIEDDATE" Type="datetime" />
+          <Property Name="ROUTE_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="TRIPS">
+          <Key>
+            <PropertyRef Name="TRIP_ID" />
+          </Key>
+          <Property Name="TRIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TRIP_VEHICLE_ID" Type="int" />
+          <Property Name="TRIP_ROUTE_ID" Type="int" />
+          <Property Name="TRIP_EXPECTEDSTARTDATE" Type="datetime" />
+          <Property Name="TRIP_EXPECTEDENDDATE" Type="datetime" />
+          <Property Name="TRIP_ACTUALSTARTDATE" Type="datetime" />
+          <Property Name="TRIP_ACTUALENDDATE" Type="datetime" />
+          <Property Name="TRIP_STATUS" Type="int" />
+          <Property Name="TRIP_CREATEDBY" Type="int" />
+          <Property Name="TRIP_CREATEDDATE" Type="datetime" />
+          <Property Name="TRIP_MODIFIEDBY" Type="int" />
+          <Property Name="TRIP_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TRIPSTATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_CREATEDBY" Type="int" />
+          <Property Name="STATUS_CREATEDDATE" Type="datetime" />
+          <Property Name="STATUS_MODIFIEDBY" Type="int" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="USER_REGISTERTYPE">
+          <Key>
+            <PropertyRef Name="REGTYPE_ID" />
+          </Key>
+          <Property Name="REGTYPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="REGTYPE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="REGTYPE_CREATEDBY" Type="int" />
+          <Property Name="REGTYPE_CREATEDDATE" Type="datetime" />
+          <Property Name="REGTYPE_MODIFIEDBY" Type="int" />
+          <Property Name="REGTYPE_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="USER_STATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_CREATEDBY" Type="int" />
+          <Property Name="STATUS_CREATEDDATE" Type="datetime" />
+          <Property Name="STATUS_MODIFIEDBY" Type="int" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VEHICLES">
+          <Key>
+            <PropertyRef Name="VEHICLE_ID" />
+          </Key>
+          <Property Name="VEHICLE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VEHICLE_VENDORID" Type="int" />
+          <Property Name="VEHICLE_NUMBER" Type="varchar" MaxLength="100" />
+          <Property Name="VEHICLE_TYPE" Type="int" />
+          <Property Name="VEHICLE_SEATS" Type="int" />
+          <Property Name="VEHICLE_REGISTERNO" Type="varchar" MaxLength="200" />
+          <Property Name="VEHICLE_INSURANCENUMBER" Type="varchar" MaxLength="200" />
+          <Property Name="VEHICLE_POLLUTIONCHECK" Type="varchar" MaxLength="200" />
+          <Property Name="VEHICLE_EXPIRYDATE" Type="datetime" />
+          <Property Name="VEHICLE_INSURANCEEXPIRY" Type="datetime" />
+          <Property Name="VEHICLE_POLLUTIONEXPIRY" Type="datetime" />
+          <Property Name="VEHICLE_MAINTANANCEEXPIRY" Type="datetime" />
+          <Property Name="VEHICLE_CREATEDBY" Type="int" />
+          <Property Name="VEHICLE_CREATEDDATE" Type="datetime" />
+          <Property Name="VEHICLE_MODIFIEDBY" Type="int" />
+          <Property Name="VEHICLE_MODIFIEDDATE" Type="datetime" />
+          <Property Name="VEHICLE_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="VEHICLETYPE">
+          <Key>
+            <PropertyRef Name="VEHICLETYPE_ID" />
+          </Key>
+          <Property Name="VEHICLETYPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VEHICLETYPE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="VEHICLE_CREATEDBY" Type="int" />
+          <Property Name="VEHICLE_CREATEDDATE" Type="datetime" />
+          <Property Name="VEHICLE_MODIFIEDBY" Type="int" />
+          <Property Name="VEHICLE_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VENDORS">
+          <Key>
+            <PropertyRef Name="VENDOR_ID" />
+          </Key>
+          <Property Name="VENDOR_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VENDOR_ORGANIZATIONNAME" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_ORGANIZATIONMOBILE" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_ORGANIZATIONLANDLINE" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_OWNFIRSTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_OWNLASTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_CONFIRSTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_CONLASTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_EMAILID" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_ADDRESS" Type="varchar(max)" />
+          <Property Name="VENDOR_OWNMOBILE" Type="varchar" MaxLength="20" />
+          <Property Name="VENDOR_CONMOBILE" Type="varchar" MaxLength="20" />
+          <Property Name="VENDOR_OWNLANDLINE" Type="varchar" MaxLength="20" />
+          <Property Name="VENDOR_CONLANDLINE" Type="varchar" MaxLength="20" />
+          <Property Name="VENDOR_USERNAME" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_PASSWORD" Type="varchar" MaxLength="200" />
+          <Property Name="VENDOR_STATUS" Type="int" />
+          <Property Name="VENDOR_CREATEDBY" Type="int" />
+          <Property Name="VENDOR_CREATEDDATE" Type="datetime" />
+          <Property Name="VENDOR_MODIFIEDBY" Type="int" />
+          <Property Name="VENDOR_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <Association Name="FK__CH_USER__USER_RE__0CBAE877">
+          <End Role="USER_REGISTERTYPE" Type="Self.USER_REGISTERTYPE" Multiplicity="0..1" />
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_REGISTERTYPE">
+              <PropertyRef Name="REGTYPE_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_REGISTERTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CH_USER__USER_ST__0DAF0CB0">
+          <End Role="USER_STATUS" Type="Self.USER_STATUS" Multiplicity="0..1" />
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_STATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_STAUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DRIVERS__DRIVER___2C3393D0">
+          <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="0..1" />
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDORS">
+              <PropertyRef Name="VENDOR_ID" />
+            </Principal>
+            <Dependent Role="DRIVERS">
+              <PropertyRef Name="DRIVER_VENDORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DRIVERS__DRIVER___2D27B809">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="DRIVERS">
+              <PropertyRef Name="DRIVER_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LATLONGS__LATLON__37A5467C">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="LATLONGS">
+              <PropertyRef Name="LATLONG_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LATLONGS__LL_ROU__35BCFE0A">
+          <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="0..1" />
+          <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROUTES">
+              <PropertyRef Name="ROUTE_ID" />
+            </Principal>
+            <Dependent Role="LATLONGS">
+              <PropertyRef Name="LL_ROUTE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROUTES__ROUTE_ST__36B12243">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="ROUTES">
+              <PropertyRef Name="ROUTE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_ROUT__49C3F6B7">
+          <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="0..1" />
+          <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROUTES">
+              <PropertyRef Name="ROUTE_ID" />
+            </Principal>
+            <Dependent Role="TRIPS">
+              <PropertyRef Name="TRIP_ROUTE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_STAT__4AB81AF0">
+          <End Role="TRIPSTATUS" Type="Self.TRIPSTATUS" Multiplicity="0..1" />
+          <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="TRIPS">
+              <PropertyRef Name="TRIP_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_VEHI__48CFD27E">
+          <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="0..1" />
+          <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_ID" />
+            </Principal>
+            <Dependent Role="TRIPS">
+              <PropertyRef Name="TRIP_VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__25869641">
+          <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="0..1" />
+          <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDORS">
+              <PropertyRef Name="VENDOR_ID" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_VENDORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__267ABA7A">
+          <End Role="VEHICLETYPE" Type="Self.VEHICLETYPE" Multiplicity="0..1" />
+          <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLETYPE">
+              <PropertyRef Name="VEHICLETYPE_ID" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__276EDEB3">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VENDORS__VENDOR___20C1E124">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="VENDORS">
+              <PropertyRef Name="VENDOR_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CHALOModelStoreContainer">
+          <EntitySet Name="CH_USER" EntityType="Self.CH_USER" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="LATLONGS" EntityType="Self.LATLONGS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATUS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="PAYMENTTYPE" EntityType="Self.PAYMENTTYPE" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="ROUTES" EntityType="Self.ROUTES" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="TRIPS" EntityType="Self.TRIPS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="TRIPSTATUS" EntityType="Self.TRIPSTATUS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="USER_REGISTERTYPE" EntityType="Self.USER_REGISTERTYPE" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="USER_STATUS" EntityType="Self.USER_STATUS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLES" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="VEHICLETYPE" EntityType="Self.VEHICLETYPE" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="VENDORS" EntityType="Self.VENDORS" Schema="CHALO" store:Type="Tables" />
+          <AssociationSet Name="FK__CH_USER__USER_RE__0CBAE877" Association="Self.FK__CH_USER__USER_RE__0CBAE877">
+            <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB0" Association="Self.FK__CH_USER__USER_ST__0DAF0CB0">
+            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="Self.FK__DRIVERS__DRIVER___2C3393D0">
+            <End Role="VENDORS" EntitySet="VENDORS" />
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__DRIVER___2D27B809" Association="Self.FK__DRIVERS__DRIVER___2D27B809">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LATLON__37A5467C" Association="Self.FK__LATLONGS__LATLON__37A5467C">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="LATLONGS" EntitySet="LATLONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LL_ROU__35BCFE0A" Association="Self.FK__LATLONGS__LL_ROU__35BCFE0A">
+            <End Role="ROUTES" EntitySet="ROUTES" />
+            <End Role="LATLONGS" EntitySet="LATLONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROUTES__ROUTE_ST__36B12243" Association="Self.FK__ROUTES__ROUTE_ST__36B12243">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="ROUTES" EntitySet="ROUTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__49C3F6B7" Association="Self.FK__TRIPS__TRIP_ROUT__49C3F6B7">
+            <End Role="ROUTES" EntitySet="ROUTES" />
+            <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_STAT__4AB81AF0" Association="Self.FK__TRIPS__TRIP_STAT__4AB81AF0">
+            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
+            <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__48CFD27E" Association="Self.FK__TRIPS__TRIP_VEHI__48CFD27E">
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+            <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__25869641" Association="Self.FK__VEHICLES__VEHICL__25869641">
+            <End Role="VENDORS" EntitySet="VENDORS" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__267ABA7A" Association="Self.FK__VEHICLES__VEHICL__267ABA7A">
+            <End Role="VEHICLETYPE" EntitySet="VEHICLETYPE" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__276EDEB3" Association="Self.FK__VEHICLES__VEHICL__276EDEB3">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VENDORS__VENDOR___20C1E124" Association="Self.FK__VENDORS__VENDOR___20C1E124">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="VENDORS" EntitySet="VENDORS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CHALOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CH_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_FIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_LASTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_USERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_DEVICEID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_REGISTERTYPE" Type="Int32" />
+          <Property Name="USER_STAUS" Type="Int32" />
+          <Property Name="USER_CREATEDBY" Type="Int32" />
+          <Property Name="USER_CREATEDATE" Type="DateTime" Precision="3" />
+          <Property Name="USER_MODIFIEDBY" Type="Int32" />
+          <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="Self.FK__CH_USER__USER_RE__0CBAE877" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
+          <NavigationProperty Name="USER_STATUS" Relationship="Self.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="CH_USER" ToRole="USER_STATUS" />
+        </EntityType>
+        <EntityType Name="DRIVER">
+          <Key>
+            <PropertyRef Name="DRIVER_ID" />
+          </Key>
+          <Property Name="DRIVER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DRIVER_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_ALTERNATENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_ADDRESS" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_USERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_LICENSENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_PANCARD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_VENDORID" Type="Int32" />
+          <Property Name="DRIVER_STATUS" Type="Int32" />
+          <Property Name="DRIVER_CREATEDBY" Type="Int32" />
+          <Property Name="DRIVER_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="DRIVER_MODIFIEDBY" Type="Int32" />
+          <Property Name="DRIVER_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VENDOR" Relationship="Self.FK__DRIVERS__DRIVER___2C3393D0" FromRole="DRIVERS" ToRole="VENDORS" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__DRIVERS__DRIVER___2D27B809" FromRole="DRIVERS" ToRole="MASTERSTATUS" />
+        </EntityType>
+        <EntityType Name="LATLONG">
+          <Key>
+            <PropertyRef Name="LL_ID" />
+          </Key>
+          <Property Name="LL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LL_ROUTE_ID" Type="Int32" />
+          <Property Name="LL_LAT" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LL_LONG" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LL_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LL_CREATEDBY" Type="Int32" />
+          <Property Name="LL_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LL_MODIFIEDBY" Type="Int32" />
+          <Property Name="LL_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LATLONG_STATUS" Type="Int32" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__LATLONGS__LATLON__37A5467C" FromRole="LATLONGS" ToRole="MASTERSTATUS" />
+          <NavigationProperty Name="ROUTE" Relationship="Self.FK__LATLONGS__LL_ROU__35BCFE0A" FromRole="LATLONGS" ToRole="ROUTES" />
+        </EntityType>
+        <EntityType Name="MASTERSTATU">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_CREATEDBY" Type="Int32" />
+          <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DRIVERS" Relationship="Self.FK__DRIVERS__DRIVER___2D27B809" FromRole="MASTERSTATUS" ToRole="DRIVERS" />
+          <NavigationProperty Name="LATLONGS" Relationship="Self.FK__LATLONGS__LATLON__37A5467C" FromRole="MASTERSTATUS" ToRole="LATLONGS" />
+          <NavigationProperty Name="ROUTES" Relationship="Self.FK__ROUTES__ROUTE_ST__36B12243" FromRole="MASTERSTATUS" ToRole="ROUTES" />
+          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__276EDEB3" FromRole="MASTERSTATUS" ToRole="VEHICLES" />
+          <NavigationProperty Name="VENDORS" Relationship="Self.FK__VENDORS__VENDOR___20C1E124" FromRole="MASTERSTATUS" ToRole="VENDORS" />
+        </EntityType>
+        <EntityType Name="PAYMENTTYPE">
+          <Key>
+            <PropertyRef Name="PAYMENTTYPE_ID" />
+          </Key>
+          <Property Name="PAYMENTTYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PAYMENTTYPE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="PAYMENTTYPE_CREATEDBY" Type="Int32" />
+          <Property Name="PAYMENTTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="PAYMENT_MODIFIEDBY" Type="Int32" />
+          <Property Name="PAYMENT_MODIFIEDDATE" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ROUTE">
+          <Key>
+            <PropertyRef Name="ROUTE_ID" />
+          </Key>
+          <Property Name="ROUTE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ROUTE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ROUTE_FROMNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ROUTE_TONAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ROUTE_VIANAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ROUTE_FROMLAT" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_TOLAT" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_VIALAT" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_FROMLONG" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_TOLONG" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_VIALONG" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="ROUTE_CREATEDBY" Type="Int32" />
+          <Property Name="ROUTE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="ROUTE_MODIFIEDBY" Type="Int32" />
+          <Property Name="ROUTE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="ROUTE_STATUS" Type="Int32" />
+          <NavigationProperty Name="LATLONGS" Relationship="Self.FK__LATLONGS__LL_ROU__35BCFE0A" FromRole="ROUTES" ToRole="LATLONGS" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__ROUTES__ROUTE_ST__36B12243" FromRole="ROUTES" ToRole="MASTERSTATUS" />
+          <NavigationProperty Name="TRIPS" Relationship="Self.FK__TRIPS__TRIP_ROUT__49C3F6B7" FromRole="ROUTES" ToRole="TRIPS" />
+        </EntityType>
+        <EntityType Name="TRIP">
+          <Key>
+            <PropertyRef Name="TRIP_ID" />
+          </Key>
+          <Property Name="TRIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TRIP_VEHICLE_ID" Type="Int32" />
+          <Property Name="TRIP_ROUTE_ID" Type="Int32" />
+          <Property Name="TRIP_EXPECTEDSTARTDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRIP_EXPECTEDENDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRIP_ACTUALSTARTDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRIP_ACTUALENDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRIP_STATUS" Type="Int32" />
+          <Property Name="TRIP_CREATEDBY" Type="Int32" />
+          <Property Name="TRIP_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRIP_MODIFIEDBY" Type="Int32" />
+          <Property Name="TRIP_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ROUTE" Relationship="Self.FK__TRIPS__TRIP_ROUT__49C3F6B7" FromRole="TRIPS" ToRole="ROUTES" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="Self.FK__TRIPS__TRIP_STAT__4AB81AF0" FromRole="TRIPS" ToRole="TRIPSTATUS" />
+          <NavigationProperty Name="VEHICLE" Relationship="Self.FK__TRIPS__TRIP_VEHI__48CFD27E" FromRole="TRIPS" ToRole="VEHICLES" />
+        </EntityType>
+        <EntityType Name="TRIPSTATU">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_CREATEDBY" Type="Int32" />
+          <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TRIPS" Relationship="Self.FK__TRIPS__TRIP_STAT__4AB81AF0" FromRole="TRIPSTATUS" ToRole="TRIPS" />
+        </EntityType>
+        <EntityType Name="USER_REGISTERTYPE">
+          <Key>
+            <PropertyRef Name="REGTYPE_ID" />
+          </Key>
+          <Property Name="REGTYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="REGTYPE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="REGTYPE_CREATEDBY" Type="Int32" />
+          <Property Name="REGTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="REGTYPE_MODIFIEDBY" Type="Int32" />
+          <Property Name="REGTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_RE__0CBAE877" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
+        </EntityType>
+        <EntityType Name="USER_STATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_CREATEDBY" Type="Int32" />
+          <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="USER_STATUS" ToRole="CH_USER" />
+        </EntityType>
+        <EntityType Name="VEHICLE">
+          <Key>
+            <PropertyRef Name="VEHICLE_ID" />
+          </Key>
+          <Property Name="VEHICLE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VEHICLE_VENDORID" Type="Int32" />
+          <Property Name="VEHICLE_NUMBER" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_TYPE" Type="Int32" />
+          <Property Name="VEHICLE_SEATS" Type="Int32" />
+          <Property Name="VEHICLE_REGISTERNO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_INSURANCENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_POLLUTIONCHECK" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_EXPIRYDATE" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_INSURANCEEXPIRY" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_POLLUTIONEXPIRY" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_MAINTANANCEEXPIRY" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_CREATEDBY" Type="Int32" />
+          <Property Name="VEHICLE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_MODIFIEDBY" Type="Int32" />
+          <Property Name="VEHICLE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_STATUS" Type="Int32" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__VEHICLES__VEHICL__276EDEB3" FromRole="VEHICLES" ToRole="MASTERSTATUS" />
+          <NavigationProperty Name="TRIPS" Relationship="Self.FK__TRIPS__TRIP_VEHI__48CFD27E" FromRole="VEHICLES" ToRole="TRIPS" />
+          <NavigationProperty Name="VENDOR" Relationship="Self.FK__VEHICLES__VEHICL__25869641" FromRole="VEHICLES" ToRole="VENDORS" />
+          <NavigationProperty Name="VEHICLETYPE" Relationship="Self.FK__VEHICLES__VEHICL__267ABA7A" FromRole="VEHICLES" ToRole="VEHICLETYPE" />
+        </EntityType>
+        <EntityType Name="VEHICLETYPE">
+          <Key>
+            <PropertyRef Name="VEHICLETYPE_ID" />
+          </Key>
+          <Property Name="VEHICLETYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VEHICLETYPE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_CREATEDBY" Type="Int32" />
+          <Property Name="VEHICLE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="VEHICLE_MODIFIEDBY" Type="Int32" />
+          <Property Name="VEHICLE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__267ABA7A" FromRole="VEHICLETYPE" ToRole="VEHICLES" />
+        </EntityType>
+        <EntityType Name="VENDOR">
+          <Key>
+            <PropertyRef Name="VENDOR_ID" />
+          </Key>
+          <Property Name="VENDOR_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VENDOR_ORGANIZATIONNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_ORGANIZATIONMOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_ORGANIZATIONLANDLINE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_OWNFIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_OWNLASTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_CONFIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_CONLASTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_OWNMOBILE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_CONMOBILE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_OWNLANDLINE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_CONLANDLINE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_USERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VENDOR_STATUS" Type="Int32" />
+          <Property Name="VENDOR_CREATEDBY" Type="Int32" />
+          <Property Name="VENDOR_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="VENDOR_MODIFIEDBY" Type="Int32" />
+          <Property Name="VENDOR_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DRIVERS" Relationship="Self.FK__DRIVERS__DRIVER___2C3393D0" FromRole="VENDORS" ToRole="DRIVERS" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__VENDORS__VENDOR___20C1E124" FromRole="VENDORS" ToRole="MASTERSTATUS" />
+          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__25869641" FromRole="VENDORS" ToRole="VEHICLES" />
+        </EntityType>
+        <Association Name="FK__CH_USER__USER_RE__0CBAE877">
+          <End Role="USER_REGISTERTYPE" Type="Self.USER_REGISTERTYPE" Multiplicity="0..1" />
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_REGISTERTYPE">
+              <PropertyRef Name="REGTYPE_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_REGISTERTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CH_USER__USER_ST__0DAF0CB0">
+          <End Role="USER_STATUS" Type="Self.USER_STATUS" Multiplicity="0..1" />
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_STATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_STAUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DRIVERS__DRIVER___2C3393D0">
+          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="0..1" />
+          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDORS">
+              <PropertyRef Name="VENDOR_ID" />
+            </Principal>
+            <Dependent Role="DRIVERS">
+              <PropertyRef Name="DRIVER_VENDORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DRIVERS__DRIVER___2D27B809">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
+          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="DRIVERS">
+              <PropertyRef Name="DRIVER_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LATLONGS__LATLON__37A5467C">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
+          <End Role="LATLONGS" Type="Self.LATLONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="LATLONGS">
+              <PropertyRef Name="LATLONG_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LATLONGS__LL_ROU__35BCFE0A">
+          <End Role="ROUTES" Type="Self.ROUTE" Multiplicity="0..1" />
+          <End Role="LATLONGS" Type="Self.LATLONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROUTES">
+              <PropertyRef Name="ROUTE_ID" />
+            </Principal>
+            <Dependent Role="LATLONGS">
+              <PropertyRef Name="LL_ROUTE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROUTES__ROUTE_ST__36B12243">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
+          <End Role="ROUTES" Type="Self.ROUTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="ROUTES">
+              <PropertyRef Name="ROUTE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__276EDEB3">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
+          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VENDORS__VENDOR___20C1E124">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
+          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="VENDORS">
+              <PropertyRef Name="VENDOR_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_ROUT__49C3F6B7">
+          <End Role="ROUTES" Type="Self.ROUTE" Multiplicity="0..1" />
+          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ROUTES">
+              <PropertyRef Name="ROUTE_ID" />
+            </Principal>
+            <Dependent Role="TRIPS">
+              <PropertyRef Name="TRIP_ROUTE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_STAT__4AB81AF0">
+          <End Role="TRIPSTATUS" Type="Self.TRIPSTATU" Multiplicity="0..1" />
+          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="TRIPS">
+              <PropertyRef Name="TRIP_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_VEHI__48CFD27E">
+          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="0..1" />
+          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_ID" />
+            </Principal>
+            <Dependent Role="TRIPS">
+              <PropertyRef Name="TRIP_VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__25869641">
+          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="0..1" />
+          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VENDORS">
+              <PropertyRef Name="VENDOR_ID" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_VENDORID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__267ABA7A">
+          <End Role="VEHICLETYPE" Type="Self.VEHICLETYPE" Multiplicity="0..1" />
+          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLETYPE">
+              <PropertyRef Name="VEHICLETYPE_ID" />
+            </Principal>
+            <Dependent Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CHALOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CH_USER" EntityType="Self.CH_USER" />
+          <EntitySet Name="DRIVERS" EntityType="Self.DRIVER" />
+          <EntitySet Name="LATLONGS" EntityType="Self.LATLONG" />
+          <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATU" />
+          <EntitySet Name="PAYMENTTYPEs" EntityType="Self.PAYMENTTYPE" />
+          <EntitySet Name="ROUTES" EntityType="Self.ROUTE" />
+          <EntitySet Name="TRIPS" EntityType="Self.TRIP" />
+          <EntitySet Name="TRIPSTATUS" EntityType="Self.TRIPSTATU" />
+          <EntitySet Name="USER_REGISTERTYPE" EntityType="Self.USER_REGISTERTYPE" />
+          <EntitySet Name="USER_STATUS" EntityType="Self.USER_STATUS" />
+          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLE" />
+          <EntitySet Name="VEHICLETYPEs" EntityType="Self.VEHICLETYPE" />
+          <EntitySet Name="VENDORS" EntityType="Self.VENDOR" />
+          <AssociationSet Name="FK__CH_USER__USER_RE__0CBAE877" Association="Self.FK__CH_USER__USER_RE__0CBAE877">
+            <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB0" Association="Self.FK__CH_USER__USER_ST__0DAF0CB0">
+            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="Self.FK__DRIVERS__DRIVER___2C3393D0">
+            <End Role="VENDORS" EntitySet="VENDORS" />
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__DRIVER___2D27B809" Association="Self.FK__DRIVERS__DRIVER___2D27B809">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LATLON__37A5467C" Association="Self.FK__LATLONGS__LATLON__37A5467C">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="LATLONGS" EntitySet="LATLONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LL_ROU__35BCFE0A" Association="Self.FK__LATLONGS__LL_ROU__35BCFE0A">
+            <End Role="ROUTES" EntitySet="ROUTES" />
+            <End Role="LATLONGS" EntitySet="LATLONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROUTES__ROUTE_ST__36B12243" Association="Self.FK__ROUTES__ROUTE_ST__36B12243">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="ROUTES" EntitySet="ROUTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__276EDEB3" Association="Self.FK__VEHICLES__VEHICL__276EDEB3">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VENDORS__VENDOR___20C1E124" Association="Self.FK__VENDORS__VENDOR___20C1E124">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="VENDORS" EntitySet="VENDORS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__49C3F6B7" Association="Self.FK__TRIPS__TRIP_ROUT__49C3F6B7">
+            <End Role="ROUTES" EntitySet="ROUTES" />
+            <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_STAT__4AB81AF0" Association="Self.FK__TRIPS__TRIP_STAT__4AB81AF0">
+            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
+            <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__48CFD27E" Association="Self.FK__TRIPS__TRIP_VEHI__48CFD27E">
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+            <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__25869641" Association="Self.FK__VEHICLES__VEHICL__25869641">
+            <End Role="VENDORS" EntitySet="VENDORS" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__267ABA7A" Association="Self.FK__VEHICLES__VEHICL__267ABA7A">
+            <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CHALOModelStoreContainer" CdmEntityContainer="CHALOEntities">
+          <EntitySetMapping Name="CH_USER">
+            <EntityTypeMapping TypeName="CHALOModel.CH_USER">
+              <MappingFragment StoreEntitySet="CH_USER">
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
+                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
+                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
+                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
+                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
+                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
+                <ScalarProperty Name="USER_STAUS" ColumnName="USER_STAUS" />
+                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
+                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
+                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
+                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DRIVERS">
+            <EntityTypeMapping TypeName="CHALOModel.DRIVER">
+              <MappingFragment StoreEntitySet="DRIVERS">
+                <ScalarProperty Name="DRIVER_ID" ColumnName="DRIVER_ID" />
+                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
+                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
+                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
+                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
+                <ScalarProperty Name="DRIVER_ADDRESS" ColumnName="DRIVER_ADDRESS" />
+                <ScalarProperty Name="DRIVER_USERNAME" ColumnName="DRIVER_USERNAME" />
+                <ScalarProperty Name="DRIVER_PASSWORD" ColumnName="DRIVER_PASSWORD" />
+                <ScalarProperty Name="DRIVER_LICENSENUMBER" ColumnName="DRIVER_LICENSENUMBER" />
+                <ScalarProperty Name="DRIVER_PANCARD" ColumnName="DRIVER_PANCARD" />
+                <ScalarProperty Name="DRIVER_VENDORID" ColumnName="DRIVER_VENDORID" />
+                <ScalarProperty Name="DRIVER_STATUS" ColumnName="DRIVER_STATUS" />
+                <ScalarProperty Name="DRIVER_CREATEDBY" ColumnName="DRIVER_CREATEDBY" />
+                <ScalarProperty Name="DRIVER_CREATEDDATE" ColumnName="DRIVER_CREATEDDATE" />
+                <ScalarProperty Name="DRIVER_MODIFIEDBY" ColumnName="DRIVER_MODIFIEDBY" />
+                <ScalarProperty Name="DRIVER_MODIFIEDDATE" ColumnName="DRIVER_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LATLONGS">
+            <EntityTypeMapping TypeName="CHALOModel.LATLONG">
+              <MappingFragment StoreEntitySet="LATLONGS">
+                <ScalarProperty Name="LL_ID" ColumnName="LL_ID" />
+                <ScalarProperty Name="LL_ROUTE_ID" ColumnName="LL_ROUTE_ID" />
+                <ScalarProperty Name="LL_LAT" ColumnName="LL_LAT" />
+                <ScalarProperty Name="LL_LONG" ColumnName="LL_LONG" />
+                <ScalarProperty Name="LL_NAME" ColumnName="LL_NAME" />
+                <ScalarProperty Name="LL_CREATEDBY" ColumnName="LL_CREATEDBY" />
+                <ScalarProperty Name="LL_CREATEDDATE" ColumnName="LL_CREATEDDATE" />
+                <ScalarProperty Name="LL_MODIFIEDBY" ColumnName="LL_MODIFIEDBY" />
+                <ScalarProperty Name="LL_MODIFIEDDATE" ColumnName="LL_MODIFIEDDATE" />
+                <ScalarProperty Name="LATLONG_STATUS" ColumnName="LATLONG_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MASTERSTATUS">
+            <EntityTypeMapping TypeName="CHALOModel.MASTERSTATU">
+              <MappingFragment StoreEntitySet="MASTERSTATUS">
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+                <ScalarProperty Name="SATUS_NAME" ColumnName="SATUS_NAME" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAYMENTTYPEs">
+            <EntityTypeMapping TypeName="CHALOModel.PAYMENTTYPE">
+              <MappingFragment StoreEntitySet="PAYMENTTYPE">
+                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
+                <ScalarProperty Name="PAYMENTTYPE_NAME" ColumnName="PAYMENTTYPE_NAME" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDDATE" ColumnName="PAYMENT_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ROUTES">
+            <EntityTypeMapping TypeName="CHALOModel.ROUTE">
+              <MappingFragment StoreEntitySet="ROUTES">
+                <ScalarProperty Name="ROUTE_ID" ColumnName="ROUTE_ID" />
+                <ScalarProperty Name="ROUTE_NAME" ColumnName="ROUTE_NAME" />
+                <ScalarProperty Name="ROUTE_FROMNAME" ColumnName="ROUTE_FROMNAME" />
+                <ScalarProperty Name="ROUTE_TONAME" ColumnName="ROUTE_TONAME" />
+                <ScalarProperty Name="ROUTE_VIANAME" ColumnName="ROUTE_VIANAME" />
+                <ScalarProperty Name="ROUTE_FROMLAT" ColumnName="ROUTE_FROMLAT" />
+                <ScalarProperty Name="ROUTE_TOLAT" ColumnName="ROUTE_TOLAT" />
+                <ScalarProperty Name="ROUTE_VIALAT" ColumnName="ROUTE_VIALAT" />
+                <ScalarProperty Name="ROUTE_FROMLONG" ColumnName="ROUTE_FROMLONG" />
+                <ScalarProperty Name="ROUTE_TOLONG" ColumnName="ROUTE_TOLONG" />
+                <ScalarProperty Name="ROUTE_VIALONG" ColumnName="ROUTE_VIALONG" />
+                <ScalarProperty Name="ROUTE_CREATEDBY" ColumnName="ROUTE_CREATEDBY" />
+                <ScalarProperty Name="ROUTE_CREATEDDATE" ColumnName="ROUTE_CREATEDDATE" />
+                <ScalarProperty Name="ROUTE_MODIFIEDBY" ColumnName="ROUTE_MODIFIEDBY" />
+                <ScalarProperty Name="ROUTE_MODIFIEDDATE" ColumnName="ROUTE_MODIFIEDDATE" />
+                <ScalarProperty Name="ROUTE_STATUS" ColumnName="ROUTE_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRIPS">
+            <EntityTypeMapping TypeName="CHALOModel.TRIP">
+              <MappingFragment StoreEntitySet="TRIPS">
+                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
+                <ScalarProperty Name="TRIP_VEHICLE_ID" ColumnName="TRIP_VEHICLE_ID" />
+                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
+                <ScalarProperty Name="TRIP_EXPECTEDSTARTDATE" ColumnName="TRIP_EXPECTEDSTARTDATE" />
+                <ScalarProperty Name="TRIP_EXPECTEDENDDATE" ColumnName="TRIP_EXPECTEDENDDATE" />
+                <ScalarProperty Name="TRIP_ACTUALSTARTDATE" ColumnName="TRIP_ACTUALSTARTDATE" />
+                <ScalarProperty Name="TRIP_ACTUALENDDATE" ColumnName="TRIP_ACTUALENDDATE" />
+                <ScalarProperty Name="TRIP_STATUS" ColumnName="TRIP_STATUS" />
+                <ScalarProperty Name="TRIP_CREATEDBY" ColumnName="TRIP_CREATEDBY" />
+                <ScalarProperty Name="TRIP_CREATEDDATE" ColumnName="TRIP_CREATEDDATE" />
+                <ScalarProperty Name="TRIP_MODIFIEDBY" ColumnName="TRIP_MODIFIEDBY" />
+                <ScalarProperty Name="TRIP_MODIFIEDDATE" ColumnName="TRIP_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRIPSTATUS">
+            <EntityTypeMapping TypeName="CHALOModel.TRIPSTATU">
+              <MappingFragment StoreEntitySet="TRIPSTATUS">
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_REGISTERTYPE">
+            <EntityTypeMapping TypeName="CHALOModel.USER_REGISTERTYPE">
+              <MappingFragment StoreEntitySet="USER_REGISTERTYPE">
+                <ScalarProperty Name="REGTYPE_ID" ColumnName="REGTYPE_ID" />
+                <ScalarProperty Name="REGTYPE_NAME" ColumnName="REGTYPE_NAME" />
+                <ScalarProperty Name="REGTYPE_CREATEDBY" ColumnName="REGTYPE_CREATEDBY" />
+                <ScalarProperty Name="REGTYPE_CREATEDDATE" ColumnName="REGTYPE_CREATEDDATE" />
+                <ScalarProperty Name="REGTYPE_MODIFIEDBY" ColumnName="REGTYPE_MODIFIEDBY" />
+                <ScalarProperty Name="REGTYPE_MODIFIEDDATE" ColumnName="REGTYPE_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USER_STATUS">
+            <EntityTypeMapping TypeName="CHALOModel.USER_STATUS">
+              <MappingFragment StoreEntitySet="USER_STATUS">
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEHICLES">
+            <EntityTypeMapping TypeName="CHALOModel.VEHICLE">
+              <MappingFragment StoreEntitySet="VEHICLES">
+                <ScalarProperty Name="VEHICLE_ID" ColumnName="VEHICLE_ID" />
+                <ScalarProperty Name="VEHICLE_VENDORID" ColumnName="VEHICLE_VENDORID" />
+                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
+                <ScalarProperty Name="VEHICLE_TYPE" ColumnName="VEHICLE_TYPE" />
+                <ScalarProperty Name="VEHICLE_SEATS" ColumnName="VEHICLE_SEATS" />
+                <ScalarProperty Name="VEHICLE_REGISTERNO" ColumnName="VEHICLE_REGISTERNO" />
+                <ScalarProperty Name="VEHICLE_INSURANCENUMBER" ColumnName="VEHICLE_INSURANCENUMBER" />
+                <ScalarProperty Name="VEHICLE_POLLUTIONCHECK" ColumnName="VEHICLE_POLLUTIONCHECK" />
+                <ScalarProperty Name="VEHICLE_EXPIRYDATE" ColumnName="VEHICLE_EXPIRYDATE" />
+                <ScalarProperty Name="VEHICLE_INSURANCEEXPIRY" ColumnName="VEHICLE_INSURANCEEXPIRY" />
+                <ScalarProperty Name="VEHICLE_POLLUTIONEXPIRY" ColumnName="VEHICLE_POLLUTIONEXPIRY" />
+                <ScalarProperty Name="VEHICLE_MAINTANANCEEXPIRY" ColumnName="VEHICLE_MAINTANANCEEXPIRY" />
+                <ScalarProperty Name="VEHICLE_CREATEDBY" ColumnName="VEHICLE_CREATEDBY" />
+                <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
+                <ScalarProperty Name="VEHICLE_STATUS" ColumnName="VEHICLE_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VEHICLETYPEs">
+            <EntityTypeMapping TypeName="CHALOModel.VEHICLETYPE">
+              <MappingFragment StoreEntitySet="VEHICLETYPE">
+                <ScalarProperty Name="VEHICLETYPE_ID" ColumnName="VEHICLETYPE_ID" />
+                <ScalarProperty Name="VEHICLETYPE_NAME" ColumnName="VEHICLETYPE_NAME" />
+                <ScalarProperty Name="VEHICLE_CREATEDBY" ColumnName="VEHICLE_CREATEDBY" />
+                <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VENDORS">
+            <EntityTypeMapping TypeName="CHALOModel.VENDOR">
+              <MappingFragment StoreEntitySet="VENDORS">
+                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
+                <ScalarProperty Name="VENDOR_ORGANIZATIONNAME" ColumnName="VENDOR_ORGANIZATIONNAME" />
+                <ScalarProperty Name="VENDOR_ORGANIZATIONMOBILE" ColumnName="VENDOR_ORGANIZATIONMOBILE" />
+                <ScalarProperty Name="VENDOR_ORGANIZATIONLANDLINE" ColumnName="VENDOR_ORGANIZATIONLANDLINE" />
+                <ScalarProperty Name="VENDOR_OWNFIRSTNAME" ColumnName="VENDOR_OWNFIRSTNAME" />
+                <ScalarProperty Name="VENDOR_OWNLASTNAME" ColumnName="VENDOR_OWNLASTNAME" />
+                <ScalarProperty Name="VENDOR_CONFIRSTNAME" ColumnName="VENDOR_CONFIRSTNAME" />
+                <ScalarProperty Name="VENDOR_CONLASTNAME" ColumnName="VENDOR_CONLASTNAME" />
+                <ScalarProperty Name="VENDOR_EMAILID" ColumnName="VENDOR_EMAILID" />
+                <ScalarProperty Name="VENDOR_ADDRESS" ColumnName="VENDOR_ADDRESS" />
+                <ScalarProperty Name="VENDOR_OWNMOBILE" ColumnName="VENDOR_OWNMOBILE" />
+                <ScalarProperty Name="VENDOR_CONMOBILE" ColumnName="VENDOR_CONMOBILE" />
+                <ScalarProperty Name="VENDOR_OWNLANDLINE" ColumnName="VENDOR_OWNLANDLINE" />
+                <ScalarProperty Name="VENDOR_CONLANDLINE" ColumnName="VENDOR_CONLANDLINE" />
+                <ScalarProperty Name="VENDOR_USERNAME" ColumnName="VENDOR_USERNAME" />
+                <ScalarProperty Name="VENDOR_PASSWORD" ColumnName="VENDOR_PASSWORD" />
+                <ScalarProperty Name="VENDOR_STATUS" ColumnName="VENDOR_STATUS" />
+                <ScalarProperty Name="VENDOR_CREATEDBY" ColumnName="VENDOR_CREATEDBY" />
+                <ScalarProperty Name="VENDOR_CREATEDDATE" ColumnName="VENDOR_CREATEDDATE" />
+                <ScalarProperty Name="VENDOR_MODIFIEDBY" ColumnName="VENDOR_MODIFIEDBY" />
+                <ScalarProperty Name="VENDOR_MODIFIEDDATE" ColumnName="VENDOR_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
