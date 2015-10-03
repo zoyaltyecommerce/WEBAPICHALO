@@ -11,11 +11,12 @@ namespace CHALO.Controllers
     public class RegisterController : ApiController
     {
         private CHALOEntities db = new CHALOEntities();
-        public IHttpActionResult Register(List<string> user)
+       
+        public IHttpActionResult Register(string Firstname,string Lastname,string Email,string Pass,string Mobile)
         {
-            CH_USER users = new CH_USER();
+            CH_USER user = new CH_USER();
             //user.USER_FIRSTNAME = Firstname;
-            //user.USER_LASTNAME = LastName;
+            //user.USER_LASTNAME = Lastname;
             //user.USER_EMAILID = Email;
             //user.USER_MOBILE = Mobile;
             //user.USER_PASSWORD = Pass;
@@ -27,10 +28,10 @@ namespace CHALO.Controllers
                 return BadRequest(ModelState);
             }
 
-            db.CH_USER.Add(users);
+            db.CH_USER.Add(user);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = users.USER_ID }, user);
+            return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
         }
     }
 }
