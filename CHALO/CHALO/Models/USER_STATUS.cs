@@ -29,5 +29,10 @@ namespace CHALO.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CH_USER> CH_USER { get; set; }
+
+        public static implicit operator USER_STATUS(int v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
