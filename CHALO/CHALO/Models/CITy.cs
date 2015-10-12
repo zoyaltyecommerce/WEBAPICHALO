@@ -12,22 +12,26 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USER_STATUS
+    public partial class CITy
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USER_STATUS()
+        public CITy()
         {
-            this.CH_USER = new HashSet<CH_USER>();
+            this.LOCATIONS = new HashSet<LOCATION>();
         }
     
-        public int STATUS_ID { get; set; }
-        public string STATUS_NAME { get; set; }
-        public Nullable<int> STATUS_CREATEDBY { get; set; }
-        public Nullable<System.DateTime> STATUS_CREATEDDATE { get; set; }
-        public Nullable<int> STATUS_MODIFIEDBY { get; set; }
-        public Nullable<System.DateTime> STATUS_MODIFIEDDATE { get; set; }
+        public int CITY_ID { get; set; }
+        public Nullable<int> CITY_STATEID { get; set; }
+        public string CITY_NAME { get; set; }
+        public Nullable<int> CITY_CREATEDBY { get; set; }
+        public Nullable<System.DateTime> CITY_CREATEDDATE { get; set; }
+        public Nullable<int> CITY_MODIFIEDBY { get; set; }
+        public Nullable<System.DateTime> CITY_MODIFIEDDATE { get; set; }
+        public Nullable<int> CITY_STATUS { get; set; }
     
+        public virtual STATE STATE { get; set; }
+        public virtual MASTERSTATU MASTERSTATU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CH_USER> CH_USER { get; set; }
+        public virtual ICollection<LOCATION> LOCATIONS { get; set; }
     }
 }

@@ -12,22 +12,24 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USER_STATUS
+    public partial class STATE
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USER_STATUS()
+        public STATE()
         {
-            this.CH_USER = new HashSet<CH_USER>();
+            this.CITIES = new HashSet<CITy>();
         }
     
-        public int STATUS_ID { get; set; }
-        public string STATUS_NAME { get; set; }
-        public Nullable<int> STATUS_CREATEDBY { get; set; }
-        public Nullable<System.DateTime> STATUS_CREATEDDATE { get; set; }
-        public Nullable<int> STATUS_MODIFIEDBY { get; set; }
-        public Nullable<System.DateTime> STATUS_MODIFIEDDATE { get; set; }
+        public int STATE_ID { get; set; }
+        public string STATE_NAME { get; set; }
+        public Nullable<int> STATE_CREATEDBY { get; set; }
+        public Nullable<System.DateTime> STATE_CREATEDDATE { get; set; }
+        public Nullable<int> STATE_MODIFIEDBY { get; set; }
+        public Nullable<System.DateTime> STATE_MODIFIEDDATE { get; set; }
+        public Nullable<int> STATE_STATUS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CH_USER> CH_USER { get; set; }
+        public virtual ICollection<CITy> CITIES { get; set; }
+        public virtual MASTERSTATU MASTERSTATU { get; set; }
     }
 }

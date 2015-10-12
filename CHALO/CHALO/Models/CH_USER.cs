@@ -23,13 +23,13 @@ namespace CHALO.Models
         public string USER_PASSWORD { get; set; }
         public string USER_DEVICEID { get; set; }
         public Nullable<int> USER_REGISTERTYPE { get; set; }
-        public Nullable<int> USER_STAUS { get; set; }
+        public Nullable<int> USER_STATUS { get; set; }
         public Nullable<int> USER_CREATEDBY { get; set; }
         public Nullable<System.DateTime> USER_CREATEDATE { get; set; }
         public Nullable<int> USER_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> USER_MODIFIEDDATE { get; set; }
     
         public virtual USER_REGISTERTYPE USER_REGISTERTYPE1 { get; set; }
-        public virtual USER_STATUS USER_STATUS { get; set; }
+        public virtual USER_STATUS USER_STATUS1 { get; set; }
     }
 }

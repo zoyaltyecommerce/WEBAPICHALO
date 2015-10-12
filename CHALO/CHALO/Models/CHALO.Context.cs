@@ -25,7 +25,6 @@ namespace CHALO.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CH_USER> CH_USER { get; set; }
         public virtual DbSet<DRIVER> DRIVERS { get; set; }
         public virtual DbSet<LATLONG> LATLONGS { get; set; }
         public virtual DbSet<MASTERSTATU> MASTERSTATUS { get; set; }
@@ -38,5 +37,9 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLE> VEHICLES { get; set; }
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
+        public virtual DbSet<CITy> CITIES { get; set; }
+        public virtual DbSet<LOCATION> LOCATIONS { get; set; }
+        public virtual DbSet<STATE> STATEs { get; set; }
+        public virtual DbSet<CH_USER> CH_USER { get; set; }
     }
 }

@@ -22,6 +22,9 @@ namespace CHALO.Models
             this.ROUTES = new HashSet<ROUTE>();
             this.VEHICLES = new HashSet<VEHICLE>();
             this.VENDORS = new HashSet<VENDOR>();
+            this.CITIES = new HashSet<CITy>();
+            this.LOCATIONS = new HashSet<LOCATION>();
+            this.STATEs = new HashSet<STATE>();
         }
     
         public int STATUS_ID { get; set; }
@@ -41,5 +44,11 @@ namespace CHALO.Models
         public virtual ICollection<VEHICLE> VEHICLES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VENDOR> VENDORS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CITy> CITIES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOCATION> LOCATIONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<STATE> STATEs { get; set; }
     }
 }

@@ -595,29 +595,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CHALOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="CH_USER">
-          <Key>
-            <PropertyRef Name="USER_ID" />
-          </Key>
-          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="USER_FIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_LASTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_USERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_DEVICEID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_REGISTERTYPE" Type="Int32" />
-          <Property Name="USER_STAUS" Type="Int32" />
-          <Property Name="USER_CREATEDBY" Type="Int32" />
-          <Property Name="USER_CREATEDATE" Type="DateTime" Precision="3" />
-          <Property Name="USER_MODIFIEDBY" Type="Int32" />
-          <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="Self.FK__CH_USER__USER_RE__0CBAE877" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
-          <NavigationProperty Name="USER_STATUS" Relationship="Self.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="CH_USER" ToRole="USER_STATUS" />
-          <Property Name="USER_STATUS1" Type="Int32" />
-          <NavigationProperty Name="USER_STATUS11" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01" FromRole="CH_USER" ToRole="USER_STATUS" />
-        </EntityType>
         <EntityType Name="DRIVER">
           <Key>
             <PropertyRef Name="DRIVER_ID" />
@@ -756,7 +733,7 @@
           <Property Name="REGTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="REGTYPE_MODIFIEDBY" Type="Int32" />
           <Property Name="REGTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_RE__0CBAE877" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_RE__0CBAE877" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="USER_STATUS">
           <Key>
@@ -768,9 +745,8 @@
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="USER_STATUS" ToRole="CH_USER" />
-          <NavigationProperty Name="CH_USER1" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01" FromRole="USER_STATUS" ToRole="CH_USER" />
-        </EntityType>
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="USER_STATUS" ToRole="CH_USER" />
+          </EntityType>
         <EntityType Name="VEHICLE">
           <Key>
             <PropertyRef Name="VEHICLE_ID" />
@@ -838,30 +814,6 @@
           <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__VENDORS__VENDOR___20C1E124" FromRole="VENDORS" ToRole="MASTERSTATUS" />
           <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__25869641" FromRole="VENDORS" ToRole="VEHICLES" />
         </EntityType>
-        <Association Name="FK__CH_USER__USER_RE__0CBAE877">
-          <End Role="USER_REGISTERTYPE" Type="Self.USER_REGISTERTYPE" Multiplicity="0..1" />
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER_REGISTERTYPE">
-              <PropertyRef Name="REGTYPE_ID" />
-            </Principal>
-            <Dependent Role="CH_USER">
-              <PropertyRef Name="USER_REGISTERTYPE" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CH_USER__USER_ST__0DAF0CB0">
-          <End Role="USER_STATUS" Type="Self.USER_STATUS" Multiplicity="0..1" />
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER_STATUS">
-              <PropertyRef Name="STATUS_ID" />
-            </Principal>
-            <Dependent Role="CH_USER">
-              <PropertyRef Name="USER_STAUS" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__DRIVERS__DRIVER___2C3393D0">
           <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="0..1" />
           <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="*" />
@@ -1007,7 +959,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="CHALOEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CH_USER" EntityType="Self.CH_USER" />
           <EntitySet Name="DRIVERS" EntityType="Self.DRIVER" />
           <EntitySet Name="LATLONGS" EntityType="Self.LATLONG" />
           <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATU" />
@@ -1020,14 +971,6 @@
           <EntitySet Name="VEHICLES" EntityType="Self.VEHICLE" />
           <EntitySet Name="VEHICLETYPEs" EntityType="Self.VEHICLETYPE" />
           <EntitySet Name="VENDORS" EntityType="Self.VENDOR" />
-          <AssociationSet Name="FK__CH_USER__USER_RE__0CBAE877" Association="Self.FK__CH_USER__USER_RE__0CBAE877">
-            <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
-            <End Role="CH_USER" EntitySet="CH_USER" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB0" Association="Self.FK__CH_USER__USER_ST__0DAF0CB0">
-            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
-            <End Role="CH_USER" EntitySet="CH_USER" />
-          </AssociationSet>
           <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="Self.FK__DRIVERS__DRIVER___2C3393D0">
             <End Role="VENDORS" EntitySet="VENDORS" />
             <End Role="DRIVERS" EntitySet="DRIVERS" />
@@ -1079,10 +1022,6 @@
           <EntitySet Name="CITIES" EntityType="CHALOModel.CITy" />
           <EntitySet Name="LOCATIONS" EntityType="CHALOModel.LOCATION" />
           <EntitySet Name="STATEs" EntityType="CHALOModel.STATE" />
-          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB01" Association="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01">
-            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
-            <End Role="CH_USER" EntitySet="CH_USER" />
-          </AssociationSet>
           <AssociationSet Name="FK__CITIES__CITY_STA__534D60F1" Association="CHALOModel.FK__CITIES__CITY_STA__534D60F1">
             <End Role="STATE" EntitySet="STATEs" />
             <End Role="CITy" EntitySet="CITIES" />
@@ -1106,6 +1045,15 @@
           <AssociationSet Name="FK__STATE__STATE_STA__59FA5E80" Association="CHALOModel.FK__STATE__STATE_STA__59FA5E80">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="STATE" EntitySet="STATEs" />
+          </AssociationSet>
+          <EntitySet Name="CH_USER" EntityType="CHALOModel.CH_USER" />
+          <AssociationSet Name="FK__CH_USER__USER_RE__0CBAE877" Association="CHALOModel.FK__CH_USER__USER_RE__0CBAE877">
+            <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB0" Association="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0">
+            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="CITy">
@@ -1156,18 +1104,6 @@
           <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__534D60F1" FromRole="STATE" ToRole="CITy" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__STATE__STATE_STA__59FA5E80" FromRole="STATE" ToRole="MASTERSTATU" />
         </EntityType>
-        <Association Name="FK__CH_USER__USER_ST__0DAF0CB01">
-          <End Type="CHALOModel.USER_STATUS" Role="USER_STATUS" Multiplicity="0..1" />
-          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="USER_STATUS">
-              <PropertyRef Name="STATUS_ID" />
-            </Principal>
-            <Dependent Role="CH_USER">
-              <PropertyRef Name="USER_STATUS1" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CITIES__CITY_STA__534D60F1">
           <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
           <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
@@ -1240,32 +1176,57 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CH_USER">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_FIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_LASTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_USERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_PASSWORD" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_DEVICEID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_REGISTERTYPE" Type="Int32" />
+          <Property Name="USER_STATUS" Type="Int32" />
+          <Property Name="USER_CREATEDBY" Type="Int32" />
+          <Property Name="USER_CREATEDATE" Type="DateTime" Precision="3" />
+          <Property Name="USER_MODIFIEDBY" Type="Int32" />
+          <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="CHALOModel.FK__CH_USER__USER_RE__0CBAE877" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
+          <NavigationProperty Name="USER_STATUS1" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="CH_USER" ToRole="USER_STATUS" />
+        </EntityType>
+        <Association Name="FK__CH_USER__USER_RE__0CBAE877">
+          <End Type="CHALOModel.USER_REGISTERTYPE" Role="USER_REGISTERTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_REGISTERTYPE">
+              <PropertyRef Name="REGTYPE_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_REGISTERTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CH_USER__USER_ST__0DAF0CB0">
+          <End Type="CHALOModel.USER_STATUS" Role="USER_STATUS" Multiplicity="0..1" />
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_STATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CHALOModelStoreContainer" CdmEntityContainer="CHALOEntities">
-          <EntitySetMapping Name="CH_USER">
-            <EntityTypeMapping TypeName="CHALOModel.CH_USER">
-              <MappingFragment StoreEntitySet="CH_USER">
-                <ScalarProperty Name="USER_STATUS1" ColumnName="USER_STATUS" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
-                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
-                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
-                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
-                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
-                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
-                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
-                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
-                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
-                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
-                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
-                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DRIVERS">
             <EntityTypeMapping TypeName="CHALOModel.DRIVER">
               <MappingFragment StoreEntitySet="DRIVERS">
@@ -1507,6 +1468,26 @@
                 <ScalarProperty Name="STATE_CREATEDBY" ColumnName="STATE_CREATEDBY" />
                 <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
                 <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CH_USER">
+            <EntityTypeMapping TypeName="CHALOModel.CH_USER">
+              <MappingFragment StoreEntitySet="CH_USER">
+                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
+                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
+                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
+                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
+                <ScalarProperty Name="USER_STATUS" ColumnName="USER_STATUS" />
+                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
+                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
+                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
+                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
+                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
+                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
