@@ -32,6 +32,16 @@
         <AssociationConnector Association="CHALOModel.FK__TRIPS__TRIP_VEHI__48CFD27E" ManuallyRouted="false" />
         <AssociationConnector Association="CHALOModel.FK__VEHICLES__VEHICL__25869641" ManuallyRouted="false" />
         <AssociationConnector Association="CHALOModel.FK__VEHICLES__VEHICL__267ABA7A" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CHALOModel.CITy" Width="1.5" PointX="8.25" PointY="14.125" />
+        <EntityTypeShape EntityType="CHALOModel.LOCATION" Width="1.5" PointX="10.5" PointY="13.75" />
+        <EntityTypeShape EntityType="CHALOModel.STATE" Width="1.5" PointX="3" PointY="15" />
+        <AssociationConnector Association="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01" />
+        <AssociationConnector Association="CHALOModel.FK__CITIES__CITY_STA__534D60F1" />
+        <AssociationConnector Association="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B" />
+        <AssociationConnector Association="CHALOModel.FK__LOCATIONS__LOCAT__5812160E" />
+        <AssociationConnector Association="CHALOModel.FK__LATLONGS__LL_LOC__59063A47" />
+        <AssociationConnector Association="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64" />
+        <AssociationConnector Association="CHALOModel.FK__STATE__STATE_STA__59FA5E80" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

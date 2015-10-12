@@ -18,11 +18,24 @@
           <Property Name="USER_PASSWORD" Type="varchar" MaxLength="200" />
           <Property Name="USER_DEVICEID" Type="varchar" MaxLength="200" />
           <Property Name="USER_REGISTERTYPE" Type="int" />
-          <Property Name="USER_STAUS" Type="int" />
+          <Property Name="USER_STATUS" Type="int" />
           <Property Name="USER_CREATEDBY" Type="int" />
           <Property Name="USER_CREATEDATE" Type="datetime" />
           <Property Name="USER_MODIFIEDBY" Type="int" />
           <Property Name="USER_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CITIES">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CITY_STATEID" Type="int" />
+          <Property Name="CITY_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="CITY_CREATEDBY" Type="int" />
+          <Property Name="CITY_CREATEDDATE" Type="datetime" />
+          <Property Name="CITY_MODIFIEDBY" Type="int" />
+          <Property Name="CITY_MODIFIEDDATE" Type="datetime" />
+          <Property Name="CITY_STATUS" Type="int" />
         </EntityType>
         <EntityType Name="DRIVERS">
           <Key>
@@ -59,6 +72,22 @@
           <Property Name="LL_MODIFIEDBY" Type="int" />
           <Property Name="LL_MODIFIEDDATE" Type="datetime" />
           <Property Name="LATLONG_STATUS" Type="int" />
+          <Property Name="LL_LOCATIONID" Type="int" />
+        </EntityType>
+        <EntityType Name="LOCATIONS">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LOCATION_CITYID" Type="int" />
+          <Property Name="LOCATION_NAME" Type="varchar(max)" />
+          <Property Name="LOCATION_LATITUDE" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="LOCATION_LONGITUDE" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="LOCATION_CREATEDBY" Type="int" />
+          <Property Name="LOCATION_CREATEDDATE" Type="datetime" />
+          <Property Name="LOCATION_MODIFIEDBY" Type="int" />
+          <Property Name="LOCATION_MODIFIEDDATE" Type="datetime" />
+          <Property Name="LOCATION_STATUS" Type="int" />
         </EntityType>
         <EntityType Name="MASTERSTATUS">
           <Key>
@@ -102,6 +131,18 @@
           <Property Name="ROUTE_MODIFIEDBY" Type="int" />
           <Property Name="ROUTE_MODIFIEDDATE" Type="datetime" />
           <Property Name="ROUTE_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="STATE">
+          <Key>
+            <PropertyRef Name="STATE_ID" />
+          </Key>
+          <Property Name="STATE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATE_CREATEDBY" Type="int" />
+          <Property Name="STATE_CREATEDDATE" Type="datetime" />
+          <Property Name="STATE_MODIFIEDBY" Type="int" />
+          <Property Name="STATE_MODIFIEDDATE" Type="datetime" />
+          <Property Name="STATE_STATUS" Type="int" />
         </EntityType>
         <EntityType Name="TRIPS">
           <Key>
@@ -232,7 +273,31 @@
               <PropertyRef Name="STATUS_ID" />
             </Principal>
             <Dependent Role="CH_USER">
-              <PropertyRef Name="USER_STAUS" />
+              <PropertyRef Name="USER_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CITIES__CITY_STA__534D60F1">
+          <End Role="STATE" Type="Self.STATE" Multiplicity="0..1" />
+          <End Role="CITIES" Type="Self.CITIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="STATE_ID" />
+            </Principal>
+            <Dependent Role="CITIES">
+              <PropertyRef Name="CITY_STATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CITIES__CITY_STA__5CD6CB2B">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="CITIES" Type="Self.CITIES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CITIES">
+              <PropertyRef Name="CITY_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -272,6 +337,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__LATLONGS__LL_LOC__59063A47">
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="0..1" />
+          <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_ID" />
+            </Principal>
+            <Dependent Role="LATLONGS">
+              <PropertyRef Name="LL_LOCATIONID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__LATLONGS__LL_ROU__35BCFE0A">
           <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="0..1" />
           <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
@@ -284,6 +361,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__LOCATIONS__LOCAT__5812160E">
+          <End Role="CITIES" Type="Self.CITIES" Multiplicity="0..1" />
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITIES">
+              <PropertyRef Name="CITY_ID" />
+            </Principal>
+            <Dependent Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_CITYID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCATIONS__LOCAT__5DCAEF64">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="LOCATIONS">
+              <PropertyRef Name="LOCATION_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__ROUTES__ROUTE_ST__36B12243">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="*" />
@@ -293,6 +394,18 @@
             </Principal>
             <Dependent Role="ROUTES">
               <PropertyRef Name="ROUTE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STATE__STATE_STA__59FA5E80">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="STATE" Type="Self.STATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="STATE">
+              <PropertyRef Name="STATE_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -382,11 +495,14 @@
         </Association>
         <EntityContainer Name="CHALOModelStoreContainer">
           <EntitySet Name="CH_USER" EntityType="Self.CH_USER" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="CITIES" EntityType="Self.CITIES" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="LATLONGS" EntityType="Self.LATLONGS" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATUS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="PAYMENTTYPE" EntityType="Self.PAYMENTTYPE" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="ROUTES" EntityType="Self.ROUTES" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="STATE" EntityType="Self.STATE" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="TRIPS" EntityType="Self.TRIPS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="TRIPSTATUS" EntityType="Self.TRIPSTATUS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="USER_REGISTERTYPE" EntityType="Self.USER_REGISTERTYPE" Schema="CHALO" store:Type="Tables" />
@@ -402,6 +518,14 @@
             <End Role="USER_STATUS" EntitySet="USER_STATUS" />
             <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__534D60F1" Association="Self.FK__CITIES__CITY_STA__534D60F1">
+            <End Role="STATE" EntitySet="STATE" />
+            <End Role="CITIES" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__5CD6CB2B" Association="Self.FK__CITIES__CITY_STA__5CD6CB2B">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="CITIES" EntitySet="CITIES" />
+          </AssociationSet>
           <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="Self.FK__DRIVERS__DRIVER___2C3393D0">
             <End Role="VENDORS" EntitySet="VENDORS" />
             <End Role="DRIVERS" EntitySet="DRIVERS" />
@@ -414,13 +538,29 @@
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="LATLONGS" EntitySet="LATLONGS" />
           </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LL_LOC__59063A47" Association="Self.FK__LATLONGS__LL_LOC__59063A47">
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+            <End Role="LATLONGS" EntitySet="LATLONGS" />
+          </AssociationSet>
           <AssociationSet Name="FK__LATLONGS__LL_ROU__35BCFE0A" Association="Self.FK__LATLONGS__LL_ROU__35BCFE0A">
             <End Role="ROUTES" EntitySet="ROUTES" />
             <End Role="LATLONGS" EntitySet="LATLONGS" />
           </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__5812160E" Association="Self.FK__LOCATIONS__LOCAT__5812160E">
+            <End Role="CITIES" EntitySet="CITIES" />
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__5DCAEF64" Association="Self.FK__LOCATIONS__LOCAT__5DCAEF64">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
+          </AssociationSet>
           <AssociationSet Name="FK__ROUTES__ROUTE_ST__36B12243" Association="Self.FK__ROUTES__ROUTE_ST__36B12243">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="ROUTES" EntitySet="ROUTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STATE__STATE_STA__59FA5E80" Association="Self.FK__STATE__STATE_STA__59FA5E80">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="STATE" EntitySet="STATE" />
           </AssociationSet>
           <AssociationSet Name="FK__TRIPS__TRIP_ROUT__49C3F6B7" Association="Self.FK__TRIPS__TRIP_ROUT__49C3F6B7">
             <End Role="ROUTES" EntitySet="ROUTES" />
@@ -475,6 +615,8 @@
           <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="Self.FK__CH_USER__USER_RE__0CBAE877" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
           <NavigationProperty Name="USER_STATUS" Relationship="Self.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="CH_USER" ToRole="USER_STATUS" />
+          <Property Name="USER_STATUS1" Type="Int32" />
+          <NavigationProperty Name="USER_STATUS11" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01" FromRole="CH_USER" ToRole="USER_STATUS" />
         </EntityType>
         <EntityType Name="DRIVER">
           <Key>
@@ -515,6 +657,8 @@
           <Property Name="LATLONG_STATUS" Type="Int32" />
           <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__LATLONGS__LATLON__37A5467C" FromRole="LATLONGS" ToRole="MASTERSTATUS" />
           <NavigationProperty Name="ROUTE" Relationship="Self.FK__LATLONGS__LL_ROU__35BCFE0A" FromRole="LATLONGS" ToRole="ROUTES" />
+          <Property Name="LL_LOCATIONID" Type="Int32" />
+          <NavigationProperty Name="LOCATION" Relationship="CHALOModel.FK__LATLONGS__LL_LOC__59063A47" FromRole="LATLONG" ToRole="LOCATION" />
         </EntityType>
         <EntityType Name="MASTERSTATU">
           <Key>
@@ -531,6 +675,9 @@
           <NavigationProperty Name="ROUTES" Relationship="Self.FK__ROUTES__ROUTE_ST__36B12243" FromRole="MASTERSTATUS" ToRole="ROUTES" />
           <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__276EDEB3" FromRole="MASTERSTATUS" ToRole="VEHICLES" />
           <NavigationProperty Name="VENDORS" Relationship="Self.FK__VENDORS__VENDOR___20C1E124" FromRole="MASTERSTATUS" ToRole="VENDORS" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B" FromRole="MASTERSTATU" ToRole="CITy" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64" FromRole="MASTERSTATU" ToRole="LOCATION" />
+          <NavigationProperty Name="STATEs" Relationship="CHALOModel.FK__STATE__STATE_STA__59FA5E80" FromRole="MASTERSTATU" ToRole="STATE" />
         </EntityType>
         <EntityType Name="PAYMENTTYPE">
           <Key>
@@ -622,6 +769,7 @@
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="USER_STATUS" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER1" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01" FromRole="USER_STATUS" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="VEHICLE">
           <Key>
@@ -928,7 +1076,170 @@
             <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
             <End Role="VEHICLES" EntitySet="VEHICLES" />
           </AssociationSet>
+          <EntitySet Name="CITIES" EntityType="CHALOModel.CITy" />
+          <EntitySet Name="LOCATIONS" EntityType="CHALOModel.LOCATION" />
+          <EntitySet Name="STATEs" EntityType="CHALOModel.STATE" />
+          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB01" Association="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB01">
+            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__534D60F1" Association="CHALOModel.FK__CITIES__CITY_STA__534D60F1">
+            <End Role="STATE" EntitySet="STATEs" />
+            <End Role="CITy" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__5CD6CB2B" Association="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="CITy" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__5812160E" Association="CHALOModel.FK__LOCATIONS__LOCAT__5812160E">
+            <End Role="CITy" EntitySet="CITIES" />
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LL_LOC__59063A47" Association="CHALOModel.FK__LATLONGS__LL_LOC__59063A47">
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
+            <End Role="LATLONG" EntitySet="LATLONGS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__5DCAEF64" Association="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STATE__STATE_STA__59FA5E80" Association="CHALOModel.FK__STATE__STATE_STA__59FA5E80">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="STATE" EntitySet="STATEs" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="CITy">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CITY_STATEID" Type="Int32" />
+          <Property Name="CITY_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CITY_CREATEDBY" Type="Int32" />
+          <Property Name="CITY_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="CITY_MODIFIEDBY" Type="Int32" />
+          <Property Name="CITY_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="CITY_STATUS" Type="Int32" />
+          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__534D60F1" FromRole="CITy" ToRole="STATE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B" FromRole="CITy" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5812160E" FromRole="CITy" ToRole="LOCATION" />
+        </EntityType>
+        <EntityType Name="LOCATION">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOCATION_CITYID" Type="Int32" />
+          <Property Name="LOCATION_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LOCATION_LATITUDE" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LOCATION_LONGITUDE" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LOCATION_CREATEDBY" Type="Int32" />
+          <Property Name="LOCATION_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LOCATION_MODIFIEDBY" Type="Int32" />
+          <Property Name="LOCATION_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LOCATION_STATUS" Type="Int32" />
+          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5812160E" FromRole="LOCATION" ToRole="CITy" />
+          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LL_LOC__59063A47" FromRole="LOCATION" ToRole="LATLONG" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64" FromRole="LOCATION" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="STATE">
+          <Key>
+            <PropertyRef Name="STATE_ID" />
+          </Key>
+          <Property Name="STATE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATE_CREATEDBY" Type="Int32" />
+          <Property Name="STATE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATE_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATE_STATUS" Type="Int32" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__534D60F1" FromRole="STATE" ToRole="CITy" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__STATE__STATE_STA__59FA5E80" FromRole="STATE" ToRole="MASTERSTATU" />
+        </EntityType>
+        <Association Name="FK__CH_USER__USER_ST__0DAF0CB01">
+          <End Type="CHALOModel.USER_STATUS" Role="USER_STATUS" Multiplicity="0..1" />
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER_STATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CH_USER">
+              <PropertyRef Name="USER_STATUS1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CITIES__CITY_STA__534D60F1">
+          <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="STATE_ID" />
+            </Principal>
+            <Dependent Role="CITy">
+              <PropertyRef Name="CITY_STATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CITIES__CITY_STA__5CD6CB2B">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CITy">
+              <PropertyRef Name="CITY_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCATIONS__LOCAT__5812160E">
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITy">
+              <PropertyRef Name="CITY_ID" />
+            </Principal>
+            <Dependent Role="LOCATION">
+              <PropertyRef Name="LOCATION_CITYID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LATLONGS__LL_LOC__59063A47">
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="0..1" />
+          <End Type="CHALOModel.LATLONG" Role="LATLONG" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOCATION">
+              <PropertyRef Name="LOCATION_ID" />
+            </Principal>
+            <Dependent Role="LATLONG">
+              <PropertyRef Name="LL_LOCATIONID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCATIONS__LOCAT__5DCAEF64">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="LOCATION">
+              <PropertyRef Name="LOCATION_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__STATE__STATE_STA__59FA5E80">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="STATE">
+              <PropertyRef Name="STATE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -938,6 +1249,7 @@
           <EntitySetMapping Name="CH_USER">
             <EntityTypeMapping TypeName="CHALOModel.CH_USER">
               <MappingFragment StoreEntitySet="CH_USER">
+                <ScalarProperty Name="USER_STATUS1" ColumnName="USER_STATUS" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
                 <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
                 <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
@@ -947,7 +1259,6 @@
                 <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
                 <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
                 <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
-                <ScalarProperty Name="USER_STAUS" ColumnName="USER_STAUS" />
                 <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
                 <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
                 <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
@@ -980,6 +1291,7 @@
           <EntitySetMapping Name="LATLONGS">
             <EntityTypeMapping TypeName="CHALOModel.LATLONG">
               <MappingFragment StoreEntitySet="LATLONGS">
+                <ScalarProperty Name="LL_LOCATIONID" ColumnName="LL_LOCATIONID" />
                 <ScalarProperty Name="LL_ID" ColumnName="LL_ID" />
                 <ScalarProperty Name="LL_ROUTE_ID" ColumnName="LL_ROUTE_ID" />
                 <ScalarProperty Name="LL_LAT" ColumnName="LL_LAT" />
@@ -1152,6 +1464,49 @@
                 <ScalarProperty Name="VENDOR_CREATEDDATE" ColumnName="VENDOR_CREATEDDATE" />
                 <ScalarProperty Name="VENDOR_MODIFIEDBY" ColumnName="VENDOR_MODIFIEDBY" />
                 <ScalarProperty Name="VENDOR_MODIFIEDDATE" ColumnName="VENDOR_MODIFIEDDATE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CITIES">
+            <EntityTypeMapping TypeName="CHALOModel.CITy">
+              <MappingFragment StoreEntitySet="CITIES">
+                <ScalarProperty Name="CITY_STATUS" ColumnName="CITY_STATUS" />
+                <ScalarProperty Name="CITY_MODIFIEDDATE" ColumnName="CITY_MODIFIEDDATE" />
+                <ScalarProperty Name="CITY_MODIFIEDBY" ColumnName="CITY_MODIFIEDBY" />
+                <ScalarProperty Name="CITY_CREATEDDATE" ColumnName="CITY_CREATEDDATE" />
+                <ScalarProperty Name="CITY_CREATEDBY" ColumnName="CITY_CREATEDBY" />
+                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
+                <ScalarProperty Name="CITY_STATEID" ColumnName="CITY_STATEID" />
+                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOCATIONS">
+            <EntityTypeMapping TypeName="CHALOModel.LOCATION">
+              <MappingFragment StoreEntitySet="LOCATIONS">
+                <ScalarProperty Name="LOCATION_STATUS" ColumnName="LOCATION_STATUS" />
+                <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
+                <ScalarProperty Name="LOCATION_MODIFIEDBY" ColumnName="LOCATION_MODIFIEDBY" />
+                <ScalarProperty Name="LOCATION_CREATEDDATE" ColumnName="LOCATION_CREATEDDATE" />
+                <ScalarProperty Name="LOCATION_CREATEDBY" ColumnName="LOCATION_CREATEDBY" />
+                <ScalarProperty Name="LOCATION_LONGITUDE" ColumnName="LOCATION_LONGITUDE" />
+                <ScalarProperty Name="LOCATION_LATITUDE" ColumnName="LOCATION_LATITUDE" />
+                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
+                <ScalarProperty Name="LOCATION_CITYID" ColumnName="LOCATION_CITYID" />
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="STATEs">
+            <EntityTypeMapping TypeName="CHALOModel.STATE">
+              <MappingFragment StoreEntitySet="STATE">
+                <ScalarProperty Name="STATE_STATUS" ColumnName="STATE_STATUS" />
+                <ScalarProperty Name="STATE_MODIFIEDDATE" ColumnName="STATE_MODIFIEDDATE" />
+                <ScalarProperty Name="STATE_MODIFIEDBY" ColumnName="STATE_MODIFIEDBY" />
+                <ScalarProperty Name="STATE_CREATEDDATE" ColumnName="STATE_CREATEDDATE" />
+                <ScalarProperty Name="STATE_CREATEDBY" ColumnName="STATE_CREATEDBY" />
+                <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
+                <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
