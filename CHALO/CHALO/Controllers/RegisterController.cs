@@ -15,13 +15,13 @@ namespace CHALO.Controllers
         public IHttpActionResult Register(string Firstname,string Lastname,string Email,string Pass,string Mobile)
         {
             CH_USER user = new CH_USER();
-            //user.USER_FIRSTNAME = Firstname;
-            //user.USER_LASTNAME = Lastname;
-            //user.USER_EMAILID = Email;
-            //user.USER_MOBILE = Mobile;
-            //user.USER_PASSWORD = Pass;
-            //user.USER_STATUS = 1;
-            //user.USER_REGISTERTYPE = 1;
+            user.USER_FIRSTNAME = Firstname;
+            user.USER_LASTNAME = Lastname;
+            user.USER_EMAILID = Email;
+            user.USER_MOBILE = Mobile;
+            user.USER_PASSWORD = Pass;
+            user.USER_STATUS = 1;
+            user.USER_REGISTERTYPE = 1;
 
             if (!ModelState.IsValid)
             {
