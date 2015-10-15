@@ -41,5 +41,6 @@ namespace CHALO.Models
         public virtual DbSet<LOCATION> LOCATIONS { get; set; }
         public virtual DbSet<STATE> STATEs { get; set; }
         public virtual DbSet<CH_USER> CH_USER { get; set; }
+        public virtual DbSet<COUPON> COUPONS { get; set; }
     }
 }

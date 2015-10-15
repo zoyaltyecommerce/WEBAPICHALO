@@ -23,6 +23,8 @@
           <Property Name="USER_CREATEDATE" Type="datetime" />
           <Property Name="USER_MODIFIEDBY" Type="int" />
           <Property Name="USER_MODIFIEDDATE" Type="datetime" />
+          <Property Name="USER_COUPONAPPLIED" Type="bit" />
+          <Property Name="USER_REFEREDBY" Type="int" />
         </EntityType>
         <EntityType Name="CITIES">
           <Key>
@@ -36,6 +38,20 @@
           <Property Name="CITY_MODIFIEDBY" Type="int" />
           <Property Name="CITY_MODIFIEDDATE" Type="datetime" />
           <Property Name="CITY_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="COUPONS">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COUPON_USERID" Type="int" />
+          <Property Name="COUPON_NAME" Type="nvarchar" MaxLength="200" />
+          <Property Name="COUPON_MONEY" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="COUPON_CREATEDBY" Type="int" />
+          <Property Name="COUPON_CREATEDDATE" Type="datetime" />
+          <Property Name="COUPON_MODIFIEDBY" Type="int" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
+          <Property Name="COUPON_ADMINCOUPON" Type="bit" />
         </EntityType>
         <EntityType Name="DRIVERS">
           <Key>
@@ -301,6 +317,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__COUPONS__COUPON___656C112C">
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+          <End Role="COUPONS" Type="Self.COUPONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="COUPONS">
+              <PropertyRef Name="COUPON_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__DRIVERS__DRIVER___2C3393D0">
           <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="0..1" />
           <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="*" />
@@ -496,6 +524,7 @@
         <EntityContainer Name="CHALOModelStoreContainer">
           <EntitySet Name="CH_USER" EntityType="Self.CH_USER" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="CITIES" EntityType="Self.CITIES" Schema="CHALO" store:Type="Tables" />
+          <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="LATLONGS" EntityType="Self.LATLONGS" Schema="CHALO" store:Type="Tables" />
           <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="CHALO" store:Type="Tables" />
@@ -525,6 +554,10 @@
           <AssociationSet Name="FK__CITIES__CITY_STA__5CD6CB2B" Association="Self.FK__CITIES__CITY_STA__5CD6CB2B">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="CITIES" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COUPONS__COUPON___656C112C" Association="Self.FK__COUPONS__COUPON___656C112C">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="COUPONS" EntitySet="COUPONS" />
           </AssociationSet>
           <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="Self.FK__DRIVERS__DRIVER___2C3393D0">
             <End Role="VENDORS" EntitySet="VENDORS" />
@@ -1055,6 +1088,11 @@
             <End Role="USER_STATUS" EntitySet="USER_STATUS" />
             <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
+          <EntitySet Name="COUPONS" EntityType="CHALOModel.COUPON" />
+          <AssociationSet Name="FK__COUPONS__COUPON___656C112C" Association="CHALOModel.FK__COUPONS__COUPON___656C112C">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="COUPON" EntitySet="COUPONS" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CITy">
           <Key>
@@ -1196,6 +1234,9 @@
           <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="CHALOModel.FK__CH_USER__USER_RE__0CBAE877" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
           <NavigationProperty Name="USER_STATUS1" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="CH_USER" ToRole="USER_STATUS" />
+          <Property Name="USER_COUPONAPPLIED" Type="Boolean" />
+          <Property Name="USER_REFEREDBY" Type="Int32" />
+          <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___656C112C" FromRole="CH_USER" ToRole="COUPON" />
         </EntityType>
         <Association Name="FK__CH_USER__USER_RE__0CBAE877">
           <End Type="CHALOModel.USER_REGISTERTYPE" Role="USER_REGISTERTYPE" Multiplicity="0..1" />
@@ -1218,6 +1259,33 @@
             </Principal>
             <Dependent Role="CH_USER">
               <PropertyRef Name="USER_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="COUPON">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COUPON_USERID" Type="Int32" />
+          <Property Name="COUPON_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="COUPON_MONEY" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="COUPON_CREATEDBY" Type="Int32" />
+          <Property Name="COUPON_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPON_MODIFIEDBY" Type="Int32" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPON_ADMINCOUPON" Type="Boolean" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__COUPONS__COUPON___656C112C" FromRole="COUPON" ToRole="CH_USER" />
+        </EntityType>
+        <Association Name="FK__COUPONS__COUPON___656C112C">
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
+          <End Type="CHALOModel.COUPON" Role="COUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="COUPON">
+              <PropertyRef Name="COUPON_USERID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1474,6 +1542,8 @@
           <EntitySetMapping Name="CH_USER">
             <EntityTypeMapping TypeName="CHALOModel.CH_USER">
               <MappingFragment StoreEntitySet="CH_USER">
+                <ScalarProperty Name="USER_REFEREDBY" ColumnName="USER_REFEREDBY" />
+                <ScalarProperty Name="USER_COUPONAPPLIED" ColumnName="USER_COUPONAPPLIED" />
                 <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
                 <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
                 <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
@@ -1488,6 +1558,21 @@
                 <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
                 <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COUPONS">
+            <EntityTypeMapping TypeName="CHALOModel.COUPON">
+              <MappingFragment StoreEntitySet="COUPONS">
+                <ScalarProperty Name="COUPON_ADMINCOUPON" ColumnName="COUPON_ADMINCOUPON" />
+                <ScalarProperty Name="COUPON_MODIFIEDDATE" ColumnName="COUPON_MODIFIEDDATE" />
+                <ScalarProperty Name="COUPON_MODIFIEDBY" ColumnName="COUPON_MODIFIEDBY" />
+                <ScalarProperty Name="COUPON_CREATEDDATE" ColumnName="COUPON_CREATEDDATE" />
+                <ScalarProperty Name="COUPON_CREATEDBY" ColumnName="COUPON_CREATEDBY" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_USERID" ColumnName="COUPON_USERID" />
+                <ScalarProperty Name="COUPON_ID" ColumnName="COUPON_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

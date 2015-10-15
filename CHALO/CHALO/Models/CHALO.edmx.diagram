@@ -41,6 +41,8 @@
         <EntityTypeShape EntityType="CHALOModel.CH_USER" Width="1.5" PointX="3" PointY="3.5" />
         <AssociationConnector Association="CHALOModel.FK__CH_USER__USER_RE__0CBAE877" />
         <AssociationConnector Association="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0" />
+        <EntityTypeShape EntityType="CHALOModel.COUPON" Width="1.5" PointX="5.25" PointY="4.375" />
+        <AssociationConnector Association="CHALOModel.FK__COUPONS__COUPON___656C112C" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

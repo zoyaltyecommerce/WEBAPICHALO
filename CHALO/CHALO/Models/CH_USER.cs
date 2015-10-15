@@ -14,6 +14,12 @@ namespace CHALO.Models
     
     public partial class CH_USER
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public CH_USER()
+        {
+            this.COUPONS = new HashSet<COUPON>();
+        }
+    
         public int USER_ID { get; set; }
         public string USER_FIRSTNAME { get; set; }
         public string USER_LASTNAME { get; set; }
@@ -28,8 +34,12 @@ namespace CHALO.Models
         public Nullable<System.DateTime> USER_CREATEDATE { get; set; }
         public Nullable<int> USER_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> USER_MODIFIEDDATE { get; set; }
+        public Nullable<bool> USER_COUPONAPPLIED { get; set; }
+        public Nullable<int> USER_REFEREDBY { get; set; }
     
         public virtual USER_REGISTERTYPE USER_REGISTERTYPE1 { get; set; }
         public virtual USER_STATUS USER_STATUS1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COUPON> COUPONS { get; set; }
     }
 }
