@@ -239,6 +239,9 @@
     <Compile Include="Models\CITy.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\COUPON.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DRIVER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
