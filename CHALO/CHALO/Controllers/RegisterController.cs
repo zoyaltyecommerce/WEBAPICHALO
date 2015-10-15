@@ -16,22 +16,20 @@ namespace CHALO.Controllers
         {
             CH_USER user = new CH_USER();
 
-            user.USER_FIRSTNAME = Firstname;
+            user.USER_FIRSTNAME = Firstname.Trim();
             //user.USER_LASTNAME = Lastname;
-            user.USER_EMAILID = Email;
-            user.USER_MOBILE = Mobile;
-            user.USER_PASSWORD = Pass;
+            user.USER_EMAILID = Email.Trim();
+            user.USER_MOBILE = Mobile.Trim();
+            user.USER_PASSWORD = Pass.Trim();
             user.USER_STATUS = 1;
             user.USER_REGISTERTYPE = 1;
             user.USER_MODIFIEDBY = 1;
             user.USER_MODIFIEDDATE = DateTime.Now;
             user.USER_CREATEDBY = 1;
             user.USER_CREATEDATE = DateTime.Now;
-            user.USER_USERNAME = Email;
-            
-
-
-            List<CH_USER> listusers = db.CH_USER.Where(c => c.USER_USERNAME == Email || c.USER_MOBILE == Mobile).ToList();
+            user.USER_USERNAME = Email.Trim();
+           
+            List<CH_USER> listusers = db.CH_USER.Where(c => c.USER_USERNAME == Email.Trim() || c.USER_MOBILE == Mobile.Trim()).ToList();
 
             if (listusers.Count > 0)
             {

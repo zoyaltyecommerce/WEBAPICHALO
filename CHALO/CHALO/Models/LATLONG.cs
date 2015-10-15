@@ -27,7 +27,7 @@ namespace CHALO.Models
         public Nullable<int> LL_LOCATIONID { get; set; }
     
         public virtual MASTERSTATU MASTERSTATU { get; set; }
-        public virtual ROUTE ROUTE { get; set; }
         public virtual LOCATION LOCATION { get; set; }
+        public virtual ROUTE ROUTE { get; set; }
     }
 }
