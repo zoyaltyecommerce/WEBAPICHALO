@@ -18,6 +18,7 @@ namespace CHALO.Models
         public VEHICLE()
         {
             this.TRIPS = new HashSet<TRIP>();
+            this.VEHICLEDRIVERS = new HashSet<VEHICLEDRIVER>();
         }
     
         public int VEHICLE_ID { get; set; }
@@ -41,6 +42,8 @@ namespace CHALO.Models
         public virtual MASTERSTATU MASTERSTATU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRIP> TRIPS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VEHICLEDRIVER> VEHICLEDRIVERS { get; set; }
         public virtual VENDOR VENDOR { get; set; }
         public virtual VEHICLETYPE VEHICLETYPE { get; set; }
     }

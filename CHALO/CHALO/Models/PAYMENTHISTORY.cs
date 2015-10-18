@@ -12,22 +12,18 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class PAYMENTTYPE
+    public partial class PAYMENTHISTORY
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PAYMENTTYPE()
-        {
-            this.PAYMENTHISTORies = new HashSet<PAYMENTHISTORY>();
-        }
-    
-        public int PAYMENTTYPE_ID { get; set; }
-        public string PAYMENTTYPE_NAME { get; set; }
+        public int PAYMENTHISTORY_ID { get; set; }
+        public Nullable<int> PAYMENTHISTORY_USERTRIPID { get; set; }
+        public Nullable<int> PAYMENTTYPE_ID { get; set; }
+        public Nullable<decimal> PAYMENTTYPE_AMOUNTPAID { get; set; }
         public Nullable<int> PAYMENTTYPE_CREATEDBY { get; set; }
         public Nullable<System.DateTime> PAYMENTTYPE_CREATEDDATE { get; set; }
         public Nullable<int> PAYMENT_MODIFIEDBY { get; set; }
-        public Nullable<System.DateTime> PAYMENT_MODIFIEDDATE { get; set; }
+        public Nullable<System.DateTime> PAYMENTTYPE_MODIFIEDDATE { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PAYMENTHISTORY> PAYMENTHISTORies { get; set; }
+        public virtual USERTRIP USERTRIP { get; set; }
+        public virtual PAYMENTTYPE PAYMENTTYPE { get; set; }
     }
 }

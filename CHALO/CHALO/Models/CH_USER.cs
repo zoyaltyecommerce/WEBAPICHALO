@@ -18,6 +18,7 @@ namespace CHALO.Models
         public CH_USER()
         {
             this.COUPONS = new HashSet<COUPON>();
+            this.CHALOWALLETs = new HashSet<CHALOWALLET>();
         }
     
         public int USER_ID { get; set; }
@@ -41,5 +42,7 @@ namespace CHALO.Models
         public virtual USER_STATUS USER_STATUS1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COUPON> COUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CHALOWALLET> CHALOWALLETs { get; set; }
     }
 }

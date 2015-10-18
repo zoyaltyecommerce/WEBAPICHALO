@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="CH_USER">
           <Key>
             <PropertyRef Name="USER_ID" />
@@ -25,6 +25,18 @@
           <Property Name="USER_MODIFIEDDATE" Type="datetime" />
           <Property Name="USER_COUPONAPPLIED" Type="bit" />
           <Property Name="USER_REFEREDBY" Type="int" />
+        </EntityType>
+        <EntityType Name="CHALOWALLET">
+          <Key>
+            <PropertyRef Name="WALLET_ID" />
+          </Key>
+          <Property Name="WALLET_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WALLET_USERID" Type="int" />
+          <Property Name="WALLET_AMOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="WALLET_CREATEDBY" Type="int" />
+          <Property Name="WALLET_CREATEDDATE" Type="datetime" />
+          <Property Name="WALLET_MODIFIEDBY" Type="int" />
+          <Property Name="WALLET_MODIFIEDDATE" Type="datetime" />
         </EntityType>
         <EntityType Name="CITIES">
           <Key>
@@ -89,6 +101,8 @@
           <Property Name="LL_MODIFIEDDATE" Type="datetime" />
           <Property Name="LATLONG_STATUS" Type="int" />
           <Property Name="LL_LOCATIONID" Type="int" />
+          <Property Name="LL_VIA" Type="bit" />
+          <Property Name="LL_SORTORDER" Type="int" />
         </EntityType>
         <EntityType Name="LOCATIONS">
           <Key>
@@ -115,6 +129,32 @@
           <Property Name="STATUS_CREATEDDATE" Type="datetime" />
           <Property Name="STATUS_MODIFIEDBY" Type="int" />
           <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="NOOFSEATS">
+          <Key>
+            <PropertyRef Name="SEAT_ID" />
+          </Key>
+          <Property Name="SEAT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SEAT_TRIP_ID" Type="int" />
+          <Property Name="SEAT_ACTUALSEATS" Type="int" />
+          <Property Name="SEAT_AVAILABLESEATS" Type="int" />
+          <Property Name="SEAT_CREATEDBY" Type="int" />
+          <Property Name="SEAT_CREATEDDATE" Type="datetime" />
+          <Property Name="SEAT_MODIFIEDBY" Type="int" />
+          <Property Name="SEAT_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PAYMENTHISTORY">
+          <Key>
+            <PropertyRef Name="PAYMENTHISTORY_ID" />
+          </Key>
+          <Property Name="PAYMENTHISTORY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PAYMENTHISTORY_USERTRIPID" Type="int" />
+          <Property Name="PAYMENTTYPE_ID" Type="int" />
+          <Property Name="PAYMENTTYPE_AMOUNTPAID" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PAYMENTTYPE_CREATEDBY" Type="int" />
+          <Property Name="PAYMENTTYPE_CREATEDDATE" Type="datetime" />
+          <Property Name="PAYMENT_MODIFIEDBY" Type="int" />
+          <Property Name="PAYMENTTYPE_MODIFIEDDATE" Type="datetime" />
         </EntityType>
         <EntityType Name="PAYMENTTYPE">
           <Key>
@@ -147,6 +187,7 @@
           <Property Name="ROUTE_MODIFIEDBY" Type="int" />
           <Property Name="ROUTE_MODIFIEDDATE" Type="datetime" />
           <Property Name="ROUTE_STATUS" Type="int" />
+          <Property Name="ROUTE_ALLLOCATIONS" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="STATE">
           <Key>
@@ -159,6 +200,48 @@
           <Property Name="STATE_MODIFIEDBY" Type="int" />
           <Property Name="STATE_MODIFIEDDATE" Type="datetime" />
           <Property Name="STATE_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="temptrips">
+          <Key>
+            <PropertyRef Name="TEMPTRIP_ID" />
+          </Key>
+          <Property Name="TEMPTRIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fromllid" Type="int" />
+          <Property Name="fromtripid" Type="int" />
+          <Property Name="fromlocationname" Type="varchar" MaxLength="200" />
+          <Property Name="fromsortorder" Type="int" />
+          <Property Name="fromaveragereachtime" Type="datetime" />
+          <Property Name="fromactualreachtime" Type="datetime" />
+          <Property Name="fromkms" Type="int" />
+          <Property Name="tollid" Type="int" />
+          <Property Name="totripid" Type="int" />
+          <Property Name="tolocationname" Type="varchar" MaxLength="200" />
+          <Property Name="tosortorder" Type="int" />
+          <Property Name="toaveragereachtime" Type="datetime" />
+          <Property Name="toactualreachtime" Type="datetime" />
+          <Property Name="tokms" Type="int" />
+        </EntityType>
+        <EntityType Name="TRIPLOCATIONS">
+          <Key>
+            <PropertyRef Name="LL_ID" />
+          </Key>
+          <Property Name="LL_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LL_TRIP_ID" Type="int" />
+          <Property Name="LL_LAT" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="LL_LONG" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="LL_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="LL_CREATEDBY" Type="int" />
+          <Property Name="LL_CREATEDDATE" Type="datetime" />
+          <Property Name="LL_MODIFIEDBY" Type="int" />
+          <Property Name="LL_MODIFIEDDATE" Type="datetime" />
+          <Property Name="LL_VIA" Type="bit" />
+          <Property Name="LL_SORTORDER" Type="int" />
+          <Property Name="LL_AVERAGEREACHTIME" Type="datetime" />
+          <Property Name="LL_ACTUALREACHTIME" Type="datetime" />
+          <Property Name="LL_DIFFPREV" Type="int" />
+          <Property Name="LL_STATUS" Type="int" />
+          <Property Name="LL_ENDED" Type="bit" />
+          <Property Name="LL_KMFROMPICKUP" Type="int" />
         </EntityType>
         <EntityType Name="TRIPS">
           <Key>
@@ -176,6 +259,13 @@
           <Property Name="TRIP_CREATEDDATE" Type="datetime" />
           <Property Name="TRIP_MODIFIEDBY" Type="int" />
           <Property Name="TRIP_MODIFIEDDATE" Type="datetime" />
+          <Property Name="TRIP_FROM" Type="varchar" MaxLength="200" />
+          <Property Name="TRIP_TO" Type="varchar" MaxLength="200" />
+          <Property Name="TRIP_VIA" Type="varchar" MaxLength="200" />
+          <Property Name="TRIPS_ALLLOCATIONS" Type="varchar(max)" />
+          <Property Name="TRIP_STARTED" Type="bit" />
+          <Property Name="TRIP_ENDED" Type="bit" />
+          <Property Name="TRIP_NAME" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="TRIPSTATUS">
           <Key>
@@ -187,6 +277,33 @@
           <Property Name="STATUS_CREATEDDATE" Type="datetime" />
           <Property Name="STATUS_MODIFIEDBY" Type="int" />
           <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="TRIPTEMP">
+          <Key>
+            <PropertyRef Name="TRIPTEMP_ID" />
+          </Key>
+          <Property Name="TRIPTEMP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="trip_id" Type="int" />
+          <Property Name="trip_name" Type="varchar" MaxLength="200" />
+          <Property Name="trip_vehicle_id" Type="int" />
+          <Property Name="trip_route_id" Type="int" />
+          <Property Name="fromllid" Type="int" />
+          <Property Name="fromlocationname" Type="varchar" MaxLength="200" />
+          <Property Name="fromactualreachtime" Type="varchar" MaxLength="200" />
+          <Property Name="fromaveragereachtime" Type="varchar" MaxLength="200" />
+          <Property Name="tollid" Type="int" />
+          <Property Name="tolocationname" Type="varchar" MaxLength="200" />
+          <Property Name="toaveragereachtime" Type="varchar" MaxLength="200" />
+          <Property Name="toactualreachtime" Type="varchar" MaxLength="200" />
+          <Property Name="startdate" Type="varchar" MaxLength="200" />
+          <Property Name="VIA" Type="varchar" MaxLength="200" />
+          <Property Name="duration" Type="int" />
+          <Property Name="seat_availableseats" Type="int" />
+          <Property Name="DISTANCE" Type="int" />
+          <Property Name="driver_name" Type="varchar" MaxLength="200" />
+          <Property Name="vehicle_number" Type="varchar" MaxLength="200" />
+          <Property Name="vehicletype_name" Type="varchar" MaxLength="200" />
+          <Property Name="COST" Type="decimal" Precision="10" Scale="0" />
         </EntityType>
         <EntityType Name="USER_REGISTERTYPE">
           <Key>
@@ -209,6 +326,40 @@
           <Property Name="STATUS_CREATEDDATE" Type="datetime" />
           <Property Name="STATUS_MODIFIEDBY" Type="int" />
           <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="USERTRIPS">
+          <Key>
+            <PropertyRef Name="USERTRIP_ID" />
+          </Key>
+          <Property Name="USERTRIP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USERTRIP_TRIPID" Type="int" />
+          <Property Name="USERTRIP_PICKUPLOC" Type="int" />
+          <Property Name="USERTRIP_DROPLOC" Type="int" />
+          <Property Name="USERTRIP_VIA" Type="varchar" MaxLength="200" />
+          <Property Name="USERTRIP_ESTIMATEDDURATION" Type="int" />
+          <Property Name="USERTRIP_ACTUALDURATION" Type="int" />
+          <Property Name="USERTRIP_DISTANCE" Type="int" />
+          <Property Name="USERTRIP_ACTUALAMOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_DISCOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_TOTALAMOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_STATUS" Type="int" />
+          <Property Name="USERTRIP_APPLIEDCOUPON" Type="varchar" MaxLength="200" />
+          <Property Name="USERTRIP_CREATEDBY" Type="int" />
+          <Property Name="USERTRIP_CREATEDDATE" Type="datetime" />
+          <Property Name="USERTRIP_MODIFIEDBY" Type="int" />
+          <Property Name="USERTRIP_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="VEHICLEDRIVERS">
+          <Key>
+            <PropertyRef Name="VD_ID" />
+          </Key>
+          <Property Name="VD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="VD_VEHICLE_ID" Type="int" />
+          <Property Name="VD_DRIVER_ID" Type="int" />
+          <Property Name="VD_CREATEDBY" Type="int" />
+          <Property Name="VD_CREATEDDATE" Type="datetime" />
+          <Property Name="VD_MODIFIEDBY" Type="int" />
+          <Property Name="VD_MODIFIEDDATE" Type="datetime" />
         </EntityType>
         <EntityType Name="VEHICLES">
           <Key>
@@ -242,6 +393,8 @@
           <Property Name="VEHICLE_CREATEDDATE" Type="datetime" />
           <Property Name="VEHICLE_MODIFIEDBY" Type="int" />
           <Property Name="VEHICLE_MODIFIEDDATE" Type="datetime" />
+          <Property Name="VEHICLETYPE_NOOFSEATS" Type="int" />
+          <Property Name="VEHICLETYPE_COSTPERKM" Type="decimal" Precision="10" Scale="2" />
         </EntityType>
         <EntityType Name="VENDORS">
           <Key>
@@ -269,7 +422,7 @@
           <Property Name="VENDOR_MODIFIEDBY" Type="int" />
           <Property Name="VENDOR_MODIFIEDDATE" Type="datetime" />
         </EntityType>
-        <Association Name="FK__CH_USER__USER_RE__0CBAE877">
+        <Association Name="FK__CH_USER__USER_RE__5629CD9C">
           <End Role="USER_REGISTERTYPE" Type="Self.USER_REGISTERTYPE" Multiplicity="0..1" />
           <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
           <ReferentialConstraint>
@@ -281,7 +434,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CH_USER__USER_ST__0DAF0CB0">
+        <Association Name="FK__CH_USER__USER_ST__571DF1D5">
           <End Role="USER_STATUS" Type="Self.USER_STATUS" Multiplicity="0..1" />
           <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
           <ReferentialConstraint>
@@ -293,7 +446,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CITIES__CITY_STA__534D60F1">
+        <Association Name="FK__CHALOWALL__WALLE__0A9D95DB">
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+          <End Role="CHALOWALLET" Type="Self.CHALOWALLET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="CHALOWALLET">
+              <PropertyRef Name="WALLET_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CITIES__CITY_STA__5812160E">
           <End Role="STATE" Type="Self.STATE" Multiplicity="0..1" />
           <End Role="CITIES" Type="Self.CITIES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -305,7 +470,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CITIES__CITY_STA__5CD6CB2B">
+        <Association Name="FK__CITIES__CITY_STA__59063A47">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="CITIES" Type="Self.CITIES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -317,7 +482,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__COUPONS__COUPON___656C112C">
+        <Association Name="FK__COUPONS__COUPON___59FA5E80">
           <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
           <End Role="COUPONS" Type="Self.COUPONS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -329,7 +494,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DRIVERS__DRIVER___2C3393D0">
+        <Association Name="FK__DRIVERS__DRIVER___5AEE82B9">
           <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="0..1" />
           <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -341,7 +506,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DRIVERS__DRIVER___2D27B809">
+        <Association Name="FK__DRIVERS__DRIVER___5BE2A6F2">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -353,7 +518,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LATLONGS__LATLON__37A5467C">
+        <Association Name="FK__LATLONGS__LATLON__5CD6CB2B">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -365,7 +530,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LATLONGS__LL_LOC__59063A47">
+        <Association Name="FK__LATLONGS__LL_LOC__5DCAEF64">
           <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="0..1" />
           <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -377,7 +542,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LATLONGS__LL_ROU__35BCFE0A">
+        <Association Name="FK__LATLONGS__LL_ROU__5EBF139D">
           <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="0..1" />
           <End Role="LATLONGS" Type="Self.LATLONGS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -389,7 +554,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LOCATIONS__LOCAT__5812160E">
+        <Association Name="FK__LOCATIONS__LOCAT__5FB337D6">
           <End Role="CITIES" Type="Self.CITIES" Multiplicity="0..1" />
           <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -401,7 +566,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LOCATIONS__LOCAT__5DCAEF64">
+        <Association Name="FK__LOCATIONS__LOCAT__60A75C0F">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="LOCATIONS" Type="Self.LOCATIONS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -413,7 +578,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ROUTES__ROUTE_ST__36B12243">
+        <Association Name="FK__NOOFSEATS__SEAT___7B5B524B">
+          <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="0..1" />
+          <End Role="NOOFSEATS" Type="Self.NOOFSEATS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPS">
+              <PropertyRef Name="TRIP_ID" />
+            </Principal>
+            <Dependent Role="NOOFSEATS">
+              <PropertyRef Name="SEAT_TRIP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PAYMENTHI__PAYME__282DF8C2">
+          <End Role="USERTRIPS" Type="Self.USERTRIPS" Multiplicity="0..1" />
+          <End Role="PAYMENTHISTORY" Type="Self.PAYMENTHISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERTRIPS">
+              <PropertyRef Name="USERTRIP_ID" />
+            </Principal>
+            <Dependent Role="PAYMENTHISTORY">
+              <PropertyRef Name="PAYMENTHISTORY_USERTRIPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PAYMENTHI__PAYME__29221CFB">
+          <End Role="PAYMENTTYPE" Type="Self.PAYMENTTYPE" Multiplicity="0..1" />
+          <End Role="PAYMENTHISTORY" Type="Self.PAYMENTHISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAYMENTTYPE">
+              <PropertyRef Name="PAYMENTTYPE_ID" />
+            </Principal>
+            <Dependent Role="PAYMENTHISTORY">
+              <PropertyRef Name="PAYMENTTYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ROUTES__ROUTE_ST__619B8048">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -425,7 +626,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__STATE__STATE_STA__59FA5E80">
+        <Association Name="FK__STATE__STATE_STA__628FA481">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="STATE" Type="Self.STATE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -437,7 +638,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TRIPS__TRIP_ROUT__49C3F6B7">
+        <Association Name="FK__TRIPLOCAT__LL_ST__778AC167">
+          <End Role="TRIPSTATUS" Type="Self.TRIPSTATUS" Multiplicity="0..1" />
+          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="TRIPLOCATIONS">
+              <PropertyRef Name="LL_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPLOCAT__LL_TR__75A278F5">
+          <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="0..1" />
+          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPS">
+              <PropertyRef Name="TRIP_ID" />
+            </Principal>
+            <Dependent Role="TRIPLOCATIONS">
+              <PropertyRef Name="LL_TRIP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_ROUT__6383C8BA">
           <End Role="ROUTES" Type="Self.ROUTES" Multiplicity="0..1" />
           <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -449,7 +674,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TRIPS__TRIP_STAT__4AB81AF0">
+        <Association Name="FK__TRIPS__TRIP_STAT__6477ECF3">
           <End Role="TRIPSTATUS" Type="Self.TRIPSTATUS" Multiplicity="0..1" />
           <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -461,7 +686,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TRIPS__TRIP_VEHI__48CFD27E">
+        <Association Name="FK__TRIPS__TRIP_VEHI__656C112C">
           <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="0..1" />
           <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -473,7 +698,79 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VEHICLES__VEHICL__25869641">
+        <Association Name="FK__USERTRIPS__USERT__1AD3FDA4">
+          <End Role="TRIPS" Type="Self.TRIPS" Multiplicity="0..1" />
+          <End Role="USERTRIPS" Type="Self.USERTRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPS">
+              <PropertyRef Name="TRIP_ID" />
+            </Principal>
+            <Dependent Role="USERTRIPS">
+              <PropertyRef Name="USERTRIP_TRIPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERTRIPS__USERT__1BC821DD">
+          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATIONS" Multiplicity="0..1" />
+          <End Role="USERTRIPS" Type="Self.USERTRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPLOCATIONS">
+              <PropertyRef Name="LL_ID" />
+            </Principal>
+            <Dependent Role="USERTRIPS">
+              <PropertyRef Name="USERTRIP_PICKUPLOC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERTRIPS__USERT__1CBC4616">
+          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATIONS" Multiplicity="0..1" />
+          <End Role="USERTRIPS" Type="Self.USERTRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPLOCATIONS">
+              <PropertyRef Name="LL_ID" />
+            </Principal>
+            <Dependent Role="USERTRIPS">
+              <PropertyRef Name="USERTRIP_DROPLOC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERTRIPS__USERT__1DB06A4F">
+          <End Role="TRIPSTATUS" Type="Self.TRIPSTATUS" Multiplicity="0..1" />
+          <End Role="USERTRIPS" Type="Self.USERTRIPS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="USERTRIPS">
+              <PropertyRef Name="USERTRIP_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLEDR__VD_DR__7F2BE32F">
+          <End Role="DRIVERS" Type="Self.DRIVERS" Multiplicity="0..1" />
+          <End Role="VEHICLEDRIVERS" Type="Self.VEHICLEDRIVERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVERS">
+              <PropertyRef Name="DRIVER_ID" />
+            </Principal>
+            <Dependent Role="VEHICLEDRIVERS">
+              <PropertyRef Name="VD_DRIVER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLEDR__VD_VE__7E37BEF6">
+          <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="0..1" />
+          <End Role="VEHICLEDRIVERS" Type="Self.VEHICLEDRIVERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLES">
+              <PropertyRef Name="VEHICLE_ID" />
+            </Principal>
+            <Dependent Role="VEHICLEDRIVERS">
+              <PropertyRef Name="VD_VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__66603565">
           <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="0..1" />
           <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -485,7 +782,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VEHICLES__VEHICL__267ABA7A">
+        <Association Name="FK__VEHICLES__VEHICL__6754599E">
           <End Role="VEHICLETYPE" Type="Self.VEHICLETYPE" Multiplicity="0..1" />
           <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -497,7 +794,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VEHICLES__VEHICL__276EDEB3">
+        <Association Name="FK__VEHICLES__VEHICL__68487DD7">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="VEHICLES" Type="Self.VEHICLES" Multiplicity="*" />
           <ReferentialConstraint>
@@ -509,7 +806,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VENDORS__VENDOR___20C1E124">
+        <Association Name="FK__VENDORS__VENDOR___693CA210">
           <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="VENDORS" Type="Self.VENDORS" Multiplicity="*" />
           <ReferentialConstraint>
@@ -521,105 +818,235 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="USP_BOOKTRIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USERTRIP_ID" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_TRIPID" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_PICKUPLOC" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_DROPLOC" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_VIA" Type="varchar" Mode="In" />
+          <Parameter Name="USERTRIP_ESTIMATEDDURATION" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_ACTUALDURATION" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_DISTANCE" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_ACTUALAMOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="USERTRIP_DISCOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="USERTRIP_TOTALAMOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="USERTRIP_STATUS" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_APPLIEDCOUPON" Type="varchar" Mode="In" />
+          <Parameter Name="USERTRIP_CREATEDBY" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_CREATEDDATE" Type="datetime" Mode="In" />
+          <Parameter Name="USERTRIP_MODIFIEDBY" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_MODIFIEDDATE" Type="datetime" Mode="In" />
+          <Parameter Name="OPERATION" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="USP_GETVEHICLEBYTRIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DROPLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="PICKUPLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="TRIP_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_LBR_SEARCH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchkey" Type="varchar(max)" Mode="In" />
+          <Parameter Name="operation" Type="varchar" Mode="In" />
+          <Parameter Name="LINK_SIGNUPID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_LBR_SIGNUP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="searchkey" Type="varchar" Mode="In" />
+          <Parameter Name="LBR_FIRSTNAME" Type="varchar" Mode="In" />
+          <Parameter Name="LBR_ID" Type="int" Mode="In" />
+          <Parameter Name="LBR_LASTNAME" Type="varchar" Mode="In" />
+          <Parameter Name="LBR_EMAILID" Type="varchar" Mode="In" />
+          <Parameter Name="LBR_PASSWORD" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LBR_PHONENUMBER" Type="varchar" Mode="In" />
+          <Parameter Name="LBR_ADDRESS" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LBR_CREATEDBY" Type="int" Mode="In" />
+          <Parameter Name="LBR_CREATEDDATE" Type="datetime" Mode="In" />
+          <Parameter Name="LBR_MODIFIEDBY" Type="int" Mode="In" />
+          <Parameter Name="LBR_MODIFIEDDATE" Type="datetime" Mode="In" />
+          <Parameter Name="LBR_MODIFIEDTYPE" Type="int" Mode="In" />
+          <Parameter Name="LBR_LOGINTYPE" Type="int" Mode="In" />
+          <Parameter Name="LBR_IMAGEURL" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LBR_LOGINID" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LBR_STATUS" Type="int" Mode="In" />
+          <Parameter Name="LINK_PATH" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LINK_TITLE" Type="varchar" Mode="In" />
+          <Parameter Name="LINK_DESCRIPTION" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LINK_TYPE" Type="int" Mode="In" />
+          <Parameter Name="LINK_DATA" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LINK_STATUS" Type="int" Mode="In" />
+          <Parameter Name="LINK_CREATEDBY" Type="int" Mode="In" />
+          <Parameter Name="LINK_MODIFIEDBY" Type="int" Mode="In" />
+          <Parameter Name="LINK_IMAGEPATH" Type="varchar(max)" Mode="In" />
+          <Parameter Name="LINK_SIGNUPID" Type="int" Mode="In" />
+          <Parameter Name="LINK_TABID" Type="int" Mode="In" />
+          <Parameter Name="tab_id" Type="int" Mode="In" />
+          <Parameter Name="tab_signup_id" Type="int" Mode="In" />
+          <Parameter Name="tab_name" Type="varchar" Mode="In" />
+          <Parameter Name="tab_order" Type="int" Mode="In" />
+          <Parameter Name="tab_status" Type="int" Mode="In" />
+          <Parameter Name="tab_createdby" Type="int" Mode="In" />
+          <Parameter Name="tab_createddate" Type="datetime" Mode="In" />
+          <Parameter Name="tab_modifiedby" Type="int" Mode="In" />
+          <Parameter Name="tab_modifieddate" Type="datetime" Mode="In" />
+          <Parameter Name="OPERATION" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="USP_SEARCHVEHICLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DROPLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="PICKUPLOCATION" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="CHALOModelStoreContainer">
-          <EntitySet Name="CH_USER" EntityType="Self.CH_USER" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="CITIES" EntityType="Self.CITIES" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="LATLONGS" EntityType="Self.LATLONGS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATUS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="PAYMENTTYPE" EntityType="Self.PAYMENTTYPE" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="ROUTES" EntityType="Self.ROUTES" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="STATE" EntityType="Self.STATE" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="TRIPS" EntityType="Self.TRIPS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="TRIPSTATUS" EntityType="Self.TRIPSTATUS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="USER_REGISTERTYPE" EntityType="Self.USER_REGISTERTYPE" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="USER_STATUS" EntityType="Self.USER_STATUS" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLES" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="VEHICLETYPE" EntityType="Self.VEHICLETYPE" Schema="CHALO" store:Type="Tables" />
-          <EntitySet Name="VENDORS" EntityType="Self.VENDORS" Schema="CHALO" store:Type="Tables" />
-          <AssociationSet Name="FK__CH_USER__USER_RE__0CBAE877" Association="Self.FK__CH_USER__USER_RE__0CBAE877">
+          <EntitySet Name="CH_USER" EntityType="Self.CH_USER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHALOWALLET" EntityType="Self.CHALOWALLET" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CITIES" EntityType="Self.CITIES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LATLONGS" EntityType="Self.LATLONGS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NOOFSEATS" EntityType="Self.NOOFSEATS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAYMENTHISTORY" EntityType="Self.PAYMENTHISTORY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PAYMENTTYPE" EntityType="Self.PAYMENTTYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ROUTES" EntityType="Self.ROUTES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="STATE" EntityType="Self.STATE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="temptrips" EntityType="Self.temptrips" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRIPLOCATIONS" EntityType="Self.TRIPLOCATIONS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRIPS" EntityType="Self.TRIPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRIPSTATUS" EntityType="Self.TRIPSTATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRIPTEMP" EntityType="Self.TRIPTEMP" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_REGISTERTYPE" EntityType="Self.USER_REGISTERTYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER_STATUS" EntityType="Self.USER_STATUS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERTRIPS" EntityType="Self.USERTRIPS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEHICLEDRIVERS" EntityType="Self.VEHICLEDRIVERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VEHICLETYPE" EntityType="Self.VEHICLETYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VENDORS" EntityType="Self.VENDORS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CH_USER__USER_RE__5629CD9C" Association="Self.FK__CH_USER__USER_RE__5629CD9C">
             <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
             <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
-          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB0" Association="Self.FK__CH_USER__USER_ST__0DAF0CB0">
+          <AssociationSet Name="FK__CH_USER__USER_ST__571DF1D5" Association="Self.FK__CH_USER__USER_ST__571DF1D5">
             <End Role="USER_STATUS" EntitySet="USER_STATUS" />
             <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__534D60F1" Association="Self.FK__CITIES__CITY_STA__534D60F1">
+          <AssociationSet Name="FK__CHALOWALL__WALLE__0A9D95DB" Association="Self.FK__CHALOWALL__WALLE__0A9D95DB">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="CHALOWALLET" EntitySet="CHALOWALLET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__5812160E" Association="Self.FK__CITIES__CITY_STA__5812160E">
             <End Role="STATE" EntitySet="STATE" />
             <End Role="CITIES" EntitySet="CITIES" />
           </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__5CD6CB2B" Association="Self.FK__CITIES__CITY_STA__5CD6CB2B">
+          <AssociationSet Name="FK__CITIES__CITY_STA__59063A47" Association="Self.FK__CITIES__CITY_STA__59063A47">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="CITIES" EntitySet="CITIES" />
           </AssociationSet>
-          <AssociationSet Name="FK__COUPONS__COUPON___656C112C" Association="Self.FK__COUPONS__COUPON___656C112C">
+          <AssociationSet Name="FK__COUPONS__COUPON___59FA5E80" Association="Self.FK__COUPONS__COUPON___59FA5E80">
             <End Role="CH_USER" EntitySet="CH_USER" />
             <End Role="COUPONS" EntitySet="COUPONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="Self.FK__DRIVERS__DRIVER___2C3393D0">
+          <AssociationSet Name="FK__DRIVERS__DRIVER___5AEE82B9" Association="Self.FK__DRIVERS__DRIVER___5AEE82B9">
             <End Role="VENDORS" EntitySet="VENDORS" />
             <End Role="DRIVERS" EntitySet="DRIVERS" />
           </AssociationSet>
-          <AssociationSet Name="FK__DRIVERS__DRIVER___2D27B809" Association="Self.FK__DRIVERS__DRIVER___2D27B809">
+          <AssociationSet Name="FK__DRIVERS__DRIVER___5BE2A6F2" Association="Self.FK__DRIVERS__DRIVER___5BE2A6F2">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="DRIVERS" EntitySet="DRIVERS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LATLONGS__LATLON__37A5467C" Association="Self.FK__LATLONGS__LATLON__37A5467C">
+          <AssociationSet Name="FK__LATLONGS__LATLON__5CD6CB2B" Association="Self.FK__LATLONGS__LATLON__5CD6CB2B">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="LATLONGS" EntitySet="LATLONGS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LATLONGS__LL_LOC__59063A47" Association="Self.FK__LATLONGS__LL_LOC__59063A47">
+          <AssociationSet Name="FK__LATLONGS__LL_LOC__5DCAEF64" Association="Self.FK__LATLONGS__LL_LOC__5DCAEF64">
             <End Role="LOCATIONS" EntitySet="LOCATIONS" />
             <End Role="LATLONGS" EntitySet="LATLONGS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LATLONGS__LL_ROU__35BCFE0A" Association="Self.FK__LATLONGS__LL_ROU__35BCFE0A">
+          <AssociationSet Name="FK__LATLONGS__LL_ROU__5EBF139D" Association="Self.FK__LATLONGS__LL_ROU__5EBF139D">
             <End Role="ROUTES" EntitySet="ROUTES" />
             <End Role="LATLONGS" EntitySet="LATLONGS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__5812160E" Association="Self.FK__LOCATIONS__LOCAT__5812160E">
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__5FB337D6" Association="Self.FK__LOCATIONS__LOCAT__5FB337D6">
             <End Role="CITIES" EntitySet="CITIES" />
             <End Role="LOCATIONS" EntitySet="LOCATIONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__5DCAEF64" Association="Self.FK__LOCATIONS__LOCAT__5DCAEF64">
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__60A75C0F" Association="Self.FK__LOCATIONS__LOCAT__60A75C0F">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="LOCATIONS" EntitySet="LOCATIONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__ROUTES__ROUTE_ST__36B12243" Association="Self.FK__ROUTES__ROUTE_ST__36B12243">
+          <AssociationSet Name="FK__NOOFSEATS__SEAT___7B5B524B" Association="Self.FK__NOOFSEATS__SEAT___7B5B524B">
+            <End Role="TRIPS" EntitySet="TRIPS" />
+            <End Role="NOOFSEATS" EntitySet="NOOFSEATS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__282DF8C2" Association="Self.FK__PAYMENTHI__PAYME__282DF8C2">
+            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__29221CFB" Association="Self.FK__PAYMENTHI__PAYME__29221CFB">
+            <End Role="PAYMENTTYPE" EntitySet="PAYMENTTYPE" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROUTES__ROUTE_ST__619B8048" Association="Self.FK__ROUTES__ROUTE_ST__619B8048">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="ROUTES" EntitySet="ROUTES" />
           </AssociationSet>
-          <AssociationSet Name="FK__STATE__STATE_STA__59FA5E80" Association="Self.FK__STATE__STATE_STA__59FA5E80">
+          <AssociationSet Name="FK__STATE__STATE_STA__628FA481" Association="Self.FK__STATE__STATE_STA__628FA481">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="STATE" EntitySet="STATE" />
           </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__49C3F6B7" Association="Self.FK__TRIPS__TRIP_ROUT__49C3F6B7">
+          <AssociationSet Name="FK__TRIPLOCAT__LL_ST__778AC167" Association="Self.FK__TRIPLOCAT__LL_ST__778AC167">
+            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
+            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPLOCAT__LL_TR__75A278F5" Association="Self.FK__TRIPLOCAT__LL_TR__75A278F5">
+            <End Role="TRIPS" EntitySet="TRIPS" />
+            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__6383C8BA" Association="Self.FK__TRIPS__TRIP_ROUT__6383C8BA">
             <End Role="ROUTES" EntitySet="ROUTES" />
             <End Role="TRIPS" EntitySet="TRIPS" />
           </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_STAT__4AB81AF0" Association="Self.FK__TRIPS__TRIP_STAT__4AB81AF0">
+          <AssociationSet Name="FK__TRIPS__TRIP_STAT__6477ECF3" Association="Self.FK__TRIPS__TRIP_STAT__6477ECF3">
             <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
             <End Role="TRIPS" EntitySet="TRIPS" />
           </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__48CFD27E" Association="Self.FK__TRIPS__TRIP_VEHI__48CFD27E">
+          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__656C112C" Association="Self.FK__TRIPS__TRIP_VEHI__656C112C">
             <End Role="VEHICLES" EntitySet="VEHICLES" />
             <End Role="TRIPS" EntitySet="TRIPS" />
           </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__25869641" Association="Self.FK__VEHICLES__VEHICL__25869641">
+          <AssociationSet Name="FK__USERTRIPS__USERT__1AD3FDA4" Association="Self.FK__USERTRIPS__USERT__1AD3FDA4">
+            <End Role="TRIPS" EntitySet="TRIPS" />
+            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1BC821DD" Association="Self.FK__USERTRIPS__USERT__1BC821DD">
+            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
+            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1CBC4616" Association="Self.FK__USERTRIPS__USERT__1CBC4616">
+            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
+            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1DB06A4F" Association="Self.FK__USERTRIPS__USERT__1DB06A4F">
+            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
+            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLEDR__VD_DR__7F2BE32F" Association="Self.FK__VEHICLEDR__VD_DR__7F2BE32F">
+            <End Role="DRIVERS" EntitySet="DRIVERS" />
+            <End Role="VEHICLEDRIVERS" EntitySet="VEHICLEDRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLEDR__VD_VE__7E37BEF6" Association="Self.FK__VEHICLEDR__VD_VE__7E37BEF6">
+            <End Role="VEHICLES" EntitySet="VEHICLES" />
+            <End Role="VEHICLEDRIVERS" EntitySet="VEHICLEDRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__66603565" Association="Self.FK__VEHICLES__VEHICL__66603565">
             <End Role="VENDORS" EntitySet="VENDORS" />
             <End Role="VEHICLES" EntitySet="VEHICLES" />
           </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__267ABA7A" Association="Self.FK__VEHICLES__VEHICL__267ABA7A">
+          <AssociationSet Name="FK__VEHICLES__VEHICL__6754599E" Association="Self.FK__VEHICLES__VEHICL__6754599E">
             <End Role="VEHICLETYPE" EntitySet="VEHICLETYPE" />
             <End Role="VEHICLES" EntitySet="VEHICLES" />
           </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__276EDEB3" Association="Self.FK__VEHICLES__VEHICL__276EDEB3">
+          <AssociationSet Name="FK__VEHICLES__VEHICL__68487DD7" Association="Self.FK__VEHICLES__VEHICL__68487DD7">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="VEHICLES" EntitySet="VEHICLES" />
           </AssociationSet>
-          <AssociationSet Name="FK__VENDORS__VENDOR___20C1E124" Association="Self.FK__VENDORS__VENDOR___20C1E124">
+          <AssociationSet Name="FK__VENDORS__VENDOR___693CA210" Association="Self.FK__VENDORS__VENDOR___693CA210">
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="VENDORS" EntitySet="VENDORS" />
           </AssociationSet>
@@ -629,6 +1056,55 @@
     <edmx:ConceptualModels>
       <Schema Namespace="CHALOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="CHALOEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="USP_LBR_SEARCH">
+            <Parameter Name="searchkey" Mode="In" Type="String" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+            <Parameter Name="LINK_SIGNUPID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="USP_LBR_SIGNUP">
+            <Parameter Name="searchkey" Mode="In" Type="String" />
+            <Parameter Name="LBR_FIRSTNAME" Mode="In" Type="String" />
+            <Parameter Name="LBR_ID" Mode="In" Type="Int32" />
+            <Parameter Name="LBR_LASTNAME" Mode="In" Type="String" />
+            <Parameter Name="LBR_EMAILID" Mode="In" Type="String" />
+            <Parameter Name="LBR_PASSWORD" Mode="In" Type="String" />
+            <Parameter Name="LBR_PHONENUMBER" Mode="In" Type="String" />
+            <Parameter Name="LBR_ADDRESS" Mode="In" Type="String" />
+            <Parameter Name="LBR_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="LBR_CREATEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="LBR_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="LBR_MODIFIEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="LBR_MODIFIEDTYPE" Mode="In" Type="Int32" />
+            <Parameter Name="LBR_LOGINTYPE" Mode="In" Type="Int32" />
+            <Parameter Name="LBR_IMAGEURL" Mode="In" Type="String" />
+            <Parameter Name="LBR_LOGINID" Mode="In" Type="String" />
+            <Parameter Name="LBR_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="LINK_PATH" Mode="In" Type="String" />
+            <Parameter Name="LINK_TITLE" Mode="In" Type="String" />
+            <Parameter Name="LINK_DESCRIPTION" Mode="In" Type="String" />
+            <Parameter Name="LINK_TYPE" Mode="In" Type="Int32" />
+            <Parameter Name="LINK_DATA" Mode="In" Type="String" />
+            <Parameter Name="LINK_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="LINK_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="LINK_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="LINK_IMAGEPATH" Mode="In" Type="String" />
+            <Parameter Name="LINK_SIGNUPID" Mode="In" Type="Int32" />
+            <Parameter Name="LINK_TABID" Mode="In" Type="Int32" />
+            <Parameter Name="tab_id" Mode="In" Type="Int32" />
+            <Parameter Name="tab_signup_id" Mode="In" Type="Int32" />
+            <Parameter Name="tab_name" Mode="In" Type="String" />
+            <Parameter Name="tab_order" Mode="In" Type="Int32" />
+            <Parameter Name="tab_status" Mode="In" Type="Int32" />
+            <Parameter Name="tab_createdby" Mode="In" Type="Int32" />
+            <Parameter Name="tab_createddate" Mode="In" Type="DateTime" />
+            <Parameter Name="tab_modifiedby" Mode="In" Type="Int32" />
+            <Parameter Name="tab_modifieddate" Mode="In" Type="DateTime" />
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_SEARCHVEHICLES">
+            <Parameter Name="DROPLOCATION" Mode="In" Type="String" />
+            <Parameter Name="PICKUPLOCATION" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="CH_USER" EntityType="CHALOModel.CH_USER" />
           <EntitySet Name="CITIES" EntityType="CHALOModel.CITy" />
           <EntitySet Name="COUPONS" EntityType="CHALOModel.COUPON" />
@@ -636,101 +1112,182 @@
           <EntitySet Name="LATLONGS" EntityType="CHALOModel.LATLONG" />
           <EntitySet Name="LOCATIONS" EntityType="CHALOModel.LOCATION" />
           <EntitySet Name="MASTERSTATUS" EntityType="CHALOModel.MASTERSTATU" />
+          <EntitySet Name="NOOFSEATS" EntityType="CHALOModel.NOOFSEAT" />
           <EntitySet Name="PAYMENTTYPEs" EntityType="CHALOModel.PAYMENTTYPE" />
           <EntitySet Name="ROUTES" EntityType="CHALOModel.ROUTE" />
           <EntitySet Name="STATEs" EntityType="CHALOModel.STATE" />
+          <EntitySet Name="TRIPLOCATIONS" EntityType="CHALOModel.TRIPLOCATION" />
           <EntitySet Name="TRIPS" EntityType="CHALOModel.TRIP" />
           <EntitySet Name="TRIPSTATUS" EntityType="CHALOModel.TRIPSTATU" />
           <EntitySet Name="USER_REGISTERTYPE" EntityType="CHALOModel.USER_REGISTERTYPE" />
           <EntitySet Name="USER_STATUS" EntityType="CHALOModel.USER_STATUS" />
+          <EntitySet Name="VEHICLEDRIVERS" EntityType="CHALOModel.VEHICLEDRIVER" />
           <EntitySet Name="VEHICLES" EntityType="CHALOModel.VEHICLE" />
           <EntitySet Name="VEHICLETYPEs" EntityType="CHALOModel.VEHICLETYPE" />
           <EntitySet Name="VENDORS" EntityType="CHALOModel.VENDOR" />
-          <AssociationSet Name="FK__CH_USER__USER_RE__0CBAE877" Association="CHALOModel.FK__CH_USER__USER_RE__0CBAE877">
+          <AssociationSet Name="FK__CH_USER__USER_RE__5629CD9C" Association="CHALOModel.FK__CH_USER__USER_RE__5629CD9C">
             <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
             <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
-          <AssociationSet Name="FK__CH_USER__USER_ST__0DAF0CB0" Association="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0">
+          <AssociationSet Name="FK__CH_USER__USER_ST__571DF1D5" Association="CHALOModel.FK__CH_USER__USER_ST__571DF1D5">
             <End Role="USER_STATUS" EntitySet="USER_STATUS" />
             <End Role="CH_USER" EntitySet="CH_USER" />
           </AssociationSet>
-          <AssociationSet Name="FK__COUPONS__COUPON___656C112C" Association="CHALOModel.FK__COUPONS__COUPON___656C112C">
+          <AssociationSet Name="FK__COUPONS__COUPON___59FA5E80" Association="CHALOModel.FK__COUPONS__COUPON___59FA5E80">
             <End Role="CH_USER" EntitySet="CH_USER" />
             <End Role="COUPON" EntitySet="COUPONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__534D60F1" Association="CHALOModel.FK__CITIES__CITY_STA__534D60F1">
+          <AssociationSet Name="FK__CITIES__CITY_STA__5812160E" Association="CHALOModel.FK__CITIES__CITY_STA__5812160E">
             <End Role="STATE" EntitySet="STATEs" />
             <End Role="CITy" EntitySet="CITIES" />
           </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__5CD6CB2B" Association="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B">
+          <AssociationSet Name="FK__CITIES__CITY_STA__59063A47" Association="CHALOModel.FK__CITIES__CITY_STA__59063A47">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="CITy" EntitySet="CITIES" />
           </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__5812160E" Association="CHALOModel.FK__LOCATIONS__LOCAT__5812160E">
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__5FB337D6" Association="CHALOModel.FK__LOCATIONS__LOCAT__5FB337D6">
             <End Role="CITy" EntitySet="CITIES" />
             <End Role="LOCATION" EntitySet="LOCATIONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__DRIVERS__DRIVER___2C3393D0" Association="CHALOModel.FK__DRIVERS__DRIVER___2C3393D0">
+          <AssociationSet Name="FK__DRIVERS__DRIVER___5AEE82B9" Association="CHALOModel.FK__DRIVERS__DRIVER___5AEE82B9">
             <End Role="VENDOR" EntitySet="VENDORS" />
             <End Role="DRIVER" EntitySet="DRIVERS" />
           </AssociationSet>
-          <AssociationSet Name="FK__DRIVERS__DRIVER___2D27B809" Association="CHALOModel.FK__DRIVERS__DRIVER___2D27B809">
+          <AssociationSet Name="FK__DRIVERS__DRIVER___5BE2A6F2" Association="CHALOModel.FK__DRIVERS__DRIVER___5BE2A6F2">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="DRIVER" EntitySet="DRIVERS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LATLONGS__LATLON__37A5467C" Association="CHALOModel.FK__LATLONGS__LATLON__37A5467C">
+          <AssociationSet Name="FK__VEHICLEDR__VD_DR__7F2BE32F" Association="CHALOModel.FK__VEHICLEDR__VD_DR__7F2BE32F">
+            <End Role="DRIVER" EntitySet="DRIVERS" />
+            <End Role="VEHICLEDRIVER" EntitySet="VEHICLEDRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LATLONGS__LATLON__5CD6CB2B" Association="CHALOModel.FK__LATLONGS__LATLON__5CD6CB2B">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="LATLONG" EntitySet="LATLONGS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LATLONGS__LL_LOC__59063A47" Association="CHALOModel.FK__LATLONGS__LL_LOC__59063A47">
+          <AssociationSet Name="FK__LATLONGS__LL_LOC__5DCAEF64" Association="CHALOModel.FK__LATLONGS__LL_LOC__5DCAEF64">
             <End Role="LOCATION" EntitySet="LOCATIONS" />
             <End Role="LATLONG" EntitySet="LATLONGS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LATLONGS__LL_ROU__35BCFE0A" Association="CHALOModel.FK__LATLONGS__LL_ROU__35BCFE0A">
+          <AssociationSet Name="FK__LATLONGS__LL_ROU__5EBF139D" Association="CHALOModel.FK__LATLONGS__LL_ROU__5EBF139D">
             <End Role="ROUTE" EntitySet="ROUTES" />
             <End Role="LATLONG" EntitySet="LATLONGS" />
           </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__5DCAEF64" Association="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64">
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__60A75C0F" Association="CHALOModel.FK__LOCATIONS__LOCAT__60A75C0F">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="LOCATION" EntitySet="LOCATIONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__ROUTES__ROUTE_ST__36B12243" Association="CHALOModel.FK__ROUTES__ROUTE_ST__36B12243">
+          <AssociationSet Name="FK__ROUTES__ROUTE_ST__619B8048" Association="CHALOModel.FK__ROUTES__ROUTE_ST__619B8048">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="ROUTE" EntitySet="ROUTES" />
           </AssociationSet>
-          <AssociationSet Name="FK__STATE__STATE_STA__59FA5E80" Association="CHALOModel.FK__STATE__STATE_STA__59FA5E80">
+          <AssociationSet Name="FK__STATE__STATE_STA__628FA481" Association="CHALOModel.FK__STATE__STATE_STA__628FA481">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="STATE" EntitySet="STATEs" />
           </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__276EDEB3" Association="CHALOModel.FK__VEHICLES__VEHICL__276EDEB3">
+          <AssociationSet Name="FK__VEHICLES__VEHICL__68487DD7" Association="CHALOModel.FK__VEHICLES__VEHICL__68487DD7">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="VEHICLE" EntitySet="VEHICLES" />
           </AssociationSet>
-          <AssociationSet Name="FK__VENDORS__VENDOR___20C1E124" Association="CHALOModel.FK__VENDORS__VENDOR___20C1E124">
+          <AssociationSet Name="FK__VENDORS__VENDOR___693CA210" Association="CHALOModel.FK__VENDORS__VENDOR___693CA210">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="VENDOR" EntitySet="VENDORS" />
           </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__49C3F6B7" Association="CHALOModel.FK__TRIPS__TRIP_ROUT__49C3F6B7">
+          <AssociationSet Name="FK__NOOFSEATS__SEAT___7B5B524B" Association="CHALOModel.FK__NOOFSEATS__SEAT___7B5B524B">
+            <End Role="TRIP" EntitySet="TRIPS" />
+            <End Role="NOOFSEAT" EntitySet="NOOFSEATS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__6383C8BA" Association="CHALOModel.FK__TRIPS__TRIP_ROUT__6383C8BA">
             <End Role="ROUTE" EntitySet="ROUTES" />
             <End Role="TRIP" EntitySet="TRIPS" />
           </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_STAT__4AB81AF0" Association="CHALOModel.FK__TRIPS__TRIP_STAT__4AB81AF0">
+          <AssociationSet Name="FK__TRIPLOCAT__LL_ST__778AC167" Association="CHALOModel.FK__TRIPLOCAT__LL_ST__778AC167">
+            <End Role="TRIPSTATU" EntitySet="TRIPSTATUS" />
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPLOCAT__LL_TR__75A278F5" Association="CHALOModel.FK__TRIPLOCAT__LL_TR__75A278F5">
+            <End Role="TRIP" EntitySet="TRIPS" />
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_STAT__6477ECF3" Association="CHALOModel.FK__TRIPS__TRIP_STAT__6477ECF3">
             <End Role="TRIPSTATU" EntitySet="TRIPSTATUS" />
             <End Role="TRIP" EntitySet="TRIPS" />
           </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__48CFD27E" Association="CHALOModel.FK__TRIPS__TRIP_VEHI__48CFD27E">
+          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__656C112C" Association="CHALOModel.FK__TRIPS__TRIP_VEHI__656C112C">
             <End Role="VEHICLE" EntitySet="VEHICLES" />
             <End Role="TRIP" EntitySet="TRIPS" />
           </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__25869641" Association="CHALOModel.FK__VEHICLES__VEHICL__25869641">
+          <AssociationSet Name="FK__VEHICLEDR__VD_VE__7E37BEF6" Association="CHALOModel.FK__VEHICLEDR__VD_VE__7E37BEF6">
+            <End Role="VEHICLE" EntitySet="VEHICLES" />
+            <End Role="VEHICLEDRIVER" EntitySet="VEHICLEDRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__66603565" Association="CHALOModel.FK__VEHICLES__VEHICL__66603565">
             <End Role="VENDOR" EntitySet="VENDORS" />
             <End Role="VEHICLE" EntitySet="VEHICLES" />
           </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__267ABA7A" Association="CHALOModel.FK__VEHICLES__VEHICL__267ABA7A">
+          <AssociationSet Name="FK__VEHICLES__VEHICL__6754599E" Association="CHALOModel.FK__VEHICLES__VEHICL__6754599E">
             <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
             <End Role="VEHICLE" EntitySet="VEHICLES" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="temptrips" EntityType="CHALOModel.temptrip" />
+          <EntitySet Name="CHALOWALLETs" EntityType="CHALOModel.CHALOWALLET" />
+          <AssociationSet Name="FK__CHALOWALL__WALLE__0A9D95DB" Association="CHALOModel.FK__CHALOWALL__WALLE__0A9D95DB">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="CHALOWALLET" EntitySet="CHALOWALLETs" />
+          </AssociationSet>
+          <EntitySet Name="USERTRIPS" EntityType="CHALOModel.USERTRIP" />
+          <AssociationSet Name="FK__USERTRIPS__USERT__1BC821DD" Association="CHALOModel.FK__USERTRIPS__USERT__1BC821DD">
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1CBC4616" Association="CHALOModel.FK__USERTRIPS__USERT__1CBC4616">
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1AD3FDA4" Association="CHALOModel.FK__USERTRIPS__USERT__1AD3FDA4">
+            <End Role="TRIP" EntitySet="TRIPS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1DB06A4F" Association="CHALOModel.FK__USERTRIPS__USERT__1DB06A4F">
+            <End Role="TRIPSTATU" EntitySet="TRIPSTATUS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <EntitySet Name="TRIPTEMPs" EntityType="CHALOModel.TRIPTEMP" />
+          <EntitySet Name="PAYMENTHISTORies" EntityType="CHALOModel.PAYMENTHISTORY" />
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__282DF8C2" Association="CHALOModel.FK__PAYMENTHI__PAYME__282DF8C2">
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__29221CFB" Association="CHALOModel.FK__PAYMENTHI__PAYME__29221CFB">
+            <End Role="PAYMENTTYPE" EntitySet="PAYMENTTYPEs" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
+          </AssociationSet>
+          <FunctionImport Name="USP_BOOKTRIP" ReturnType="Collection(Decimal)">
+            <Parameter Name="USERTRIP_ID" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_TRIPID" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_PICKUPLOC" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_DROPLOC" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_VIA" Mode="In" Type="String" />
+            <Parameter Name="USERTRIP_ESTIMATEDDURATION" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_ACTUALDURATION" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_DISTANCE" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_ACTUALAMOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="USERTRIP_DISCOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="USERTRIP_TOTALAMOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="USERTRIP_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_APPLIEDCOUPON" Mode="In" Type="String" />
+            <Parameter Name="USERTRIP_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_CREATEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="USERTRIP_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_MODIFIEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_GETVEHICLEBYTRIP">
+            <Parameter Name="DROPLOCATION" Mode="In" Type="String" />
+            <Parameter Name="PICKUPLOCATION" Mode="In" Type="String" />
+            <Parameter Name="TRIP_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          </EntityContainer>
         <EntityType Name="CH_USER">
           <Key>
             <PropertyRef Name="USER_ID" />
@@ -751,9 +1308,10 @@
           <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="USER_COUPONAPPLIED" Type="Boolean" />
           <Property Name="USER_REFEREDBY" Type="Int32" />
-          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="CHALOModel.FK__CH_USER__USER_RE__0CBAE877" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
-          <NavigationProperty Name="USER_STATUS1" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="CH_USER" ToRole="USER_STATUS" />
-          <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___656C112C" FromRole="CH_USER" ToRole="COUPON" />
+          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="CHALOModel.FK__CH_USER__USER_RE__5629CD9C" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
+          <NavigationProperty Name="USER_STATUS1" Relationship="CHALOModel.FK__CH_USER__USER_ST__571DF1D5" FromRole="CH_USER" ToRole="USER_STATUS" />
+          <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___59FA5E80" FromRole="CH_USER" ToRole="COUPON" />
+          <NavigationProperty Name="CHALOWALLETs" Relationship="CHALOModel.FK__CHALOWALL__WALLE__0A9D95DB" FromRole="CH_USER" ToRole="CHALOWALLET" />
         </EntityType>
         <EntityType Name="CITy">
           <Key>
@@ -767,9 +1325,9 @@
           <Property Name="CITY_MODIFIEDBY" Type="Int32" />
           <Property Name="CITY_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="CITY_STATUS" Type="Int32" />
-          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__534D60F1" FromRole="CITy" ToRole="STATE" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B" FromRole="CITy" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5812160E" FromRole="CITy" ToRole="LOCATION" />
+          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__5812160E" FromRole="CITy" ToRole="STATE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__59063A47" FromRole="CITy" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5FB337D6" FromRole="CITy" ToRole="LOCATION" />
         </EntityType>
         <EntityType Name="COUPON">
           <Key>
@@ -784,7 +1342,7 @@
           <Property Name="COUPON_MODIFIEDBY" Type="Int32" />
           <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="COUPON_ADMINCOUPON" Type="Boolean" />
-          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__COUPONS__COUPON___656C112C" FromRole="COUPON" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__COUPONS__COUPON___59FA5E80" FromRole="COUPON" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="DRIVER">
           <Key>
@@ -806,8 +1364,9 @@
           <Property Name="DRIVER_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="DRIVER_MODIFIEDBY" Type="Int32" />
           <Property Name="DRIVER_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="VENDOR" Relationship="CHALOModel.FK__DRIVERS__DRIVER___2C3393D0" FromRole="DRIVER" ToRole="VENDOR" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__DRIVERS__DRIVER___2D27B809" FromRole="DRIVER" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="VENDOR" Relationship="CHALOModel.FK__DRIVERS__DRIVER___5AEE82B9" FromRole="DRIVER" ToRole="VENDOR" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__DRIVERS__DRIVER___5BE2A6F2" FromRole="DRIVER" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="VEHICLEDRIVERS" Relationship="CHALOModel.FK__VEHICLEDR__VD_DR__7F2BE32F" FromRole="DRIVER" ToRole="VEHICLEDRIVER" />
         </EntityType>
         <EntityType Name="LATLONG">
           <Key>
@@ -824,9 +1383,11 @@
           <Property Name="LL_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="LATLONG_STATUS" Type="Int32" />
           <Property Name="LL_LOCATIONID" Type="Int32" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LATLONGS__LATLON__37A5467C" FromRole="LATLONG" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="LOCATION" Relationship="CHALOModel.FK__LATLONGS__LL_LOC__59063A47" FromRole="LATLONG" ToRole="LOCATION" />
-          <NavigationProperty Name="ROUTE" Relationship="CHALOModel.FK__LATLONGS__LL_ROU__35BCFE0A" FromRole="LATLONG" ToRole="ROUTE" />
+          <Property Name="LL_VIA" Type="Boolean" />
+          <Property Name="LL_SORTORDER" Type="Int32" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LATLONGS__LATLON__5CD6CB2B" FromRole="LATLONG" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="LOCATION" Relationship="CHALOModel.FK__LATLONGS__LL_LOC__5DCAEF64" FromRole="LATLONG" ToRole="LOCATION" />
+          <NavigationProperty Name="ROUTE" Relationship="CHALOModel.FK__LATLONGS__LL_ROU__5EBF139D" FromRole="LATLONG" ToRole="ROUTE" />
         </EntityType>
         <EntityType Name="LOCATION">
           <Key>
@@ -842,9 +1403,9 @@
           <Property Name="LOCATION_MODIFIEDBY" Type="Int32" />
           <Property Name="LOCATION_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="LOCATION_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5812160E" FromRole="LOCATION" ToRole="CITy" />
-          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LL_LOC__59063A47" FromRole="LOCATION" ToRole="LATLONG" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64" FromRole="LOCATION" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5FB337D6" FromRole="LOCATION" ToRole="CITy" />
+          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LL_LOC__5DCAEF64" FromRole="LOCATION" ToRole="LATLONG" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__60A75C0F" FromRole="LOCATION" ToRole="MASTERSTATU" />
         </EntityType>
         <EntityType Name="MASTERSTATU">
           <Key>
@@ -856,14 +1417,28 @@
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__5CD6CB2B" FromRole="MASTERSTATU" ToRole="CITy" />
-          <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___2D27B809" FromRole="MASTERSTATU" ToRole="DRIVER" />
-          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LATLON__37A5467C" FromRole="MASTERSTATU" ToRole="LATLONG" />
-          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__5DCAEF64" FromRole="MASTERSTATU" ToRole="LOCATION" />
-          <NavigationProperty Name="ROUTES" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__36B12243" FromRole="MASTERSTATU" ToRole="ROUTE" />
-          <NavigationProperty Name="STATEs" Relationship="CHALOModel.FK__STATE__STATE_STA__59FA5E80" FromRole="MASTERSTATU" ToRole="STATE" />
-          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__276EDEB3" FromRole="MASTERSTATU" ToRole="VEHICLE" />
-          <NavigationProperty Name="VENDORS" Relationship="CHALOModel.FK__VENDORS__VENDOR___20C1E124" FromRole="MASTERSTATU" ToRole="VENDOR" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__59063A47" FromRole="MASTERSTATU" ToRole="CITy" />
+          <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___5BE2A6F2" FromRole="MASTERSTATU" ToRole="DRIVER" />
+          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LATLON__5CD6CB2B" FromRole="MASTERSTATU" ToRole="LATLONG" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__60A75C0F" FromRole="MASTERSTATU" ToRole="LOCATION" />
+          <NavigationProperty Name="ROUTES" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__619B8048" FromRole="MASTERSTATU" ToRole="ROUTE" />
+          <NavigationProperty Name="STATEs" Relationship="CHALOModel.FK__STATE__STATE_STA__628FA481" FromRole="MASTERSTATU" ToRole="STATE" />
+          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__68487DD7" FromRole="MASTERSTATU" ToRole="VEHICLE" />
+          <NavigationProperty Name="VENDORS" Relationship="CHALOModel.FK__VENDORS__VENDOR___693CA210" FromRole="MASTERSTATU" ToRole="VENDOR" />
+        </EntityType>
+        <EntityType Name="NOOFSEAT">
+          <Key>
+            <PropertyRef Name="SEAT_ID" />
+          </Key>
+          <Property Name="SEAT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SEAT_TRIP_ID" Type="Int32" />
+          <Property Name="SEAT_ACTUALSEATS" Type="Int32" />
+          <Property Name="SEAT_AVAILABLESEATS" Type="Int32" />
+          <Property Name="SEAT_CREATEDBY" Type="Int32" />
+          <Property Name="SEAT_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="SEAT_MODIFIEDBY" Type="Int32" />
+          <Property Name="SEAT_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__NOOFSEATS__SEAT___7B5B524B" FromRole="NOOFSEAT" ToRole="TRIP" />
         </EntityType>
         <EntityType Name="PAYMENTTYPE">
           <Key>
@@ -875,6 +1450,7 @@
           <Property Name="PAYMENTTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="PAYMENT_MODIFIEDBY" Type="Int32" />
           <Property Name="PAYMENT_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__29221CFB" FromRole="PAYMENTTYPE" ToRole="PAYMENTHISTORY" />
         </EntityType>
         <EntityType Name="ROUTE">
           <Key>
@@ -896,9 +1472,10 @@
           <Property Name="ROUTE_MODIFIEDBY" Type="Int32" />
           <Property Name="ROUTE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="ROUTE_STATUS" Type="Int32" />
-          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LL_ROU__35BCFE0A" FromRole="ROUTE" ToRole="LATLONG" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__36B12243" FromRole="ROUTE" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_ROUT__49C3F6B7" FromRole="ROUTE" ToRole="TRIP" />
+          <Property Name="ROUTE_ALLLOCATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="LATLONGS" Relationship="CHALOModel.FK__LATLONGS__LL_ROU__5EBF139D" FromRole="ROUTE" ToRole="LATLONG" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__619B8048" FromRole="ROUTE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_ROUT__6383C8BA" FromRole="ROUTE" ToRole="TRIP" />
         </EntityType>
         <EntityType Name="STATE">
           <Key>
@@ -911,9 +1488,35 @@
           <Property Name="STATE_MODIFIEDBY" Type="Int32" />
           <Property Name="STATE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATE_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__534D60F1" FromRole="STATE" ToRole="CITy" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__STATE__STATE_STA__59FA5E80" FromRole="STATE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__5812160E" FromRole="STATE" ToRole="CITy" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__STATE__STATE_STA__628FA481" FromRole="STATE" ToRole="MASTERSTATU" />
         </EntityType>
+        <EntityType Name="TRIPLOCATION">
+          <Key>
+            <PropertyRef Name="LL_ID" />
+          </Key>
+          <Property Name="LL_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LL_TRIP_ID" Type="Int32" />
+          <Property Name="LL_LAT" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LL_LONG" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LL_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="LL_CREATEDBY" Type="Int32" />
+          <Property Name="LL_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LL_MODIFIEDBY" Type="Int32" />
+          <Property Name="LL_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LL_VIA" Type="Boolean" />
+          <Property Name="LL_SORTORDER" Type="Int32" />
+          <Property Name="LL_AVERAGEREACHTIME" Type="DateTime" Precision="3" />
+          <Property Name="LL_ACTUALREACHTIME" Type="DateTime" Precision="3" />
+          <Property Name="LL_DIFFPREV" Type="Int32" />
+          <Property Name="LL_STATUS" Type="Int32" />
+          <Property Name="LL_ENDED" Type="Boolean" />
+          <Property Name="LL_KMFROMPICKUP" Type="Int32" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__TRIPLOCAT__LL_ST__778AC167" FromRole="TRIPLOCATION" ToRole="TRIPSTATU" />
+          <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__TRIPLOCAT__LL_TR__75A278F5" FromRole="TRIPLOCATION" ToRole="TRIP" />
+          <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__1BC821DD" FromRole="TRIPLOCATION" ToRole="USERTRIP" />
+          <NavigationProperty Name="USERTRIPS1" Relationship="CHALOModel.FK__USERTRIPS__USERT__1CBC4616" FromRole="TRIPLOCATION" ToRole="USERTRIP" />
+          </EntityType>
         <EntityType Name="TRIP">
           <Key>
             <PropertyRef Name="TRIP_ID" />
@@ -930,9 +1533,19 @@
           <Property Name="TRIP_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="TRIP_MODIFIEDBY" Type="Int32" />
           <Property Name="TRIP_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="ROUTE" Relationship="CHALOModel.FK__TRIPS__TRIP_ROUT__49C3F6B7" FromRole="TRIP" ToRole="ROUTE" />
-          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__4AB81AF0" FromRole="TRIP" ToRole="TRIPSTATU" />
-          <NavigationProperty Name="VEHICLE" Relationship="CHALOModel.FK__TRIPS__TRIP_VEHI__48CFD27E" FromRole="TRIP" ToRole="VEHICLE" />
+          <Property Name="TRIP_FROM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_TO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIPS_ALLLOCATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_STARTED" Type="Boolean" />
+          <Property Name="TRIP_ENDED" Type="Boolean" />
+          <Property Name="TRIP_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="NOOFSEATS" Relationship="CHALOModel.FK__NOOFSEATS__SEAT___7B5B524B" FromRole="TRIP" ToRole="NOOFSEAT" />
+          <NavigationProperty Name="ROUTE" Relationship="CHALOModel.FK__TRIPS__TRIP_ROUT__6383C8BA" FromRole="TRIP" ToRole="ROUTE" />
+          <NavigationProperty Name="TRIPLOCATIONS" Relationship="CHALOModel.FK__TRIPLOCAT__LL_TR__75A278F5" FromRole="TRIP" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__6477ECF3" FromRole="TRIP" ToRole="TRIPSTATU" />
+          <NavigationProperty Name="VEHICLE" Relationship="CHALOModel.FK__TRIPS__TRIP_VEHI__656C112C" FromRole="TRIP" ToRole="VEHICLE" />
+          <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__1AD3FDA4" FromRole="TRIP" ToRole="USERTRIP" />
         </EntityType>
         <EntityType Name="TRIPSTATU">
           <Key>
@@ -944,7 +1557,9 @@
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__4AB81AF0" FromRole="TRIPSTATU" ToRole="TRIP" />
+          <NavigationProperty Name="TRIPLOCATIONS" Relationship="CHALOModel.FK__TRIPLOCAT__LL_ST__778AC167" FromRole="TRIPSTATU" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__6477ECF3" FromRole="TRIPSTATU" ToRole="TRIP" />
+          <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__1DB06A4F" FromRole="TRIPSTATU" ToRole="USERTRIP" />
         </EntityType>
         <EntityType Name="USER_REGISTERTYPE">
           <Key>
@@ -956,7 +1571,7 @@
           <Property Name="REGTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="REGTYPE_MODIFIEDBY" Type="Int32" />
           <Property Name="REGTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_RE__0CBAE877" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_RE__5629CD9C" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="USER_STATUS">
           <Key>
@@ -968,7 +1583,21 @@
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_ST__0DAF0CB0" FromRole="USER_STATUS" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_ST__571DF1D5" FromRole="USER_STATUS" ToRole="CH_USER" />
+        </EntityType>
+        <EntityType Name="VEHICLEDRIVER">
+          <Key>
+            <PropertyRef Name="VD_ID" />
+          </Key>
+          <Property Name="VD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VD_VEHICLE_ID" Type="Int32" />
+          <Property Name="VD_DRIVER_ID" Type="Int32" />
+          <Property Name="VD_CREATEDBY" Type="Int32" />
+          <Property Name="VD_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="VD_MODIFIEDBY" Type="Int32" />
+          <Property Name="VD_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DRIVER" Relationship="CHALOModel.FK__VEHICLEDR__VD_DR__7F2BE32F" FromRole="VEHICLEDRIVER" ToRole="DRIVER" />
+          <NavigationProperty Name="VEHICLE" Relationship="CHALOModel.FK__VEHICLEDR__VD_VE__7E37BEF6" FromRole="VEHICLEDRIVER" ToRole="VEHICLE" />
         </EntityType>
         <EntityType Name="VEHICLE">
           <Key>
@@ -991,10 +1620,11 @@
           <Property Name="VEHICLE_MODIFIEDBY" Type="Int32" />
           <Property Name="VEHICLE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VEHICLE_STATUS" Type="Int32" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__VEHICLES__VEHICL__276EDEB3" FromRole="VEHICLE" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_VEHI__48CFD27E" FromRole="VEHICLE" ToRole="TRIP" />
-          <NavigationProperty Name="VENDOR" Relationship="CHALOModel.FK__VEHICLES__VEHICL__25869641" FromRole="VEHICLE" ToRole="VENDOR" />
-          <NavigationProperty Name="VEHICLETYPE" Relationship="CHALOModel.FK__VEHICLES__VEHICL__267ABA7A" FromRole="VEHICLE" ToRole="VEHICLETYPE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__VEHICLES__VEHICL__68487DD7" FromRole="VEHICLE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_VEHI__656C112C" FromRole="VEHICLE" ToRole="TRIP" />
+          <NavigationProperty Name="VEHICLEDRIVERS" Relationship="CHALOModel.FK__VEHICLEDR__VD_VE__7E37BEF6" FromRole="VEHICLE" ToRole="VEHICLEDRIVER" />
+          <NavigationProperty Name="VENDOR" Relationship="CHALOModel.FK__VEHICLES__VEHICL__66603565" FromRole="VEHICLE" ToRole="VENDOR" />
+          <NavigationProperty Name="VEHICLETYPE" Relationship="CHALOModel.FK__VEHICLES__VEHICL__6754599E" FromRole="VEHICLE" ToRole="VEHICLETYPE" />
         </EntityType>
         <EntityType Name="VEHICLETYPE">
           <Key>
@@ -1006,7 +1636,9 @@
           <Property Name="VEHICLE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VEHICLE_MODIFIEDBY" Type="Int32" />
           <Property Name="VEHICLE_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__267ABA7A" FromRole="VEHICLETYPE" ToRole="VEHICLE" />
+          <Property Name="VEHICLETYPE_NOOFSEATS" Type="Int32" />
+          <Property Name="VEHICLETYPE_COSTPERKM" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__6754599E" FromRole="VEHICLETYPE" ToRole="VEHICLE" />
         </EntityType>
         <EntityType Name="VENDOR">
           <Key>
@@ -1033,11 +1665,11 @@
           <Property Name="VENDOR_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VENDOR_MODIFIEDBY" Type="Int32" />
           <Property Name="VENDOR_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___2C3393D0" FromRole="VENDOR" ToRole="DRIVER" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__VENDORS__VENDOR___20C1E124" FromRole="VENDOR" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__25869641" FromRole="VENDOR" ToRole="VEHICLE" />
+          <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___5AEE82B9" FromRole="VENDOR" ToRole="DRIVER" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__VENDORS__VENDOR___693CA210" FromRole="VENDOR" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__66603565" FromRole="VENDOR" ToRole="VEHICLE" />
         </EntityType>
-        <Association Name="FK__CH_USER__USER_RE__0CBAE877">
+        <Association Name="FK__CH_USER__USER_RE__5629CD9C">
           <End Type="CHALOModel.USER_REGISTERTYPE" Role="USER_REGISTERTYPE" Multiplicity="0..1" />
           <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1049,7 +1681,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CH_USER__USER_ST__0DAF0CB0">
+        <Association Name="FK__CH_USER__USER_ST__571DF1D5">
           <End Type="CHALOModel.USER_STATUS" Role="USER_STATUS" Multiplicity="0..1" />
           <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1061,7 +1693,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__COUPONS__COUPON___656C112C">
+        <Association Name="FK__COUPONS__COUPON___59FA5E80">
           <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
           <End Type="CHALOModel.COUPON" Role="COUPON" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1073,7 +1705,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CITIES__CITY_STA__534D60F1">
+        <Association Name="FK__CITIES__CITY_STA__5812160E">
           <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
           <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1085,7 +1717,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CITIES__CITY_STA__5CD6CB2B">
+        <Association Name="FK__CITIES__CITY_STA__59063A47">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1097,7 +1729,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LOCATIONS__LOCAT__5812160E">
+        <Association Name="FK__LOCATIONS__LOCAT__5FB337D6">
           <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="0..1" />
           <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1109,7 +1741,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DRIVERS__DRIVER___2C3393D0">
+        <Association Name="FK__DRIVERS__DRIVER___5AEE82B9">
           <End Type="CHALOModel.VENDOR" Role="VENDOR" Multiplicity="0..1" />
           <End Type="CHALOModel.DRIVER" Role="DRIVER" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1121,7 +1753,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__DRIVERS__DRIVER___2D27B809">
+        <Association Name="FK__DRIVERS__DRIVER___5BE2A6F2">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.DRIVER" Role="DRIVER" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1133,7 +1765,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LATLONGS__LATLON__37A5467C">
+        <Association Name="FK__VEHICLEDR__VD_DR__7F2BE32F">
+          <End Type="CHALOModel.DRIVER" Role="DRIVER" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLEDRIVER" Role="VEHICLEDRIVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DRIVER">
+              <PropertyRef Name="DRIVER_ID" />
+            </Principal>
+            <Dependent Role="VEHICLEDRIVER">
+              <PropertyRef Name="VD_DRIVER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LATLONGS__LATLON__5CD6CB2B">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.LATLONG" Role="LATLONG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1145,7 +1789,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LATLONGS__LL_LOC__59063A47">
+        <Association Name="FK__LATLONGS__LL_LOC__5DCAEF64">
           <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="0..1" />
           <End Type="CHALOModel.LATLONG" Role="LATLONG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1157,7 +1801,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LATLONGS__LL_ROU__35BCFE0A">
+        <Association Name="FK__LATLONGS__LL_ROU__5EBF139D">
           <End Type="CHALOModel.ROUTE" Role="ROUTE" Multiplicity="0..1" />
           <End Type="CHALOModel.LATLONG" Role="LATLONG" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1169,7 +1813,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__LOCATIONS__LOCAT__5DCAEF64">
+        <Association Name="FK__LOCATIONS__LOCAT__60A75C0F">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1181,7 +1825,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__ROUTES__ROUTE_ST__36B12243">
+        <Association Name="FK__ROUTES__ROUTE_ST__619B8048">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.ROUTE" Role="ROUTE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1193,7 +1837,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__STATE__STATE_STA__59FA5E80">
+        <Association Name="FK__STATE__STATE_STA__628FA481">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1205,7 +1849,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VEHICLES__VEHICL__276EDEB3">
+        <Association Name="FK__VEHICLES__VEHICL__68487DD7">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1217,7 +1861,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VENDORS__VENDOR___20C1E124">
+        <Association Name="FK__VENDORS__VENDOR___693CA210">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.VENDOR" Role="VENDOR" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1229,7 +1873,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TRIPS__TRIP_ROUT__49C3F6B7">
+        <Association Name="FK__NOOFSEATS__SEAT___7B5B524B">
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.NOOFSEAT" Role="NOOFSEAT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIP">
+              <PropertyRef Name="TRIP_ID" />
+            </Principal>
+            <Dependent Role="NOOFSEAT">
+              <PropertyRef Name="SEAT_TRIP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_ROUT__6383C8BA">
           <End Type="CHALOModel.ROUTE" Role="ROUTE" Multiplicity="0..1" />
           <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1241,7 +1897,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TRIPS__TRIP_STAT__4AB81AF0">
+        <Association Name="FK__TRIPLOCAT__LL_ST__778AC167">
+          <End Type="CHALOModel.TRIPSTATU" Role="TRIPSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="TRIPLOCATION">
+              <PropertyRef Name="LL_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPLOCAT__LL_TR__75A278F5">
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIP">
+              <PropertyRef Name="TRIP_ID" />
+            </Principal>
+            <Dependent Role="TRIPLOCATION">
+              <PropertyRef Name="LL_TRIP_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRIPS__TRIP_STAT__6477ECF3">
           <End Type="CHALOModel.TRIPSTATU" Role="TRIPSTATU" Multiplicity="0..1" />
           <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1253,7 +1933,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TRIPS__TRIP_VEHI__48CFD27E">
+        <Association Name="FK__TRIPS__TRIP_VEHI__656C112C">
           <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="0..1" />
           <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1265,7 +1945,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VEHICLES__VEHICL__25869641">
+        <Association Name="FK__VEHICLEDR__VD_VE__7E37BEF6">
+          <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLEDRIVER" Role="VEHICLEDRIVER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VEHICLE">
+              <PropertyRef Name="VEHICLE_ID" />
+            </Principal>
+            <Dependent Role="VEHICLEDRIVER">
+              <PropertyRef Name="VD_VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__VEHICLES__VEHICL__66603565">
           <End Type="CHALOModel.VENDOR" Role="VENDOR" Multiplicity="0..1" />
           <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1277,7 +1969,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__VEHICLES__VEHICL__267ABA7A">
+        <Association Name="FK__VEHICLES__VEHICL__6754599E">
           <End Type="CHALOModel.VEHICLETYPE" Role="VEHICLETYPE" Multiplicity="0..1" />
           <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1289,12 +1981,201 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="temptrip">
+          <Key>
+            <PropertyRef Name="TEMPTRIP_ID" />
+          </Key>
+          <Property Name="TEMPTRIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fromllid" Type="Int32" />
+          <Property Name="fromtripid" Type="Int32" />
+          <Property Name="fromlocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fromsortorder" Type="Int32" />
+          <Property Name="fromaveragereachtime" Type="DateTime" Precision="3" />
+          <Property Name="fromactualreachtime" Type="DateTime" Precision="3" />
+          <Property Name="fromkms" Type="Int32" />
+          <Property Name="tollid" Type="Int32" />
+          <Property Name="totripid" Type="Int32" />
+          <Property Name="tolocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tosortorder" Type="Int32" />
+          <Property Name="toaveragereachtime" Type="DateTime" Precision="3" />
+          <Property Name="toactualreachtime" Type="DateTime" Precision="3" />
+          <Property Name="tokms" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CHALOWALLET">
+          <Key>
+            <PropertyRef Name="WALLET_ID" />
+          </Key>
+          <Property Name="WALLET_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WALLET_USERID" Type="Int32" />
+          <Property Name="WALLET_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="WALLET_CREATEDBY" Type="Int32" />
+          <Property Name="WALLET_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="WALLET_MODIFIEDBY" Type="Int32" />
+          <Property Name="WALLET_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CHALOWALL__WALLE__0A9D95DB" FromRole="CHALOWALLET" ToRole="CH_USER" />
+        </EntityType>
+        <Association Name="FK__CHALOWALL__WALLE__0A9D95DB">
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
+          <End Type="CHALOModel.CHALOWALLET" Role="CHALOWALLET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="CHALOWALLET">
+              <PropertyRef Name="WALLET_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="USERTRIP">
+          <Key>
+            <PropertyRef Name="USERTRIP_ID" />
+          </Key>
+          <Property Name="USERTRIP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERTRIP_TRIPID" Type="Int32" />
+          <Property Name="USERTRIP_PICKUPLOC" Type="Int32" />
+          <Property Name="USERTRIP_DROPLOC" Type="Int32" />
+          <Property Name="USERTRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_ESTIMATEDDURATION" Type="Int32" />
+          <Property Name="USERTRIP_ACTUALDURATION" Type="Int32" />
+          <Property Name="USERTRIP_DISTANCE" Type="Int32" />
+          <Property Name="USERTRIP_ACTUALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_DISCOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_TOTALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_STATUS" Type="Int32" />
+          <Property Name="USERTRIP_APPLIEDCOUPON" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_CREATEDBY" Type="Int32" />
+          <Property Name="USERTRIP_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="USERTRIP_MODIFIEDBY" Type="Int32" />
+          <Property Name="USERTRIP_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="TRIPLOCATION" Relationship="CHALOModel.FK__USERTRIPS__USERT__1BC821DD" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIPLOCATION1" Relationship="CHALOModel.FK__USERTRIPS__USERT__1CBC4616" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__USERTRIPS__USERT__1AD3FDA4" FromRole="USERTRIP" ToRole="TRIP" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__USERTRIPS__USERT__1DB06A4F" FromRole="USERTRIP" ToRole="TRIPSTATU" />
+          <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__282DF8C2" FromRole="USERTRIP" ToRole="PAYMENTHISTORY" />
+        </EntityType>
+        <Association Name="FK__USERTRIPS__USERT__1BC821DD">
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPLOCATION">
+              <PropertyRef Name="LL_ID" />
+            </Principal>
+            <Dependent Role="USERTRIP">
+              <PropertyRef Name="USERTRIP_PICKUPLOC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERTRIPS__USERT__1CBC4616">
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPLOCATION">
+              <PropertyRef Name="LL_ID" />
+            </Principal>
+            <Dependent Role="USERTRIP">
+              <PropertyRef Name="USERTRIP_DROPLOC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERTRIPS__USERT__1AD3FDA4">
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIP">
+              <PropertyRef Name="TRIP_ID" />
+            </Principal>
+            <Dependent Role="USERTRIP">
+              <PropertyRef Name="USERTRIP_TRIPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERTRIPS__USERT__1DB06A4F">
+          <End Type="CHALOModel.TRIPSTATU" Role="TRIPSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRIPSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="USERTRIP">
+              <PropertyRef Name="USERTRIP_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TRIPTEMP">
+          <Key>
+            <PropertyRef Name="TRIPTEMP_ID" />
+          </Key>
+          <Property Name="TRIPTEMP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trip_id" Type="Int32" />
+          <Property Name="trip_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="trip_vehicle_id" Type="Int32" />
+          <Property Name="trip_route_id" Type="Int32" />
+          <Property Name="fromllid" Type="Int32" />
+          <Property Name="fromlocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fromactualreachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fromaveragereachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tollid" Type="Int32" />
+          <Property Name="tolocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="toaveragereachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="toactualreachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="startdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="seat_availableseats" Type="Int32" />
+          <Property Name="DISTANCE" Type="Int32" />
+          <Property Name="driver_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vehicle_number" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vehicletype_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="COST" Type="Decimal" Precision="10" Scale="0" />
+        </EntityType>
+        <EntityType Name="PAYMENTHISTORY">
+          <Key>
+            <PropertyRef Name="PAYMENTHISTORY_ID" />
+          </Key>
+          <Property Name="PAYMENTHISTORY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PAYMENTHISTORY_USERTRIPID" Type="Int32" />
+          <Property Name="PAYMENTTYPE_ID" Type="Int32" />
+          <Property Name="PAYMENTTYPE_AMOUNTPAID" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PAYMENTTYPE_CREATEDBY" Type="Int32" />
+          <Property Name="PAYMENTTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="PAYMENT_MODIFIEDBY" Type="Int32" />
+          <Property Name="PAYMENTTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="USERTRIP" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__282DF8C2" FromRole="PAYMENTHISTORY" ToRole="USERTRIP" />
+          <NavigationProperty Name="PAYMENTTYPE" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__29221CFB" FromRole="PAYMENTHISTORY" ToRole="PAYMENTTYPE" />
+        </EntityType>
+        <Association Name="FK__PAYMENTHI__PAYME__282DF8C2">
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.PAYMENTHISTORY" Role="PAYMENTHISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERTRIP">
+              <PropertyRef Name="USERTRIP_ID" />
+            </Principal>
+            <Dependent Role="PAYMENTHISTORY">
+              <PropertyRef Name="PAYMENTHISTORY_USERTRIPID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PAYMENTHI__PAYME__29221CFB">
+          <End Type="CHALOModel.PAYMENTTYPE" Role="PAYMENTTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.PAYMENTHISTORY" Role="PAYMENTHISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAYMENTTYPE">
+              <PropertyRef Name="PAYMENTTYPE_ID" />
+            </Principal>
+            <Dependent Role="PAYMENTHISTORY">
+              <PropertyRef Name="PAYMENTTYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CHALOModelStoreContainer" CdmEntityContainer="CHALOEntities">
+          <FunctionImportMapping FunctionImportName="USP_LBR_SEARCH" FunctionName="CHALOModel.Store.USP_LBR_SEARCH" />
+          <FunctionImportMapping FunctionImportName="USP_LBR_SIGNUP" FunctionName="CHALOModel.Store.USP_LBR_SIGNUP" />
+          <FunctionImportMapping FunctionImportName="USP_SEARCHVEHICLES" FunctionName="CHALOModel.Store.USP_SEARCHVEHICLES" />
           <EntitySetMapping Name="CH_USER">
             <EntityTypeMapping TypeName="CHALOModel.CH_USER">
               <MappingFragment StoreEntitySet="CH_USER">
@@ -1371,6 +2252,8 @@
           <EntitySetMapping Name="LATLONGS">
             <EntityTypeMapping TypeName="CHALOModel.LATLONG">
               <MappingFragment StoreEntitySet="LATLONGS">
+                <ScalarProperty Name="LL_SORTORDER" ColumnName="LL_SORTORDER" />
+                <ScalarProperty Name="LL_VIA" ColumnName="LL_VIA" />
                 <ScalarProperty Name="LL_LOCATIONID" ColumnName="LL_LOCATIONID" />
                 <ScalarProperty Name="LATLONG_STATUS" ColumnName="LATLONG_STATUS" />
                 <ScalarProperty Name="LL_MODIFIEDDATE" ColumnName="LL_MODIFIEDDATE" />
@@ -1413,6 +2296,20 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="NOOFSEATS">
+            <EntityTypeMapping TypeName="CHALOModel.NOOFSEAT">
+              <MappingFragment StoreEntitySet="NOOFSEATS">
+                <ScalarProperty Name="SEAT_MODIFIEDDATE" ColumnName="SEAT_MODIFIEDDATE" />
+                <ScalarProperty Name="SEAT_MODIFIEDBY" ColumnName="SEAT_MODIFIEDBY" />
+                <ScalarProperty Name="SEAT_CREATEDDATE" ColumnName="SEAT_CREATEDDATE" />
+                <ScalarProperty Name="SEAT_CREATEDBY" ColumnName="SEAT_CREATEDBY" />
+                <ScalarProperty Name="SEAT_AVAILABLESEATS" ColumnName="SEAT_AVAILABLESEATS" />
+                <ScalarProperty Name="SEAT_ACTUALSEATS" ColumnName="SEAT_ACTUALSEATS" />
+                <ScalarProperty Name="SEAT_TRIP_ID" ColumnName="SEAT_TRIP_ID" />
+                <ScalarProperty Name="SEAT_ID" ColumnName="SEAT_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="PAYMENTTYPEs">
             <EntityTypeMapping TypeName="CHALOModel.PAYMENTTYPE">
               <MappingFragment StoreEntitySet="PAYMENTTYPE">
@@ -1428,6 +2325,7 @@
           <EntitySetMapping Name="ROUTES">
             <EntityTypeMapping TypeName="CHALOModel.ROUTE">
               <MappingFragment StoreEntitySet="ROUTES">
+                <ScalarProperty Name="ROUTE_ALLLOCATIONS" ColumnName="ROUTE_ALLLOCATIONS" />
                 <ScalarProperty Name="ROUTE_STATUS" ColumnName="ROUTE_STATUS" />
                 <ScalarProperty Name="ROUTE_MODIFIEDDATE" ColumnName="ROUTE_MODIFIEDDATE" />
                 <ScalarProperty Name="ROUTE_MODIFIEDBY" ColumnName="ROUTE_MODIFIEDBY" />
@@ -1460,9 +2358,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="TRIPLOCATIONS">
+            <EntityTypeMapping TypeName="CHALOModel.TRIPLOCATION">
+              <MappingFragment StoreEntitySet="TRIPLOCATIONS">
+                <ScalarProperty Name="LL_KMFROMPICKUP" ColumnName="LL_KMFROMPICKUP" />
+                <ScalarProperty Name="LL_ENDED" ColumnName="LL_ENDED" />
+                <ScalarProperty Name="LL_STATUS" ColumnName="LL_STATUS" />
+                <ScalarProperty Name="LL_DIFFPREV" ColumnName="LL_DIFFPREV" />
+                <ScalarProperty Name="LL_ACTUALREACHTIME" ColumnName="LL_ACTUALREACHTIME" />
+                <ScalarProperty Name="LL_AVERAGEREACHTIME" ColumnName="LL_AVERAGEREACHTIME" />
+                <ScalarProperty Name="LL_SORTORDER" ColumnName="LL_SORTORDER" />
+                <ScalarProperty Name="LL_VIA" ColumnName="LL_VIA" />
+                <ScalarProperty Name="LL_MODIFIEDDATE" ColumnName="LL_MODIFIEDDATE" />
+                <ScalarProperty Name="LL_MODIFIEDBY" ColumnName="LL_MODIFIEDBY" />
+                <ScalarProperty Name="LL_CREATEDDATE" ColumnName="LL_CREATEDDATE" />
+                <ScalarProperty Name="LL_CREATEDBY" ColumnName="LL_CREATEDBY" />
+                <ScalarProperty Name="LL_NAME" ColumnName="LL_NAME" />
+                <ScalarProperty Name="LL_LONG" ColumnName="LL_LONG" />
+                <ScalarProperty Name="LL_LAT" ColumnName="LL_LAT" />
+                <ScalarProperty Name="LL_TRIP_ID" ColumnName="LL_TRIP_ID" />
+                <ScalarProperty Name="LL_ID" ColumnName="LL_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TRIPS">
             <EntityTypeMapping TypeName="CHALOModel.TRIP">
               <MappingFragment StoreEntitySet="TRIPS">
+                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
+                <ScalarProperty Name="TRIP_ENDED" ColumnName="TRIP_ENDED" />
+                <ScalarProperty Name="TRIP_STARTED" ColumnName="TRIP_STARTED" />
+                <ScalarProperty Name="TRIPS_ALLLOCATIONS" ColumnName="TRIPS_ALLLOCATIONS" />
+                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
+                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
+                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
                 <ScalarProperty Name="TRIP_MODIFIEDDATE" ColumnName="TRIP_MODIFIEDDATE" />
                 <ScalarProperty Name="TRIP_MODIFIEDBY" ColumnName="TRIP_MODIFIEDBY" />
                 <ScalarProperty Name="TRIP_CREATEDDATE" ColumnName="TRIP_CREATEDDATE" />
@@ -1514,6 +2442,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="VEHICLEDRIVERS">
+            <EntityTypeMapping TypeName="CHALOModel.VEHICLEDRIVER">
+              <MappingFragment StoreEntitySet="VEHICLEDRIVERS">
+                <ScalarProperty Name="VD_MODIFIEDDATE" ColumnName="VD_MODIFIEDDATE" />
+                <ScalarProperty Name="VD_MODIFIEDBY" ColumnName="VD_MODIFIEDBY" />
+                <ScalarProperty Name="VD_CREATEDDATE" ColumnName="VD_CREATEDDATE" />
+                <ScalarProperty Name="VD_CREATEDBY" ColumnName="VD_CREATEDBY" />
+                <ScalarProperty Name="VD_DRIVER_ID" ColumnName="VD_DRIVER_ID" />
+                <ScalarProperty Name="VD_VEHICLE_ID" ColumnName="VD_VEHICLE_ID" />
+                <ScalarProperty Name="VD_ID" ColumnName="VD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="VEHICLES">
             <EntityTypeMapping TypeName="CHALOModel.VEHICLE">
               <MappingFragment StoreEntitySet="VEHICLES">
@@ -1540,6 +2481,8 @@
           <EntitySetMapping Name="VEHICLETYPEs">
             <EntityTypeMapping TypeName="CHALOModel.VEHICLETYPE">
               <MappingFragment StoreEntitySet="VEHICLETYPE">
+                <ScalarProperty Name="VEHICLETYPE_COSTPERKM" ColumnName="VEHICLETYPE_COSTPERKM" />
+                <ScalarProperty Name="VEHICLETYPE_NOOFSEATS" ColumnName="VEHICLETYPE_NOOFSEATS" />
                 <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
                 <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
                 <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
@@ -1576,6 +2519,107 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="temptrips">
+            <EntityTypeMapping TypeName="CHALOModel.temptrip">
+              <MappingFragment StoreEntitySet="temptrips">
+                <ScalarProperty Name="tokms" ColumnName="tokms" />
+                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
+                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
+                <ScalarProperty Name="tosortorder" ColumnName="tosortorder" />
+                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
+                <ScalarProperty Name="totripid" ColumnName="totripid" />
+                <ScalarProperty Name="tollid" ColumnName="tollid" />
+                <ScalarProperty Name="fromkms" ColumnName="fromkms" />
+                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
+                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
+                <ScalarProperty Name="fromsortorder" ColumnName="fromsortorder" />
+                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
+                <ScalarProperty Name="fromtripid" ColumnName="fromtripid" />
+                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
+                <ScalarProperty Name="TEMPTRIP_ID" ColumnName="TEMPTRIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHALOWALLETs">
+            <EntityTypeMapping TypeName="CHALOModel.CHALOWALLET">
+              <MappingFragment StoreEntitySet="CHALOWALLET">
+                <ScalarProperty Name="WALLET_MODIFIEDDATE" ColumnName="WALLET_MODIFIEDDATE" />
+                <ScalarProperty Name="WALLET_MODIFIEDBY" ColumnName="WALLET_MODIFIEDBY" />
+                <ScalarProperty Name="WALLET_CREATEDDATE" ColumnName="WALLET_CREATEDDATE" />
+                <ScalarProperty Name="WALLET_CREATEDBY" ColumnName="WALLET_CREATEDBY" />
+                <ScalarProperty Name="WALLET_AMOUNT" ColumnName="WALLET_AMOUNT" />
+                <ScalarProperty Name="WALLET_USERID" ColumnName="WALLET_USERID" />
+                <ScalarProperty Name="WALLET_ID" ColumnName="WALLET_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERTRIPS">
+            <EntityTypeMapping TypeName="CHALOModel.USERTRIP">
+              <MappingFragment StoreEntitySet="USERTRIPS">
+                <ScalarProperty Name="USERTRIP_MODIFIEDDATE" ColumnName="USERTRIP_MODIFIEDDATE" />
+                <ScalarProperty Name="USERTRIP_MODIFIEDBY" ColumnName="USERTRIP_MODIFIEDBY" />
+                <ScalarProperty Name="USERTRIP_CREATEDDATE" ColumnName="USERTRIP_CREATEDDATE" />
+                <ScalarProperty Name="USERTRIP_CREATEDBY" ColumnName="USERTRIP_CREATEDBY" />
+                <ScalarProperty Name="USERTRIP_APPLIEDCOUPON" ColumnName="USERTRIP_APPLIEDCOUPON" />
+                <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
+                <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_DISCOUNT" ColumnName="USERTRIP_DISCOUNT" />
+                <ScalarProperty Name="USERTRIP_ACTUALAMOUNT" ColumnName="USERTRIP_ACTUALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_DISTANCE" ColumnName="USERTRIP_DISTANCE" />
+                <ScalarProperty Name="USERTRIP_ACTUALDURATION" ColumnName="USERTRIP_ACTUALDURATION" />
+                <ScalarProperty Name="USERTRIP_ESTIMATEDDURATION" ColumnName="USERTRIP_ESTIMATEDDURATION" />
+                <ScalarProperty Name="USERTRIP_VIA" ColumnName="USERTRIP_VIA" />
+                <ScalarProperty Name="USERTRIP_DROPLOC" ColumnName="USERTRIP_DROPLOC" />
+                <ScalarProperty Name="USERTRIP_PICKUPLOC" ColumnName="USERTRIP_PICKUPLOC" />
+                <ScalarProperty Name="USERTRIP_TRIPID" ColumnName="USERTRIP_TRIPID" />
+                <ScalarProperty Name="USERTRIP_ID" ColumnName="USERTRIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRIPTEMPs">
+            <EntityTypeMapping TypeName="CHALOModel.TRIPTEMP">
+              <MappingFragment StoreEntitySet="TRIPTEMP">
+                <ScalarProperty Name="COST" ColumnName="COST" />
+                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
+                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
+                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
+                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
+                <ScalarProperty Name="seat_availableseats" ColumnName="seat_availableseats" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="VIA" ColumnName="VIA" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
+                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
+                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
+                <ScalarProperty Name="tollid" ColumnName="tollid" />
+                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
+                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
+                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
+                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
+                <ScalarProperty Name="trip_route_id" ColumnName="trip_route_id" />
+                <ScalarProperty Name="trip_vehicle_id" ColumnName="trip_vehicle_id" />
+                <ScalarProperty Name="trip_name" ColumnName="trip_name" />
+                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
+                <ScalarProperty Name="TRIPTEMP_ID" ColumnName="TRIPTEMP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAYMENTHISTORies">
+            <EntityTypeMapping TypeName="CHALOModel.PAYMENTHISTORY">
+              <MappingFragment StoreEntitySet="PAYMENTHISTORY">
+                <ScalarProperty Name="PAYMENTTYPE_MODIFIEDDATE" ColumnName="PAYMENTTYPE_MODIFIEDDATE" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_AMOUNTPAID" ColumnName="PAYMENTTYPE_AMOUNTPAID" />
+                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
+                <ScalarProperty Name="PAYMENTHISTORY_USERTRIPID" ColumnName="PAYMENTHISTORY_USERTRIPID" />
+                <ScalarProperty Name="PAYMENTHISTORY_ID" ColumnName="PAYMENTHISTORY_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="USP_BOOKTRIP" FunctionName="CHALOModel.Store.USP_BOOKTRIP" />
+          <FunctionImportMapping FunctionImportName="USP_GETVEHICLEBYTRIP" FunctionName="CHALOModel.Store.USP_GETVEHICLEBYTRIP" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1591,7 +2635,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

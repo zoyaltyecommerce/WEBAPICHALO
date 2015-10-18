@@ -14,6 +14,14 @@ namespace CHALO.Models
     
     public partial class TRIP
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public TRIP()
+        {
+            this.NOOFSEATS = new HashSet<NOOFSEAT>();
+            this.TRIPLOCATIONS = new HashSet<TRIPLOCATION>();
+            this.USERTRIPS = new HashSet<USERTRIP>();
+        }
+    
         public int TRIP_ID { get; set; }
         public Nullable<int> TRIP_VEHICLE_ID { get; set; }
         public Nullable<int> TRIP_ROUTE_ID { get; set; }
@@ -26,9 +34,22 @@ namespace CHALO.Models
         public Nullable<System.DateTime> TRIP_CREATEDDATE { get; set; }
         public Nullable<int> TRIP_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> TRIP_MODIFIEDDATE { get; set; }
+        public string TRIP_FROM { get; set; }
+        public string TRIP_TO { get; set; }
+        public string TRIP_VIA { get; set; }
+        public string TRIPS_ALLLOCATIONS { get; set; }
+        public Nullable<bool> TRIP_STARTED { get; set; }
+        public Nullable<bool> TRIP_ENDED { get; set; }
+        public string TRIP_NAME { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NOOFSEAT> NOOFSEATS { get; set; }
         public virtual ROUTE ROUTE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TRIPLOCATION> TRIPLOCATIONS { get; set; }
         public virtual TRIPSTATU TRIPSTATU { get; set; }
         public virtual VEHICLE VEHICLE { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USERTRIP> USERTRIPS { get; set; }
     }
 }

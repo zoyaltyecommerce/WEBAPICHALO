@@ -5,6 +5,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CHALO.Models;
+using System.Web.Http.Results;
+using System.Web.Mvc;
 
 namespace CHALO.Controllers
 {
@@ -14,7 +16,9 @@ namespace CHALO.Controllers
         {
             CHALOEntities db = new CHALOEntities();
             List<LOCATION> list = db.LOCATIONS.Where(c => c.LOCATION_STATUS==1).ToList().OrderBy(c=>c.LOCATION_NAME).ToList();
+          
             return list;
         }
+        
     }
 }

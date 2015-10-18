@@ -14,6 +14,12 @@ namespace CHALO.Models
     
     public partial class DRIVER
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public DRIVER()
+        {
+            this.VEHICLEDRIVERS = new HashSet<VEHICLEDRIVER>();
+        }
+    
         public int DRIVER_ID { get; set; }
         public string DRIVER_NAME { get; set; }
         public string DRIVER_MOBILE { get; set; }
@@ -33,5 +39,7 @@ namespace CHALO.Models
     
         public virtual VENDOR VENDOR { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<VEHICLEDRIVER> VEHICLEDRIVERS { get; set; }
     }
 }

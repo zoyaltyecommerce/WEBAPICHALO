@@ -68,10 +68,7 @@ namespace CHALO.Controllers
                 else
                 {
                    
-                    if (!ModelState.IsValid)
-                    {
-                        return BadRequest(ModelState);
-                    }
+                    
 
                     db.CH_USER.Add(user);
                     db.SaveChanges();

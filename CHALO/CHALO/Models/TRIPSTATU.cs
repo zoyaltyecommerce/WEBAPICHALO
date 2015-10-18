@@ -17,7 +17,9 @@ namespace CHALO.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TRIPSTATU()
         {
+            this.TRIPLOCATIONS = new HashSet<TRIPLOCATION>();
             this.TRIPS = new HashSet<TRIP>();
+            this.USERTRIPS = new HashSet<USERTRIP>();
         }
     
         public int STATUS_ID { get; set; }
@@ -28,6 +30,10 @@ namespace CHALO.Models
         public Nullable<System.DateTime> STATUS_MODIFIEDDATE { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TRIPLOCATION> TRIPLOCATIONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRIP> TRIPS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USERTRIP> USERTRIPS { get; set; }
     }
 }

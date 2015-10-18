@@ -207,11 +207,15 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookinginfoController.cs" />
     <Compile Include="Controllers\CH_USERController.cs" />
+    <Compile Include="Controllers\GetlocationsController.cs" />
+    <Compile Include="Controllers\GetvehiclebytripController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\SEARCHVIAController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,6 +236,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CHALO.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CHALOWALLET.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\CH_USER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
@@ -255,6 +262,12 @@
     <Compile Include="Models\MASTERSTATU.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NOOFSEAT.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PAYMENTHISTORY.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PAYMENTTYPE.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -264,10 +277,22 @@
     <Compile Include="Models\STATE.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\temptrip.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TRIP.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TRIPLOCATION.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TRIPSTATU.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRIPTEMP.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USERTRIP.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USER_REGISTERTYPE.cs">
@@ -277,6 +302,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VEHICLE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\VEHICLEDRIVER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VEHICLETYPE.cs">

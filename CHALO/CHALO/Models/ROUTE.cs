@@ -37,6 +37,7 @@ namespace CHALO.Models
         public Nullable<int> ROUTE_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> ROUTE_MODIFIEDDATE { get; set; }
         public Nullable<int> ROUTE_STATUS { get; set; }
+        public string ROUTE_ALLLOCATIONS { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LATLONG> LATLONGS { get; set; }
