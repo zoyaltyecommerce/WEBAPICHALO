@@ -14,12 +14,6 @@ namespace CHALO.Models
     
     public partial class LOCATION
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public LOCATION()
-        {
-            this.LATLONGS = new HashSet<LATLONG>();
-        }
-    
         public int LOCATION_ID { get; set; }
         public Nullable<int> LOCATION_CITYID { get; set; }
         public string LOCATION_NAME { get; set; }
@@ -32,8 +26,6 @@ namespace CHALO.Models
         public Nullable<int> LOCATION_STATUS { get; set; }
     
         public virtual CITy CITy { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LATLONG> LATLONGS { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }
     }
 }

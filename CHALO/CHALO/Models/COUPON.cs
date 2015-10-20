@@ -25,5 +25,6 @@ namespace CHALO.Models
         public Nullable<bool> COUPON_ADMINCOUPON { get; set; }
     
         public virtual CH_USER CH_USER { get; set; }
+        public virtual CH_USER CH_USER1 { get; set; }
     }
 }

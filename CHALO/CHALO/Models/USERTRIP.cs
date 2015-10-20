@@ -38,11 +38,11 @@ namespace CHALO.Models
         public Nullable<int> USERTRIP_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> USERTRIP_MODIFIEDDATE { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PAYMENTHISTORY> PAYMENTHISTORies { get; set; }
         public virtual TRIPLOCATION TRIPLOCATION { get; set; }
         public virtual TRIPLOCATION TRIPLOCATION1 { get; set; }
         public virtual TRIP TRIP { get; set; }
         public virtual TRIPSTATU TRIPSTATU { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PAYMENTHISTORY> PAYMENTHISTORies { get; set; }
     }
 }

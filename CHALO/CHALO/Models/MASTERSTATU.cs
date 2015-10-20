@@ -19,7 +19,6 @@ namespace CHALO.Models
         {
             this.CITIES = new HashSet<CITy>();
             this.DRIVERS = new HashSet<DRIVER>();
-            this.LATLONGS = new HashSet<LATLONG>();
             this.LOCATIONS = new HashSet<LOCATION>();
             this.ROUTES = new HashSet<ROUTE>();
             this.STATEs = new HashSet<STATE>();
@@ -38,8 +37,6 @@ namespace CHALO.Models
         public virtual ICollection<CITy> CITIES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DRIVER> DRIVERS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LATLONG> LATLONGS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LOCATION> LOCATIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

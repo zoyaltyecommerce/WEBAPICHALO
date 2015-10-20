@@ -17,7 +17,6 @@ namespace CHALO.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ROUTE()
         {
-            this.LATLONGS = new HashSet<LATLONG>();
             this.TRIPS = new HashSet<TRIP>();
         }
     
@@ -39,8 +38,6 @@ namespace CHALO.Models
         public Nullable<int> ROUTE_STATUS { get; set; }
         public string ROUTE_ALLLOCATIONS { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LATLONG> LATLONGS { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TRIP> TRIPS { get; set; }

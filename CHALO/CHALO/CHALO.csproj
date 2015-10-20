@@ -237,9 +237,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CHALO.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\CHALOWALLET.cs">
-      <DependentUpon>CHALO.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\CH_USER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -253,9 +250,6 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\LATLONG.cs">
-      <DependentUpon>CHALO.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\LOCATION.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -269,6 +263,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAYMENTTYPE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Query.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ROUTE.cs">

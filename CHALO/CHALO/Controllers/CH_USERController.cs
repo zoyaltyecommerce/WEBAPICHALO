@@ -15,6 +15,7 @@ namespace CHALO.Controllers
    
     public class CH_USERController : ApiController
     {
+        
         private CHALOEntities db = new CHALOEntities();
 
         // GET: api/CH
