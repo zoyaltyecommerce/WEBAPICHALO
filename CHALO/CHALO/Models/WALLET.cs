@@ -12,16 +12,26 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CHALOWALLET
+    public partial class WALLET
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WALLET()
+        {
+            this.WALLETTRANSACTIONS = new HashSet<WALLETTRANSACTION>();
+        }
+    
         public int WALLET_ID { get; set; }
         public Nullable<int> WALLET_USERID { get; set; }
-        public Nullable<decimal> WALLET_AMOUNT { get; set; }
+        public Nullable<decimal> WALLET_AVAILABLEMONEY { get; set; }
         public Nullable<int> WALLET_CREATEDBY { get; set; }
         public Nullable<System.DateTime> WALLET_CREATEDDATE { get; set; }
         public Nullable<int> WALLET_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> WALLET_MODIFIEDDATE { get; set; }
+        public Nullable<int> WALLET_STATUS { get; set; }
     
+        public virtual MASTERSTATU MASTERSTATU { get; set; }
         public virtual CH_USER CH_USER { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WALLETTRANSACTION> WALLETTRANSACTIONS { get; set; }
     }
 }

@@ -18,7 +18,7 @@ namespace CHALO.Controllers
             try
             {
 
-               users = db.CH_USER.Where(c => c.USER_USERNAME == username && c.USER_PASSWORD == password).ToList();
+               users = db.CH_USER.Where(c => c.USER_USERNAME == username && c.USER_PASSWORD == encryptdecrypt.Encrypt(password)).ToList();
                // users = db.LOCATIONS.ToList();
             }
             catch (Exception ex)

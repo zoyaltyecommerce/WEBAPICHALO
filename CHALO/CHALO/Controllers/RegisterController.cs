@@ -5,6 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CHALO.Models;
+using System.Security.Cryptography;
+using System.Text;
+using CHALO.Controllers;
 
 namespace CHALO.Controllers
 {
@@ -14,13 +17,14 @@ namespace CHALO.Controllers
 
         public IHttpActionResult Register(string Firstname, string Email, string Pass, string Mobile, string code)
         {
+            common objcommon = new common();
             CH_USER user = new CH_USER();
 
             user.USER_FIRSTNAME = Firstname.Trim();
             //user.USER_LASTNAME = Lastname;
             user.USER_EMAILID = Email.Trim();
             user.USER_MOBILE = Mobile.Trim();
-            user.USER_PASSWORD = Pass.Trim();
+            user.USER_PASSWORD = encryptdecrypt.Encrypt(Pass.Trim());
             user.USER_STATUS = 1;
             user.USER_REGISTERTYPE = 1;
             user.USER_MODIFIEDBY = 1;
@@ -41,7 +45,8 @@ namespace CHALO.Controllers
 
                 if (code != null && code != "")
                 {
-                    List<COUPON> listcoupons = db.COUPONS.Where(c => c.COUPON_NAME == code.Trim()).ToList();
+                   
+                    List<USERCOUPON> listcoupons = db.USERCOUPONS.Where(c => c.COUPON_NAME == code.Trim()).ToList();
 
 
 
@@ -53,8 +58,13 @@ namespace CHALO.Controllers
                             return BadRequest(ModelState);
                         }
 
-                        db.CH_USER.Add(user);
+                       CH_USER objuser=db.CH_USER.Add(user);
                         db.SaveChanges();
+
+                        USERCOUPON objusercoupon=common.addusercoupon(objuser.USER_ID);
+                         
+                        //firsttimeuser
+                        bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), code);
 
                         return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
                     }
@@ -71,7 +81,10 @@ namespace CHALO.Controllers
                     
 
                     db.CH_USER.Add(user);
+                    CH_USER objuser = db.CH_USER.Add(user);
                     db.SaveChanges();
+                    USERCOUPON objusercoupon = common.addusercoupon(objuser.USER_ID);
+                    bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), "");
 
                     return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
                 }
@@ -80,5 +93,7 @@ namespace CHALO.Controllers
             }
         }
 
+      
+        
     }
 }

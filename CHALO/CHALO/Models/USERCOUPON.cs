@@ -12,9 +12,10 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class COUPON
+    public partial class USERCOUPON
     {
         public int COUPON_ID { get; set; }
+        public Nullable<int> COUPON_USERID { get; set; }
         public string COUPON_NAME { get; set; }
         public Nullable<int> COUPON_MONEY { get; set; }
         public Nullable<int> COUPON_TYPE { get; set; }
@@ -25,6 +26,7 @@ namespace CHALO.Models
         public Nullable<int> COUPON_STATUS { get; set; }
     
         public virtual COUPONTYPE COUPONTYPE { get; set; }
+        public virtual CH_USER CH_USER { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }
     }
 }

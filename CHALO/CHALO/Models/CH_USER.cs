@@ -17,8 +17,9 @@ namespace CHALO.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CH_USER()
         {
-            this.COUPONS = new HashSet<COUPON>();
-            this.COUPONS1 = new HashSet<COUPON>();
+            this.APPLIEDCOUPONS = new HashSet<APPLIEDCOUPON>();
+            this.USERCOUPONS = new HashSet<USERCOUPON>();
+            this.WALLETs = new HashSet<WALLET>();
         }
     
         public int USER_ID { get; set; }
@@ -38,11 +39,13 @@ namespace CHALO.Models
         public Nullable<bool> USER_COUPONAPPLIED { get; set; }
         public Nullable<int> USER_REFEREDBY { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USERCOUPON> USERCOUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WALLET> WALLETs { get; set; }
         public virtual USER_REGISTERTYPE USER_REGISTERTYPE1 { get; set; }
         public virtual USER_STATUS USER_STATUS1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COUPON> COUPONS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<COUPON> COUPONS1 { get; set; }
     }
 }

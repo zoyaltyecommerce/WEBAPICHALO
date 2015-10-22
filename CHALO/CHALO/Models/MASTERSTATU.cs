@@ -17,6 +17,13 @@ namespace CHALO.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public MASTERSTATU()
         {
+            this.APPLIEDCOUPONS = new HashSet<APPLIEDCOUPON>();
+            this.COUPONS = new HashSet<COUPON>();
+            this.COUPONTYPEs = new HashSet<COUPONTYPE>();
+            this.USERCOUPONS = new HashSet<USERCOUPON>();
+            this.WALLETs = new HashSet<WALLET>();
+            this.WALLETADDTYPES = new HashSet<WALLETADDTYPE>();
+            this.WALLETTRANSACTIONS = new HashSet<WALLETTRANSACTION>();
             this.CITIES = new HashSet<CITy>();
             this.DRIVERS = new HashSet<DRIVER>();
             this.LOCATIONS = new HashSet<LOCATION>();
@@ -33,6 +40,20 @@ namespace CHALO.Models
         public Nullable<int> STATUS_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> STATUS_MODIFIEDDATE { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COUPON> COUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<COUPONTYPE> COUPONTYPEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USERCOUPON> USERCOUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WALLET> WALLETs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WALLETADDTYPE> WALLETADDTYPES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WALLETTRANSACTION> WALLETTRANSACTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CITy> CITIES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

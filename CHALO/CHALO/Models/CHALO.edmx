@@ -4,7 +4,159 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="APPLIEDCOUPONS">
+          <Key>
+            <PropertyRef Name="APPLIED_ID" />
+          </Key>
+          <Property Name="APPLIED_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="APPLIED_USERID" Type="int" />
+          <Property Name="APPLIED_COUPONID" Type="int" />
+          <Property Name="APPLIED_COUPONNAME" Type="varchar" MaxLength="200" />
+          <Property Name="APPLIED_ADMINCOUPON" Type="bit" />
+          <Property Name="APPLIED_USERCOUPON" Type="bit" />
+          <Property Name="APPLIED_ONETIME" Type="bit" />
+          <Property Name="APPLIED_CREATEDBY" Type="int" />
+          <Property Name="APPLIED_CREATEDDATE" Type="datetime" />
+          <Property Name="APPLIED_MODIFIEDBY" Type="int" />
+          <Property Name="APPLIED_MODIFIEDDATE" Type="datetime" />
+          <Property Name="APPLIED_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="COUPONS">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COUPON_NAME" Type="varchar" MaxLength="30" />
+          <Property Name="COUPON_MONEY" Type="int" />
+          <Property Name="COUPON_TYPE" Type="int" />
+          <Property Name="COUPON_CREATEDBY" Type="int" />
+          <Property Name="COUPON_CREATEDDATE" Type="datetime" />
+          <Property Name="COUPON_MODIFIEDBY" Type="int" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
+          <Property Name="COUPON_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="COUPONTYPE">
+          <Key>
+            <PropertyRef Name="COUPONTYPE_ID" />
+          </Key>
+          <Property Name="COUPONTYPE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COUPONTYPE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="COUPONTYPE_CREATEDBY" Type="int" />
+          <Property Name="COUPONTYPE_CREATEDDATE" Type="datetime" />
+          <Property Name="COUPONTYPE_MODIFIEDBY" Type="int" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
+          <Property Name="COUPONTYPE_STATUS" Type="int" />
+          <Property Name="COUPONTYPE_ONETIME" Type="bit" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONMODE">
+          <Key>
+            <PropertyRef Name="MODE_ID" />
+          </Key>
+          <Property Name="MODE_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MODE_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="MODE_CREATEDBY" Type="int" />
+          <Property Name="MODE_CREATEDDATE" Type="datetime" />
+          <Property Name="MODE_MODIFIEDBY" Type="int" />
+          <Property Name="MODE_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="transactions">
+          <Key>
+            <PropertyRef Name="TRANS_ID" />
+          </Key>
+          <Property Name="TRANS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TRANS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="TRANS_NUMBER" Type="varchar(max)" />
+          <Property Name="TRANS_MODE" Type="int" />
+          <Property Name="TRANS_MODENAME" Type="varchar" MaxLength="200" />
+          <Property Name="TRANS_AMOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="TRANS_STATUS" Type="int" />
+          <Property Name="TRANS_CREATEDBY" Type="int" />
+          <Property Name="TRANS_CRETEATEDDATE" Type="datetime" />
+          <Property Name="TRANS_MODIFIEDBY" Type="int" />
+          <Property Name="TRANS_MODIFIEDDATE" Type="datetime" />
+          <Property Name="TRANS_CREDIT" Type="bit" />
+          <Property Name="TRANS_DEBIT" Type="bit" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONSTATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_CREATEDBY" Type="int" />
+          <Property Name="STATUS_CREATEDDATE" Type="datetime" />
+          <Property Name="STATUS_MODIFIEDBY" Type="int" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
+        <EntityType Name="USERCOUPONS">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="COUPON_USERID" Type="int" />
+          <Property Name="COUPON_NAME" Type="varchar" MaxLength="36" StoreGeneratedPattern="Computed" />
+          <Property Name="COUPON_MONEY" Type="int" />
+          <Property Name="COUPON_TYPE" Type="int" />
+          <Property Name="COUPON_CREATEDBY" Type="int" />
+          <Property Name="COUPON_CREATEDDATE" Type="datetime" />
+          <Property Name="COUPON_MODIFIEDBY" Type="int" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
+          <Property Name="COUPON_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="WALLET">
+          <Key>
+            <PropertyRef Name="WALLET_ID" />
+          </Key>
+          <Property Name="WALLET_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WALLET_USERID" Type="int" />
+          <Property Name="WALLET_AVAILABLEMONEY" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="WALLET_CREATEDBY" Type="int" />
+          <Property Name="WALLET_CREATEDDATE" Type="datetime" />
+          <Property Name="WALLET_MODIFIEDBY" Type="int" />
+          <Property Name="WALLET_MODIFIEDDATE" Type="datetime" />
+          <Property Name="WALLET_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="WALLETADDTYPES">
+          <Key>
+            <PropertyRef Name="WALLETADD_ID" />
+          </Key>
+          <Property Name="WALLETADD_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WALLETADD_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="WALLETADD_CREATEDBY" Type="int" />
+          <Property Name="WALLETADD_CREATEDDATE" Type="datetime" />
+          <Property Name="WALLETADD_MODIFIEDBY" Type="int" />
+          <Property Name="WALLETADD_MODIFIEDDATE" Type="datetime" />
+          <Property Name="WALLETADD_STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="WALLETTRANSACTIONS">
+          <Key>
+            <PropertyRef Name="TRANS_ID" />
+          </Key>
+          <Property Name="TRANS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TRANS_WALLETID" Type="int" />
+          <Property Name="TRANS_COMMENT" Type="varchar(max)" />
+          <Property Name="TRANS_WALLETTYPE" Type="int" />
+          <Property Name="TRANS_COUPONAPPLIEDID" Type="int" />
+          <Property Name="TRANS_TRANSACTIONID" Type="int" />
+          <Property Name="TRANS_CREATEDBY" Type="int" />
+          <Property Name="TRANS_CREATEDDATE" Type="datetime" />
+          <Property Name="TRANS_MODIFIEDBY" Type="int" />
+          <Property Name="TRANS_MODIFIEDDATE" Type="datetime" />
+          <Property Name="TRANS_STATUS" Type="int" />
+          <Property Name="TRANS_WALLETSTATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="WALLETTRANSACTIONSSTATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_CREATEDBY" Type="int" />
+          <Property Name="STATUS_CREATEDDATE" Type="datetime" />
+          <Property Name="STATUS_MODIFIEDBY" Type="int" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
+        </EntityType>
         <EntityType Name="CH_USER">
           <Key>
             <PropertyRef Name="USER_ID" />
@@ -38,20 +190,6 @@
           <Property Name="CITY_MODIFIEDBY" Type="int" />
           <Property Name="CITY_MODIFIEDDATE" Type="datetime" />
           <Property Name="CITY_STATUS" Type="int" />
-        </EntityType>
-        <EntityType Name="COUPONS">
-          <Key>
-            <PropertyRef Name="COUPON_ID" />
-          </Key>
-          <Property Name="COUPON_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="COUPON_USERID" Type="int" />
-          <Property Name="COUPON_NAME" Type="nvarchar" MaxLength="200" />
-          <Property Name="COUPON_MONEY" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="COUPON_CREATEDBY" Type="int" />
-          <Property Name="COUPON_CREATEDDATE" Type="datetime" />
-          <Property Name="COUPON_MODIFIEDBY" Type="int" />
-          <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
-          <Property Name="COUPON_ADMINCOUPON" Type="bit" />
         </EntityType>
         <EntityType Name="DRIVERS">
           <Key>
@@ -415,6 +553,30 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="VENDOR_MODIFIEDBY" Type="int" />
           <Property Name="VENDOR_MODIFIEDDATE" Type="datetime" />
         </EntityType>
+        <Association Name="FK__APPLIEDCO__APPLI__51300E55">
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+          <End Role="APPLIEDCOUPONS" Type="Self.APPLIEDCOUPONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="APPLIEDCOUPONS">
+              <PropertyRef Name="APPLIED_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__APPLIEDCO__APPLI__59C55456">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="APPLIEDCOUPONS" Type="Self.APPLIEDCOUPONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="APPLIEDCOUPONS">
+              <PropertyRef Name="APPLIED_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CH_USER__USER_RE__1CF15040">
           <End Role="USER_REGISTERTYPE" Type="Self.USER_REGISTERTYPE" Multiplicity="0..1" />
           <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
@@ -463,27 +625,39 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__COUPONS__COUPON___29572725">
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+        <Association Name="FK__COUPONS__COUPON___4C6B5938">
+          <End Role="COUPONTYPE" Type="Self.COUPONTYPE" Multiplicity="0..1" />
           <End Role="COUPONS" Type="Self.COUPONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CH_USER">
-              <PropertyRef Name="USER_ID" />
+            <Principal Role="COUPONTYPE">
+              <PropertyRef Name="COUPONTYPE_ID" />
             </Principal>
             <Dependent Role="COUPONS">
-              <PropertyRef Name="COUPON_USERID" />
+              <PropertyRef Name="COUPON_TYPE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__COUPONS__COUPON___2B3F6F97">
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+        <Association Name="FK__COUPONS__COUPON___57DD0BE4">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
           <End Role="COUPONS" Type="Self.COUPONS" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CH_USER">
-              <PropertyRef Name="USER_ID" />
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
             </Principal>
             <Dependent Role="COUPONS">
-              <PropertyRef Name="COUPON_USERID" />
+              <PropertyRef Name="COUPON_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COUPONTYP__COUPO__32AB8735">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="COUPONTYPE" Type="Self.COUPONTYPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="COUPONTYPE">
+              <PropertyRef Name="COUPONTYPE_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -595,6 +769,30 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__transacti__TRANS__6EC0713C">
+          <End Role="TRANSACTIONMODE" Type="Self.TRANSACTIONMODE" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONMODE">
+              <PropertyRef Name="MODE_ID" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="TRANS_MODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__TRANS__6FB49575">
+          <End Role="TRANSACTIONSTATUS" Type="Self.TRANSACTIONSTATUS" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="TRANS_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__TRIPLOCAT__LL_ST__01142BA1">
           <End Role="TRIPSTATUS" Type="Self.TRIPSTATUS" Multiplicity="0..1" />
           <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATIONS" Multiplicity="*" />
@@ -652,6 +850,42 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Principal>
             <Dependent Role="TRIPS">
               <PropertyRef Name="TRIP_VEHICLE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERCOUPO__COUPO__3E1D39E1">
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+          <End Role="USERCOUPONS" Type="Self.USERCOUPONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="USERCOUPONS">
+              <PropertyRef Name="COUPON_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERCOUPO__COUPO__3F115E1A">
+          <End Role="COUPONTYPE" Type="Self.COUPONTYPE" Multiplicity="0..1" />
+          <End Role="USERCOUPONS" Type="Self.USERCOUPONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUPONTYPE">
+              <PropertyRef Name="COUPONTYPE_ID" />
+            </Principal>
+            <Dependent Role="USERCOUPONS">
+              <PropertyRef Name="COUPON_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERCOUPO__COUPO__58D1301D">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="USERCOUPONS" Type="Self.USERCOUPONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="USERCOUPONS">
+              <PropertyRef Name="COUPON_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -775,10 +1009,113 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__WALLET__WALLET_S__5AB9788F">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="WALLET" Type="Self.WALLET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLET">
+              <PropertyRef Name="WALLET_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLET__WALLET_U__43D61337">
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+          <End Role="WALLET" Type="Self.WALLET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="WALLET">
+              <PropertyRef Name="WALLET_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETADD__WALLE__5BAD9CC8">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="WALLETADDTYPES" Type="Self.WALLETADDTYPES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLETADDTYPES">
+              <PropertyRef Name="WALLETADD_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__TRANS__55F4C372">
+          <End Role="WALLET" Type="Self.WALLET" Multiplicity="0..1" />
+          <End Role="WALLETTRANSACTIONS" Type="Self.WALLETTRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WALLET">
+              <PropertyRef Name="WALLET_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTIONS">
+              <PropertyRef Name="TRANS_WALLETID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__TRANS__56E8E7AB">
+          <End Role="WALLETADDTYPES" Type="Self.WALLETADDTYPES" Multiplicity="0..1" />
+          <End Role="WALLETTRANSACTIONS" Type="Self.WALLETTRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WALLETADDTYPES">
+              <PropertyRef Name="WALLETADD_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTIONS">
+              <PropertyRef Name="TRANS_WALLETTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__TRANS__74794A92">
+          <End Role="WALLETTRANSACTIONSSTATUS" Type="Self.WALLETTRANSACTIONSSTATUS" Multiplicity="0..1" />
+          <End Role="WALLETTRANSACTIONS" Type="Self.WALLETTRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WALLETTRANSACTIONSSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTIONS">
+              <PropertyRef Name="TRANS_WALLETSTATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__WALLE__5CA1C101">
+          <End Role="MASTERSTATUS" Type="Self.MASTERSTATUS" Multiplicity="0..1" />
+          <End Role="WALLETTRANSACTIONS" Type="Self.WALLETTRANSACTIONS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTIONS">
+              <PropertyRef Name="TRANS_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="USP_GETVEHICLEBYTRIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DROPLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="PICKUPLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="TRIP_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_SEARCHVEHICLES" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DROPLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="PICKUPLOCATION" Type="varchar" Mode="In" />
+        </Function>
         <EntityContainer Name="CHALOModelStoreContainer">
+          <EntitySet Name="APPLIEDCOUPONS" EntityType="Self.APPLIEDCOUPONS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="COUPONTYPE" EntityType="Self.COUPONTYPE" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="TRANSACTIONMODE" EntityType="Self.TRANSACTIONMODE" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="transactions" EntityType="Self.transactions" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="TRANSACTIONSTATUS" EntityType="Self.TRANSACTIONSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="USERCOUPONS" EntityType="Self.USERCOUPONS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="WALLET" EntityType="Self.WALLET" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="WALLETADDTYPES" EntityType="Self.WALLETADDTYPES" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="WALLETTRANSACTIONS" EntityType="Self.WALLETTRANSACTIONS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="WALLETTRANSACTIONSSTATUS" EntityType="Self.WALLETTRANSACTIONSSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="CH_USER" EntityType="Self.CH_USER" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CITIES" EntityType="Self.CITIES" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DRIVERS" EntityType="Self.DRIVERS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATUS" Schema="dbo" store:Type="Tables" />
@@ -819,6 +1156,14 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
     [Query].[USER_REFEREDBY] AS [USER_REFEREDBY]
     FROM [dbo].[Query] AS [Query]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK__APPLIEDCO__APPLI__51300E55" Association="Self.FK__APPLIEDCO__APPLI__51300E55">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="APPLIEDCOUPONS" EntitySet="APPLIEDCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__APPLIEDCO__APPLI__59C55456" Association="Self.FK__APPLIEDCO__APPLI__59C55456">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="APPLIEDCOUPONS" EntitySet="APPLIEDCOUPONS" />
+          </AssociationSet>
           <AssociationSet Name="FK__CH_USER__USER_RE__1CF15040" Association="Self.FK__CH_USER__USER_RE__1CF15040">
             <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
             <End Role="CH_USER" EntitySet="CH_USER" />
@@ -835,13 +1180,17 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="CITIES" EntitySet="CITIES" />
           </AssociationSet>
-          <AssociationSet Name="FK__COUPONS__COUPON___29572725" Association="Self.FK__COUPONS__COUPON___29572725">
-            <End Role="CH_USER" EntitySet="CH_USER" />
+          <AssociationSet Name="FK__COUPONS__COUPON___4C6B5938" Association="Self.FK__COUPONS__COUPON___4C6B5938">
+            <End Role="COUPONTYPE" EntitySet="COUPONTYPE" />
             <End Role="COUPONS" EntitySet="COUPONS" />
           </AssociationSet>
-          <AssociationSet Name="FK__COUPONS__COUPON___2B3F6F97" Association="Self.FK__COUPONS__COUPON___2B3F6F97">
-            <End Role="CH_USER" EntitySet="CH_USER" />
+          <AssociationSet Name="FK__COUPONS__COUPON___57DD0BE4" Association="Self.FK__COUPONS__COUPON___57DD0BE4">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="COUPONS" EntitySet="COUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COUPONTYP__COUPO__32AB8735" Association="Self.FK__COUPONTYP__COUPO__32AB8735">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="COUPONTYPE" EntitySet="COUPONTYPE" />
           </AssociationSet>
           <AssociationSet Name="FK__DRIVERS__DRIVER___34C8D9D1" Association="Self.FK__DRIVERS__DRIVER___34C8D9D1">
             <End Role="VENDORS" EntitySet="VENDORS" />
@@ -879,6 +1228,14 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="STATE" EntitySet="STATE" />
           </AssociationSet>
+          <AssociationSet Name="FK__transacti__TRANS__6EC0713C" Association="Self.FK__transacti__TRANS__6EC0713C">
+            <End Role="TRANSACTIONMODE" EntitySet="TRANSACTIONMODE" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__TRANS__6FB49575" Association="Self.FK__transacti__TRANS__6FB49575">
+            <End Role="TRANSACTIONSTATUS" EntitySet="TRANSACTIONSTATUS" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
           <AssociationSet Name="FK__TRIPLOCAT__LL_ST__01142BA1" Association="Self.FK__TRIPLOCAT__LL_ST__01142BA1">
             <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
             <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
@@ -898,6 +1255,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <AssociationSet Name="FK__TRIPS__TRIP_VEHI__6C190EBB" Association="Self.FK__TRIPS__TRIP_VEHI__6C190EBB">
             <End Role="VEHICLES" EntitySet="VEHICLES" />
             <End Role="TRIPS" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERCOUPO__COUPO__3E1D39E1" Association="Self.FK__USERCOUPO__COUPO__3E1D39E1">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="USERCOUPONS" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERCOUPO__COUPO__3F115E1A" Association="Self.FK__USERCOUPO__COUPO__3F115E1A">
+            <End Role="COUPONTYPE" EntitySet="COUPONTYPE" />
+            <End Role="USERCOUPONS" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERCOUPO__COUPO__58D1301D" Association="Self.FK__USERCOUPO__COUPO__58D1301D">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="USERCOUPONS" EntitySet="USERCOUPONS" />
           </AssociationSet>
           <AssociationSet Name="FK__USERTRIPS__USERT__1332DBDC" Association="Self.FK__USERTRIPS__USERT__1332DBDC">
             <End Role="TRIPS" EntitySet="TRIPS" />
@@ -939,12 +1308,440 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
             <End Role="VENDORS" EntitySet="VENDORS" />
           </AssociationSet>
+          <AssociationSet Name="FK__WALLET__WALLET_S__5AB9788F" Association="Self.FK__WALLET__WALLET_S__5AB9788F">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="WALLET" EntitySet="WALLET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLET__WALLET_U__43D61337" Association="Self.FK__WALLET__WALLET_U__43D61337">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="WALLET" EntitySet="WALLET" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETADD__WALLE__5BAD9CC8" Association="Self.FK__WALLETADD__WALLE__5BAD9CC8">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="WALLETADDTYPES" EntitySet="WALLETADDTYPES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__TRANS__55F4C372" Association="Self.FK__WALLETTRA__TRANS__55F4C372">
+            <End Role="WALLET" EntitySet="WALLET" />
+            <End Role="WALLETTRANSACTIONS" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__TRANS__56E8E7AB" Association="Self.FK__WALLETTRA__TRANS__56E8E7AB">
+            <End Role="WALLETADDTYPES" EntitySet="WALLETADDTYPES" />
+            <End Role="WALLETTRANSACTIONS" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__TRANS__74794A92" Association="Self.FK__WALLETTRA__TRANS__74794A92">
+            <End Role="WALLETTRANSACTIONSSTATUS" EntitySet="WALLETTRANSACTIONSSTATUS" />
+            <End Role="WALLETTRANSACTIONS" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__WALLE__5CA1C101" Association="Self.FK__WALLETTRA__WALLE__5CA1C101">
+            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
+            <End Role="WALLETTRANSACTIONS" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CHALOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CHALOEntities" annotation:LazyLoadingEnabled="true">
+          <FunctionImport Name="USP_GETVEHICLEBYTRIP">
+            <Parameter Name="DROPLOCATION" Mode="In" Type="String" />
+            <Parameter Name="PICKUPLOCATION" Mode="In" Type="String" />
+            <Parameter Name="TRIP_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="USP_SEARCHVEHICLES">
+            <Parameter Name="DROPLOCATION" Mode="In" Type="String" />
+            <Parameter Name="PICKUPLOCATION" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="APPLIEDCOUPONS" EntityType="CHALOModel.APPLIEDCOUPON" />
+          <EntitySet Name="COUPONS" EntityType="CHALOModel.COUPON" />
+          <EntitySet Name="COUPONTYPEs" EntityType="CHALOModel.COUPONTYPE" />
+          <EntitySet Name="TRANSACTIONMODEs" EntityType="CHALOModel.TRANSACTIONMODE" />
+          <EntitySet Name="transactions" EntityType="CHALOModel.transaction" />
+          <EntitySet Name="TRANSACTIONSTATUS" EntityType="CHALOModel.TRANSACTIONSTATU" />
+          <EntitySet Name="USERCOUPONS" EntityType="CHALOModel.USERCOUPON" />
+          <EntitySet Name="WALLETs" EntityType="CHALOModel.WALLET" />
+          <EntitySet Name="WALLETADDTYPES" EntityType="CHALOModel.WALLETADDTYPE" />
+          <EntitySet Name="WALLETTRANSACTIONS" EntityType="CHALOModel.WALLETTRANSACTION" />
+          <EntitySet Name="WALLETTRANSACTIONSSTATUS" EntityType="CHALOModel.WALLETTRANSACTIONSSTATU" />
+          <EntitySet Name="CH_USER" EntityType="CHALOModel.CH_USER" />
+          <EntitySet Name="CITIES" EntityType="CHALOModel.CITy" />
+          <EntitySet Name="DRIVERS" EntityType="CHALOModel.DRIVER" />
+          <EntitySet Name="LOCATIONS" EntityType="CHALOModel.LOCATION" />
+          <EntitySet Name="MASTERSTATUS" EntityType="CHALOModel.MASTERSTATU" />
+          <EntitySet Name="NOOFSEATS" EntityType="CHALOModel.NOOFSEAT" />
+          <EntitySet Name="PAYMENTHISTORies" EntityType="CHALOModel.PAYMENTHISTORY" />
+          <EntitySet Name="PAYMENTTYPEs" EntityType="CHALOModel.PAYMENTTYPE" />
+          <EntitySet Name="ROUTES" EntityType="CHALOModel.ROUTE" />
+          <EntitySet Name="STATEs" EntityType="CHALOModel.STATE" />
+          <EntitySet Name="temptrips" EntityType="CHALOModel.temptrip" />
+          <EntitySet Name="TRIPLOCATIONS" EntityType="CHALOModel.TRIPLOCATION" />
+          <EntitySet Name="TRIPS" EntityType="CHALOModel.TRIP" />
+          <EntitySet Name="TRIPSTATUS" EntityType="CHALOModel.TRIPSTATU" />
+          <EntitySet Name="TRIPTEMPs" EntityType="CHALOModel.TRIPTEMP" />
+          <EntitySet Name="USER_REGISTERTYPE" EntityType="CHALOModel.USER_REGISTERTYPE" />
+          <EntitySet Name="USER_STATUS" EntityType="CHALOModel.USER_STATUS" />
+          <EntitySet Name="USERTRIPS" EntityType="CHALOModel.USERTRIP" />
+          <EntitySet Name="VEHICLEDRIVERS" EntityType="CHALOModel.VEHICLEDRIVER" />
+          <EntitySet Name="VEHICLES" EntityType="CHALOModel.VEHICLE" />
+          <EntitySet Name="VEHICLETYPEs" EntityType="CHALOModel.VEHICLETYPE" />
+          <EntitySet Name="VENDORS" EntityType="CHALOModel.VENDOR" />
+          <EntitySet Name="Queries" EntityType="CHALOModel.Query" />
+          <AssociationSet Name="FK__APPLIEDCO__APPLI__51300E55" Association="CHALOModel.FK__APPLIEDCO__APPLI__51300E55">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="APPLIEDCOUPON" EntitySet="APPLIEDCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__APPLIEDCO__APPLI__59C55456" Association="CHALOModel.FK__APPLIEDCO__APPLI__59C55456">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="APPLIEDCOUPON" EntitySet="APPLIEDCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COUPONS__COUPON___4C6B5938" Association="CHALOModel.FK__COUPONS__COUPON___4C6B5938">
+            <End Role="COUPONTYPE" EntitySet="COUPONTYPEs" />
+            <End Role="COUPON" EntitySet="COUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COUPONS__COUPON___57DD0BE4" Association="CHALOModel.FK__COUPONS__COUPON___57DD0BE4">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="COUPON" EntitySet="COUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__COUPONTYP__COUPO__32AB8735" Association="CHALOModel.FK__COUPONTYP__COUPO__32AB8735">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="COUPONTYPE" EntitySet="COUPONTYPEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERCOUPO__COUPO__3F115E1A" Association="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A">
+            <End Role="COUPONTYPE" EntitySet="COUPONTYPEs" />
+            <End Role="USERCOUPON" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__TRANS__6EC0713C" Association="CHALOModel.FK__transacti__TRANS__6EC0713C">
+            <End Role="TRANSACTIONMODE" EntitySet="TRANSACTIONMODEs" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__transacti__TRANS__6FB49575" Association="CHALOModel.FK__transacti__TRANS__6FB49575">
+            <End Role="TRANSACTIONSTATU" EntitySet="TRANSACTIONSTATUS" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERCOUPO__COUPO__3E1D39E1" Association="CHALOModel.FK__USERCOUPO__COUPO__3E1D39E1">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="USERCOUPON" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERCOUPO__COUPO__58D1301D" Association="CHALOModel.FK__USERCOUPO__COUPO__58D1301D">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="USERCOUPON" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLET__WALLET_S__5AB9788F" Association="CHALOModel.FK__WALLET__WALLET_S__5AB9788F">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="WALLET" EntitySet="WALLETs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLET__WALLET_U__43D61337" Association="CHALOModel.FK__WALLET__WALLET_U__43D61337">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="WALLET" EntitySet="WALLETs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__TRANS__55F4C372" Association="CHALOModel.FK__WALLETTRA__TRANS__55F4C372">
+            <End Role="WALLET" EntitySet="WALLETs" />
+            <End Role="WALLETTRANSACTION" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETADD__WALLE__5BAD9CC8" Association="CHALOModel.FK__WALLETADD__WALLE__5BAD9CC8">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="WALLETADDTYPE" EntitySet="WALLETADDTYPES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__TRANS__56E8E7AB" Association="CHALOModel.FK__WALLETTRA__TRANS__56E8E7AB">
+            <End Role="WALLETADDTYPE" EntitySet="WALLETADDTYPES" />
+            <End Role="WALLETTRANSACTION" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__TRANS__74794A92" Association="CHALOModel.FK__WALLETTRA__TRANS__74794A92">
+            <End Role="WALLETTRANSACTIONSSTATU" EntitySet="WALLETTRANSACTIONSSTATUS" />
+            <End Role="WALLETTRANSACTION" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__WALLETTRA__WALLE__5CA1C101" Association="CHALOModel.FK__WALLETTRA__WALLE__5CA1C101">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="WALLETTRANSACTION" EntitySet="WALLETTRANSACTIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CH_USER__USER_RE__1CF15040" Association="CHALOModel.FK__CH_USER__USER_RE__1CF15040">
+            <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CH_USER__USER_ST__1DE57479" Association="CHALOModel.FK__CH_USER__USER_ST__1DE57479">
+            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
+            <End Role="CH_USER" EntitySet="CH_USER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__44FF419A" Association="CHALOModel.FK__CITIES__CITY_STA__44FF419A">
+            <End Role="STATE" EntitySet="STATEs" />
+            <End Role="CITy" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__45F365D3" Association="CHALOModel.FK__CITIES__CITY_STA__45F365D3">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="CITy" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__4AB81AF0" Association="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0">
+            <End Role="CITy" EntitySet="CITIES" />
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__DRIVER___34C8D9D1" Association="CHALOModel.FK__DRIVERS__DRIVER___34C8D9D1">
+            <End Role="VENDOR" EntitySet="VENDORS" />
+            <End Role="DRIVER" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DRIVERS__DRIVER___35BCFE0A" Association="CHALOModel.FK__DRIVERS__DRIVER___35BCFE0A">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="DRIVER" EntitySet="DRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLEDR__VD_DR__2A164134" Association="CHALOModel.FK__VEHICLEDR__VD_DR__2A164134">
+            <End Role="DRIVER" EntitySet="DRIVERS" />
+            <End Role="VEHICLEDRIVER" EntitySet="VEHICLEDRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__4BAC3F29" Association="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ROUTES__ROUTE_ST__5070F446" Association="CHALOModel.FK__ROUTES__ROUTE_ST__5070F446">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="ROUTE" EntitySet="ROUTES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__STATE__STATE_STA__403A8C7D" Association="CHALOModel.FK__STATE__STATE_STA__403A8C7D">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="STATE" EntitySet="STATEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__656C112C" Association="CHALOModel.FK__VEHICLES__VEHICL__656C112C">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="VEHICLE" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VENDORS__VENDOR___300424B4" Association="CHALOModel.FK__VENDORS__VENDOR___300424B4">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="VENDOR" EntitySet="VENDORS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NOOFSEATS__SEAT___70DDC3D8" Association="CHALOModel.FK__NOOFSEATS__SEAT___70DDC3D8">
+            <End Role="TRIP" EntitySet="TRIPS" />
+            <End Role="NOOFSEAT" EntitySet="NOOFSEATS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__1AD3FDA4" Association="CHALOModel.FK__PAYMENTHI__PAYME__1AD3FDA4">
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__1BC821DD" Association="CHALOModel.FK__PAYMENTHI__PAYME__1BC821DD">
+            <End Role="PAYMENTTYPE" EntitySet="PAYMENTTYPEs" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__6A30C649" Association="CHALOModel.FK__TRIPS__TRIP_ROUT__6A30C649">
+            <End Role="ROUTE" EntitySet="ROUTES" />
+            <End Role="TRIP" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPLOCAT__LL_ST__01142BA1" Association="CHALOModel.FK__TRIPLOCAT__LL_ST__01142BA1">
+            <End Role="TRIPSTATU" EntitySet="TRIPSTATUS" />
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPLOCAT__LL_TR__02084FDA" Association="CHALOModel.FK__TRIPLOCAT__LL_TR__02084FDA">
+            <End Role="TRIP" EntitySet="TRIPS" />
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__14270015" Association="CHALOModel.FK__USERTRIPS__USERT__14270015">
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__151B244E" Association="CHALOModel.FK__USERTRIPS__USERT__151B244E">
+            <End Role="TRIPLOCATION" EntitySet="TRIPLOCATIONS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_STAT__6B24EA82" Association="CHALOModel.FK__TRIPS__TRIP_STAT__6B24EA82">
+            <End Role="TRIPSTATU" EntitySet="TRIPSTATUS" />
+            <End Role="TRIP" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__6C190EBB" Association="CHALOModel.FK__TRIPS__TRIP_VEHI__6C190EBB">
+            <End Role="VEHICLE" EntitySet="VEHICLES" />
+            <End Role="TRIP" EntitySet="TRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__1332DBDC" Association="CHALOModel.FK__USERTRIPS__USERT__1332DBDC">
+            <End Role="TRIP" EntitySet="TRIPS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__USERTRIPS__USERT__160F4887" Association="CHALOModel.FK__USERTRIPS__USERT__160F4887">
+            <End Role="TRIPSTATU" EntitySet="TRIPSTATUS" />
+            <End Role="USERTRIP" EntitySet="USERTRIPS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLEDR__VD_VE__2B0A656D" Association="CHALOModel.FK__VEHICLEDR__VD_VE__2B0A656D">
+            <End Role="VEHICLE" EntitySet="VEHICLES" />
+            <End Role="VEHICLEDRIVER" EntitySet="VEHICLEDRIVERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__6383C8BA" Association="CHALOModel.FK__VEHICLES__VEHICL__6383C8BA">
+            <End Role="VENDOR" EntitySet="VENDORS" />
+            <End Role="VEHICLE" EntitySet="VEHICLES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__VEHICLES__VEHICL__6477ECF3" Association="CHALOModel.FK__VEHICLES__VEHICL__6477ECF3">
+            <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
+            <End Role="VEHICLE" EntitySet="VEHICLES" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="APPLIEDCOUPON">
+          <Key>
+            <PropertyRef Name="APPLIED_ID" />
+          </Key>
+          <Property Name="APPLIED_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="APPLIED_USERID" Type="Int32" />
+          <Property Name="APPLIED_COUPONID" Type="Int32" />
+          <Property Name="APPLIED_COUPONNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="APPLIED_ADMINCOUPON" Type="Boolean" />
+          <Property Name="APPLIED_USERCOUPON" Type="Boolean" />
+          <Property Name="APPLIED_ONETIME" Type="Boolean" />
+          <Property Name="APPLIED_CREATEDBY" Type="Int32" />
+          <Property Name="APPLIED_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="APPLIED_MODIFIEDBY" Type="Int32" />
+          <Property Name="APPLIED_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="APPLIED_STATUS" Type="Int32" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="APPLIEDCOUPON" ToRole="CH_USER" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" FromRole="APPLIEDCOUPON" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="COUPON">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COUPON_NAME" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="COUPON_MONEY" Type="Int32" />
+          <Property Name="COUPON_TYPE" Type="Int32" />
+          <Property Name="COUPON_CREATEDBY" Type="Int32" />
+          <Property Name="COUPON_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPON_MODIFIEDBY" Type="Int32" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPON_STATUS" Type="Int32" />
+          <NavigationProperty Name="COUPONTYPE" Relationship="CHALOModel.FK__COUPONS__COUPON___4C6B5938" FromRole="COUPON" ToRole="COUPONTYPE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__COUPONS__COUPON___57DD0BE4" FromRole="COUPON" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="COUPONTYPE">
+          <Key>
+            <PropertyRef Name="COUPONTYPE_ID" />
+          </Key>
+          <Property Name="COUPONTYPE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COUPONTYPE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="COUPONTYPE_CREATEDBY" Type="Int32" />
+          <Property Name="COUPONTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPONTYPE_MODIFIEDBY" Type="Int32" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPONTYPE_STATUS" Type="Int32" />
+          <Property Name="COUPONTYPE_ONETIME" Type="Boolean" />
+          <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___4C6B5938" FromRole="COUPONTYPE" ToRole="COUPON" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__COUPONTYP__COUPO__32AB8735" FromRole="COUPONTYPE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A" FromRole="COUPONTYPE" ToRole="USERCOUPON" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONMODE">
+          <Key>
+            <PropertyRef Name="MODE_ID" />
+          </Key>
+          <Property Name="MODE_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MODE_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="MODE_CREATEDBY" Type="Int32" />
+          <Property Name="MODE_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="MODE_MODIFIEDBY" Type="Int32" />
+          <Property Name="MODE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="transactions" Relationship="CHALOModel.FK__transacti__TRANS__6EC0713C" FromRole="TRANSACTIONMODE" ToRole="transaction" />
+        </EntityType>
+        <EntityType Name="transaction">
+          <Key>
+            <PropertyRef Name="TRANS_ID" />
+          </Key>
+          <Property Name="TRANS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TRANS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRANS_NUMBER" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TRANS_MODE" Type="Int32" />
+          <Property Name="TRANS_MODENAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRANS_AMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="TRANS_STATUS" Type="Int32" />
+          <Property Name="TRANS_CREATEDBY" Type="Int32" />
+          <Property Name="TRANS_CRETEATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRANS_MODIFIEDBY" Type="Int32" />
+          <Property Name="TRANS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRANS_CREDIT" Type="Boolean" />
+          <Property Name="TRANS_DEBIT" Type="Boolean" />
+          <NavigationProperty Name="TRANSACTIONMODE" Relationship="CHALOModel.FK__transacti__TRANS__6EC0713C" FromRole="transaction" ToRole="TRANSACTIONMODE" />
+          <NavigationProperty Name="TRANSACTIONSTATU" Relationship="CHALOModel.FK__transacti__TRANS__6FB49575" FromRole="transaction" ToRole="TRANSACTIONSTATU" />
+        </EntityType>
+        <EntityType Name="TRANSACTIONSTATU">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_CREATEDBY" Type="Int32" />
+          <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="transactions" Relationship="CHALOModel.FK__transacti__TRANS__6FB49575" FromRole="TRANSACTIONSTATU" ToRole="transaction" />
+        </EntityType>
+        <EntityType Name="USERCOUPON">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="COUPON_USERID" Type="Int32" />
+          <Property Name="COUPON_NAME" Type="String" MaxLength="36" FixedLength="false" Unicode="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="COUPON_MONEY" Type="Int32" />
+          <Property Name="COUPON_TYPE" Type="Int32" />
+          <Property Name="COUPON_CREATEDBY" Type="Int32" />
+          <Property Name="COUPON_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPON_MODIFIEDBY" Type="Int32" />
+          <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="COUPON_STATUS" Type="Int32" />
+          <NavigationProperty Name="COUPONTYPE" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A" FromRole="USERCOUPON" ToRole="COUPONTYPE" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3E1D39E1" FromRole="USERCOUPON" ToRole="CH_USER" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__USERCOUPO__COUPO__58D1301D" FromRole="USERCOUPON" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="WALLET">
+          <Key>
+            <PropertyRef Name="WALLET_ID" />
+          </Key>
+          <Property Name="WALLET_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WALLET_USERID" Type="Int32" />
+          <Property Name="WALLET_AVAILABLEMONEY" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="WALLET_CREATEDBY" Type="Int32" />
+          <Property Name="WALLET_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="WALLET_MODIFIEDBY" Type="Int32" />
+          <Property Name="WALLET_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="WALLET_STATUS" Type="Int32" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__WALLET__WALLET_S__5AB9788F" FromRole="WALLET" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__WALLET__WALLET_U__43D61337" FromRole="WALLET" ToRole="CH_USER" />
+          <NavigationProperty Name="WALLETTRANSACTIONS" Relationship="CHALOModel.FK__WALLETTRA__TRANS__55F4C372" FromRole="WALLET" ToRole="WALLETTRANSACTION" />
+        </EntityType>
+        <EntityType Name="WALLETADDTYPE">
+          <Key>
+            <PropertyRef Name="WALLETADD_ID" />
+          </Key>
+          <Property Name="WALLETADD_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WALLETADD_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="WALLETADD_CREATEDBY" Type="Int32" />
+          <Property Name="WALLETADD_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="WALLETADD_MODIFIEDBY" Type="Int32" />
+          <Property Name="WALLETADD_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="WALLETADD_STATUS" Type="Int32" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__WALLETADD__WALLE__5BAD9CC8" FromRole="WALLETADDTYPE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="WALLETTRANSACTIONS" Relationship="CHALOModel.FK__WALLETTRA__TRANS__56E8E7AB" FromRole="WALLETADDTYPE" ToRole="WALLETTRANSACTION" />
+        </EntityType>
+        <EntityType Name="WALLETTRANSACTION">
+          <Key>
+            <PropertyRef Name="TRANS_ID" />
+          </Key>
+          <Property Name="TRANS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TRANS_WALLETID" Type="Int32" />
+          <Property Name="TRANS_COMMENT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TRANS_WALLETTYPE" Type="Int32" />
+          <Property Name="TRANS_COUPONAPPLIEDID" Type="Int32" />
+          <Property Name="TRANS_TRANSACTIONID" Type="Int32" />
+          <Property Name="TRANS_CREATEDBY" Type="Int32" />
+          <Property Name="TRANS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRANS_MODIFIEDBY" Type="Int32" />
+          <Property Name="TRANS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="TRANS_STATUS" Type="Int32" />
+          <Property Name="TRANS_WALLETSTATUS" Type="Int32" />
+          <NavigationProperty Name="WALLET" Relationship="CHALOModel.FK__WALLETTRA__TRANS__55F4C372" FromRole="WALLETTRANSACTION" ToRole="WALLET" />
+          <NavigationProperty Name="WALLETADDTYPE" Relationship="CHALOModel.FK__WALLETTRA__TRANS__56E8E7AB" FromRole="WALLETTRANSACTION" ToRole="WALLETADDTYPE" />
+          <NavigationProperty Name="WALLETTRANSACTIONSSTATU" Relationship="CHALOModel.FK__WALLETTRA__TRANS__74794A92" FromRole="WALLETTRANSACTION" ToRole="WALLETTRANSACTIONSSTATU" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__WALLETTRA__WALLE__5CA1C101" FromRole="WALLETTRANSACTION" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="WALLETTRANSACTIONSSTATU">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_CREATEDBY" Type="Int32" />
+          <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="WALLETTRANSACTIONS" Relationship="CHALOModel.FK__WALLETTRA__TRANS__74794A92" FromRole="WALLETTRANSACTIONSSTATU" ToRole="WALLETTRANSACTION" />
+        </EntityType>
         <EntityType Name="CH_USER">
           <Key>
             <PropertyRef Name="USER_ID" />
@@ -965,10 +1762,11 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="USER_COUPONAPPLIED" Type="Boolean" />
           <Property Name="USER_REFEREDBY" Type="Int32" />
-          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="Self.FK__CH_USER__USER_RE__1CF15040" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
-          <NavigationProperty Name="USER_STATUS1" Relationship="Self.FK__CH_USER__USER_ST__1DE57479" FromRole="CH_USER" ToRole="USER_STATUS" />
-          <NavigationProperty Name="COUPONS" Relationship="Self.FK__COUPONS__COUPON___29572725" FromRole="CH_USER" ToRole="COUPONS" />
-          <NavigationProperty Name="COUPONS1" Relationship="Self.FK__COUPONS__COUPON___2B3F6F97" FromRole="CH_USER" ToRole="COUPONS" />
+          <NavigationProperty Name="APPLIEDCOUPONS" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="CH_USER" ToRole="APPLIEDCOUPON" />
+          <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3E1D39E1" FromRole="CH_USER" ToRole="USERCOUPON" />
+          <NavigationProperty Name="WALLETs" Relationship="CHALOModel.FK__WALLET__WALLET_U__43D61337" FromRole="CH_USER" ToRole="WALLET" />
+          <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="CHALOModel.FK__CH_USER__USER_RE__1CF15040" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
+          <NavigationProperty Name="USER_STATUS1" Relationship="CHALOModel.FK__CH_USER__USER_ST__1DE57479" FromRole="CH_USER" ToRole="USER_STATUS" />
         </EntityType>
         <EntityType Name="CITy">
           <Key>
@@ -982,25 +1780,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="CITY_MODIFIEDBY" Type="Int32" />
           <Property Name="CITY_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="CITY_STATUS" Type="Int32" />
-          <NavigationProperty Name="STATE" Relationship="Self.FK__CITIES__CITY_STA__44FF419A" FromRole="CITIES" ToRole="STATE" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__CITIES__CITY_STA__45F365D3" FromRole="CITIES" ToRole="MASTERSTATUS" />
-          <NavigationProperty Name="LOCATIONS" Relationship="Self.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="CITIES" ToRole="LOCATIONS" />
-        </EntityType>
-        <EntityType Name="COUPON">
-          <Key>
-            <PropertyRef Name="COUPON_ID" />
-          </Key>
-          <Property Name="COUPON_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="COUPON_USERID" Type="Int32" />
-          <Property Name="COUPON_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="COUPON_MONEY" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="COUPON_CREATEDBY" Type="Int32" />
-          <Property Name="COUPON_CREATEDDATE" Type="DateTime" Precision="3" />
-          <Property Name="COUPON_MODIFIEDBY" Type="Int32" />
-          <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <Property Name="COUPON_ADMINCOUPON" Type="Boolean" />
-          <NavigationProperty Name="CH_USER" Relationship="Self.FK__COUPONS__COUPON___29572725" FromRole="COUPONS" ToRole="CH_USER" />
-          <NavigationProperty Name="CH_USER1" Relationship="Self.FK__COUPONS__COUPON___2B3F6F97" FromRole="COUPONS" ToRole="CH_USER" />
+          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__44FF419A" FromRole="CITy" ToRole="STATE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__45F365D3" FromRole="CITy" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="CITy" ToRole="LOCATION" />
         </EntityType>
         <EntityType Name="DRIVER">
           <Key>
@@ -1022,9 +1804,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="DRIVER_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="DRIVER_MODIFIEDBY" Type="Int32" />
           <Property Name="DRIVER_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="VENDOR" Relationship="Self.FK__DRIVERS__DRIVER___34C8D9D1" FromRole="DRIVERS" ToRole="VENDORS" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__DRIVERS__DRIVER___35BCFE0A" FromRole="DRIVERS" ToRole="MASTERSTATUS" />
-          <NavigationProperty Name="VEHICLEDRIVERS" Relationship="Self.FK__VEHICLEDR__VD_DR__2A164134" FromRole="DRIVERS" ToRole="VEHICLEDRIVERS" />
+          <NavigationProperty Name="VENDOR" Relationship="CHALOModel.FK__DRIVERS__DRIVER___34C8D9D1" FromRole="DRIVER" ToRole="VENDOR" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__DRIVERS__DRIVER___35BCFE0A" FromRole="DRIVER" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="VEHICLEDRIVERS" Relationship="CHALOModel.FK__VEHICLEDR__VD_DR__2A164134" FromRole="DRIVER" ToRole="VEHICLEDRIVER" />
         </EntityType>
         <EntityType Name="LOCATION">
           <Key>
@@ -1040,8 +1822,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="LOCATION_MODIFIEDBY" Type="Int32" />
           <Property Name="LOCATION_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="LOCATION_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITy" Relationship="Self.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="LOCATIONS" ToRole="CITIES" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="LOCATIONS" ToRole="MASTERSTATUS" />
+          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="LOCATION" ToRole="CITy" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="LOCATION" ToRole="MASTERSTATU" />
         </EntityType>
         <EntityType Name="MASTERSTATU">
           <Key>
@@ -1053,13 +1835,20 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CITIES" Relationship="Self.FK__CITIES__CITY_STA__45F365D3" FromRole="MASTERSTATUS" ToRole="CITIES" />
-          <NavigationProperty Name="DRIVERS" Relationship="Self.FK__DRIVERS__DRIVER___35BCFE0A" FromRole="MASTERSTATUS" ToRole="DRIVERS" />
-          <NavigationProperty Name="LOCATIONS" Relationship="Self.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="MASTERSTATUS" ToRole="LOCATIONS" />
-          <NavigationProperty Name="ROUTES" Relationship="Self.FK__ROUTES__ROUTE_ST__5070F446" FromRole="MASTERSTATUS" ToRole="ROUTES" />
-          <NavigationProperty Name="STATEs" Relationship="Self.FK__STATE__STATE_STA__403A8C7D" FromRole="MASTERSTATUS" ToRole="STATE" />
-          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__656C112C" FromRole="MASTERSTATUS" ToRole="VEHICLES" />
-          <NavigationProperty Name="VENDORS" Relationship="Self.FK__VENDORS__VENDOR___300424B4" FromRole="MASTERSTATUS" ToRole="VENDORS" />
+          <NavigationProperty Name="APPLIEDCOUPONS" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" FromRole="MASTERSTATU" ToRole="APPLIEDCOUPON" />
+          <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___57DD0BE4" FromRole="MASTERSTATU" ToRole="COUPON" />
+          <NavigationProperty Name="COUPONTYPEs" Relationship="CHALOModel.FK__COUPONTYP__COUPO__32AB8735" FromRole="MASTERSTATU" ToRole="COUPONTYPE" />
+          <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__58D1301D" FromRole="MASTERSTATU" ToRole="USERCOUPON" />
+          <NavigationProperty Name="WALLETs" Relationship="CHALOModel.FK__WALLET__WALLET_S__5AB9788F" FromRole="MASTERSTATU" ToRole="WALLET" />
+          <NavigationProperty Name="WALLETADDTYPES" Relationship="CHALOModel.FK__WALLETADD__WALLE__5BAD9CC8" FromRole="MASTERSTATU" ToRole="WALLETADDTYPE" />
+          <NavigationProperty Name="WALLETTRANSACTIONS" Relationship="CHALOModel.FK__WALLETTRA__WALLE__5CA1C101" FromRole="MASTERSTATU" ToRole="WALLETTRANSACTION" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__45F365D3" FromRole="MASTERSTATU" ToRole="CITy" />
+          <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___35BCFE0A" FromRole="MASTERSTATU" ToRole="DRIVER" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="MASTERSTATU" ToRole="LOCATION" />
+          <NavigationProperty Name="ROUTES" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__5070F446" FromRole="MASTERSTATU" ToRole="ROUTE" />
+          <NavigationProperty Name="STATEs" Relationship="CHALOModel.FK__STATE__STATE_STA__403A8C7D" FromRole="MASTERSTATU" ToRole="STATE" />
+          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__656C112C" FromRole="MASTERSTATU" ToRole="VEHICLE" />
+          <NavigationProperty Name="VENDORS" Relationship="CHALOModel.FK__VENDORS__VENDOR___300424B4" FromRole="MASTERSTATU" ToRole="VENDOR" />
         </EntityType>
         <EntityType Name="NOOFSEAT">
           <Key>
@@ -1073,7 +1862,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="SEAT_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="SEAT_MODIFIEDBY" Type="Int32" />
           <Property Name="SEAT_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TRIP" Relationship="Self.FK__NOOFSEATS__SEAT___70DDC3D8" FromRole="NOOFSEATS" ToRole="TRIPS" />
+          <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__NOOFSEATS__SEAT___70DDC3D8" FromRole="NOOFSEAT" ToRole="TRIP" />
         </EntityType>
         <EntityType Name="PAYMENTHISTORY">
           <Key>
@@ -1087,8 +1876,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="PAYMENTTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="PAYMENT_MODIFIEDBY" Type="Int32" />
           <Property Name="PAYMENTTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="USERTRIP" Relationship="Self.FK__PAYMENTHI__PAYME__1AD3FDA4" FromRole="PAYMENTHISTORY" ToRole="USERTRIPS" />
-          <NavigationProperty Name="PAYMENTTYPE" Relationship="Self.FK__PAYMENTHI__PAYME__1BC821DD" FromRole="PAYMENTHISTORY" ToRole="PAYMENTTYPE" />
+          <NavigationProperty Name="USERTRIP" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1AD3FDA4" FromRole="PAYMENTHISTORY" ToRole="USERTRIP" />
+          <NavigationProperty Name="PAYMENTTYPE" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1BC821DD" FromRole="PAYMENTHISTORY" ToRole="PAYMENTTYPE" />
         </EntityType>
         <EntityType Name="PAYMENTTYPE">
           <Key>
@@ -1100,7 +1889,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="PAYMENTTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="PAYMENT_MODIFIEDBY" Type="Int32" />
           <Property Name="PAYMENT_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PAYMENTHISTORies" Relationship="Self.FK__PAYMENTHI__PAYME__1BC821DD" FromRole="PAYMENTTYPE" ToRole="PAYMENTHISTORY" />
+          <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1BC821DD" FromRole="PAYMENTTYPE" ToRole="PAYMENTHISTORY" />
         </EntityType>
         <EntityType Name="ROUTE">
           <Key>
@@ -1123,8 +1912,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="ROUTE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="ROUTE_STATUS" Type="Int32" />
           <Property Name="ROUTE_ALLLOCATIONS" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__ROUTES__ROUTE_ST__5070F446" FromRole="ROUTES" ToRole="MASTERSTATUS" />
-          <NavigationProperty Name="TRIPS" Relationship="Self.FK__TRIPS__TRIP_ROUT__6A30C649" FromRole="ROUTES" ToRole="TRIPS" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__5070F446" FromRole="ROUTE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_ROUT__6A30C649" FromRole="ROUTE" ToRole="TRIP" />
         </EntityType>
         <EntityType Name="STATE">
           <Key>
@@ -1137,8 +1926,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATE_MODIFIEDBY" Type="Int32" />
           <Property Name="STATE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATE_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITIES" Relationship="Self.FK__CITIES__CITY_STA__44FF419A" FromRole="STATE" ToRole="CITIES" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__STATE__STATE_STA__403A8C7D" FromRole="STATE" ToRole="MASTERSTATUS" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__44FF419A" FromRole="STATE" ToRole="CITy" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__STATE__STATE_STA__403A8C7D" FromRole="STATE" ToRole="MASTERSTATU" />
         </EntityType>
         <EntityType Name="temptrip">
           <Key>
@@ -1181,10 +1970,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="LL_STATUS" Type="Int32" />
           <Property Name="LL_ENDED" Type="Boolean" />
           <Property Name="LL_KMFROMPICKUP" Type="Int32" />
-          <NavigationProperty Name="TRIPSTATU" Relationship="Self.FK__TRIPLOCAT__LL_ST__01142BA1" FromRole="TRIPLOCATIONS" ToRole="TRIPSTATUS" />
-          <NavigationProperty Name="TRIP" Relationship="Self.FK__TRIPLOCAT__LL_TR__02084FDA" FromRole="TRIPLOCATIONS" ToRole="TRIPS" />
-          <NavigationProperty Name="USERTRIPS" Relationship="Self.FK__USERTRIPS__USERT__14270015" FromRole="TRIPLOCATIONS" ToRole="USERTRIPS" />
-          <NavigationProperty Name="USERTRIPS1" Relationship="Self.FK__USERTRIPS__USERT__151B244E" FromRole="TRIPLOCATIONS" ToRole="USERTRIPS" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__TRIPLOCAT__LL_ST__01142BA1" FromRole="TRIPLOCATION" ToRole="TRIPSTATU" />
+          <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__TRIPLOCAT__LL_TR__02084FDA" FromRole="TRIPLOCATION" ToRole="TRIP" />
+          <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__14270015" FromRole="TRIPLOCATION" ToRole="USERTRIP" />
+          <NavigationProperty Name="USERTRIPS1" Relationship="CHALOModel.FK__USERTRIPS__USERT__151B244E" FromRole="TRIPLOCATION" ToRole="USERTRIP" />
         </EntityType>
         <EntityType Name="TRIP">
           <Key>
@@ -1209,12 +1998,12 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="TRIP_STARTED" Type="Boolean" />
           <Property Name="TRIP_ENDED" Type="Boolean" />
           <Property Name="TRIP_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="NOOFSEATS" Relationship="Self.FK__NOOFSEATS__SEAT___70DDC3D8" FromRole="TRIPS" ToRole="NOOFSEATS" />
-          <NavigationProperty Name="ROUTE" Relationship="Self.FK__TRIPS__TRIP_ROUT__6A30C649" FromRole="TRIPS" ToRole="ROUTES" />
-          <NavigationProperty Name="TRIPLOCATIONS" Relationship="Self.FK__TRIPLOCAT__LL_TR__02084FDA" FromRole="TRIPS" ToRole="TRIPLOCATIONS" />
-          <NavigationProperty Name="TRIPSTATU" Relationship="Self.FK__TRIPS__TRIP_STAT__6B24EA82" FromRole="TRIPS" ToRole="TRIPSTATUS" />
-          <NavigationProperty Name="VEHICLE" Relationship="Self.FK__TRIPS__TRIP_VEHI__6C190EBB" FromRole="TRIPS" ToRole="VEHICLES" />
-          <NavigationProperty Name="USERTRIPS" Relationship="Self.FK__USERTRIPS__USERT__1332DBDC" FromRole="TRIPS" ToRole="USERTRIPS" />
+          <NavigationProperty Name="NOOFSEATS" Relationship="CHALOModel.FK__NOOFSEATS__SEAT___70DDC3D8" FromRole="TRIP" ToRole="NOOFSEAT" />
+          <NavigationProperty Name="ROUTE" Relationship="CHALOModel.FK__TRIPS__TRIP_ROUT__6A30C649" FromRole="TRIP" ToRole="ROUTE" />
+          <NavigationProperty Name="TRIPLOCATIONS" Relationship="CHALOModel.FK__TRIPLOCAT__LL_TR__02084FDA" FromRole="TRIP" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__6B24EA82" FromRole="TRIP" ToRole="TRIPSTATU" />
+          <NavigationProperty Name="VEHICLE" Relationship="CHALOModel.FK__TRIPS__TRIP_VEHI__6C190EBB" FromRole="TRIP" ToRole="VEHICLE" />
+          <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__1332DBDC" FromRole="TRIP" ToRole="USERTRIP" />
         </EntityType>
         <EntityType Name="TRIPSTATU">
           <Key>
@@ -1226,9 +2015,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="TRIPLOCATIONS" Relationship="Self.FK__TRIPLOCAT__LL_ST__01142BA1" FromRole="TRIPSTATUS" ToRole="TRIPLOCATIONS" />
-          <NavigationProperty Name="TRIPS" Relationship="Self.FK__TRIPS__TRIP_STAT__6B24EA82" FromRole="TRIPSTATUS" ToRole="TRIPS" />
-          <NavigationProperty Name="USERTRIPS" Relationship="Self.FK__USERTRIPS__USERT__160F4887" FromRole="TRIPSTATUS" ToRole="USERTRIPS" />
+          <NavigationProperty Name="TRIPLOCATIONS" Relationship="CHALOModel.FK__TRIPLOCAT__LL_ST__01142BA1" FromRole="TRIPSTATU" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__6B24EA82" FromRole="TRIPSTATU" ToRole="TRIP" />
+          <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__160F4887" FromRole="TRIPSTATU" ToRole="USERTRIP" />
         </EntityType>
         <EntityType Name="TRIPTEMP">
           <Key>
@@ -1267,7 +2056,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="REGTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="REGTYPE_MODIFIEDBY" Type="Int32" />
           <Property Name="REGTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_RE__1CF15040" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_RE__1CF15040" FromRole="USER_REGISTERTYPE" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="USER_STATUS">
           <Key>
@@ -1279,7 +2068,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CH_USER" Relationship="Self.FK__CH_USER__USER_ST__1DE57479" FromRole="USER_STATUS" ToRole="CH_USER" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__CH_USER__USER_ST__1DE57479" FromRole="USER_STATUS" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="USERTRIP">
           <Key>
@@ -1302,11 +2091,11 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USERTRIP_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="USERTRIP_MODIFIEDBY" Type="Int32" />
           <Property Name="USERTRIP_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="PAYMENTHISTORies" Relationship="Self.FK__PAYMENTHI__PAYME__1AD3FDA4" FromRole="USERTRIPS" ToRole="PAYMENTHISTORY" />
-          <NavigationProperty Name="TRIPLOCATION" Relationship="Self.FK__USERTRIPS__USERT__14270015" FromRole="USERTRIPS" ToRole="TRIPLOCATIONS" />
-          <NavigationProperty Name="TRIPLOCATION1" Relationship="Self.FK__USERTRIPS__USERT__151B244E" FromRole="USERTRIPS" ToRole="TRIPLOCATIONS" />
-          <NavigationProperty Name="TRIP" Relationship="Self.FK__USERTRIPS__USERT__1332DBDC" FromRole="USERTRIPS" ToRole="TRIPS" />
-          <NavigationProperty Name="TRIPSTATU" Relationship="Self.FK__USERTRIPS__USERT__160F4887" FromRole="USERTRIPS" ToRole="TRIPSTATUS" />
+          <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1AD3FDA4" FromRole="USERTRIP" ToRole="PAYMENTHISTORY" />
+          <NavigationProperty Name="TRIPLOCATION" Relationship="CHALOModel.FK__USERTRIPS__USERT__14270015" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIPLOCATION1" Relationship="CHALOModel.FK__USERTRIPS__USERT__151B244E" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
+          <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__USERTRIPS__USERT__1332DBDC" FromRole="USERTRIP" ToRole="TRIP" />
+          <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__USERTRIPS__USERT__160F4887" FromRole="USERTRIP" ToRole="TRIPSTATU" />
         </EntityType>
         <EntityType Name="VEHICLEDRIVER">
           <Key>
@@ -1319,8 +2108,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="VD_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VD_MODIFIEDBY" Type="Int32" />
           <Property Name="VD_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DRIVER" Relationship="Self.FK__VEHICLEDR__VD_DR__2A164134" FromRole="VEHICLEDRIVERS" ToRole="DRIVERS" />
-          <NavigationProperty Name="VEHICLE" Relationship="Self.FK__VEHICLEDR__VD_VE__2B0A656D" FromRole="VEHICLEDRIVERS" ToRole="VEHICLES" />
+          <NavigationProperty Name="DRIVER" Relationship="CHALOModel.FK__VEHICLEDR__VD_DR__2A164134" FromRole="VEHICLEDRIVER" ToRole="DRIVER" />
+          <NavigationProperty Name="VEHICLE" Relationship="CHALOModel.FK__VEHICLEDR__VD_VE__2B0A656D" FromRole="VEHICLEDRIVER" ToRole="VEHICLE" />
         </EntityType>
         <EntityType Name="VEHICLE">
           <Key>
@@ -1343,11 +2132,11 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="VEHICLE_MODIFIEDBY" Type="Int32" />
           <Property Name="VEHICLE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VEHICLE_STATUS" Type="Int32" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__VEHICLES__VEHICL__656C112C" FromRole="VEHICLES" ToRole="MASTERSTATUS" />
-          <NavigationProperty Name="TRIPS" Relationship="Self.FK__TRIPS__TRIP_VEHI__6C190EBB" FromRole="VEHICLES" ToRole="TRIPS" />
-          <NavigationProperty Name="VEHICLEDRIVERS" Relationship="Self.FK__VEHICLEDR__VD_VE__2B0A656D" FromRole="VEHICLES" ToRole="VEHICLEDRIVERS" />
-          <NavigationProperty Name="VENDOR" Relationship="Self.FK__VEHICLES__VEHICL__6383C8BA" FromRole="VEHICLES" ToRole="VENDORS" />
-          <NavigationProperty Name="VEHICLETYPE" Relationship="Self.FK__VEHICLES__VEHICL__6477ECF3" FromRole="VEHICLES" ToRole="VEHICLETYPE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__VEHICLES__VEHICL__656C112C" FromRole="VEHICLE" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_VEHI__6C190EBB" FromRole="VEHICLE" ToRole="TRIP" />
+          <NavigationProperty Name="VEHICLEDRIVERS" Relationship="CHALOModel.FK__VEHICLEDR__VD_VE__2B0A656D" FromRole="VEHICLE" ToRole="VEHICLEDRIVER" />
+          <NavigationProperty Name="VENDOR" Relationship="CHALOModel.FK__VEHICLES__VEHICL__6383C8BA" FromRole="VEHICLE" ToRole="VENDOR" />
+          <NavigationProperty Name="VEHICLETYPE" Relationship="CHALOModel.FK__VEHICLES__VEHICL__6477ECF3" FromRole="VEHICLE" ToRole="VEHICLETYPE" />
         </EntityType>
         <EntityType Name="VEHICLETYPE">
           <Key>
@@ -1361,7 +2150,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="VEHICLE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VEHICLETYPE_NOOFSEATS" Type="Int32" />
           <Property Name="VEHICLETYPE_COSTPERKM" Type="Decimal" Precision="10" Scale="2" />
-          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__6477ECF3" FromRole="VEHICLETYPE" ToRole="VEHICLES" />
+          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__6477ECF3" FromRole="VEHICLETYPE" ToRole="VEHICLE" />
         </EntityType>
         <EntityType Name="VENDOR">
           <Key>
@@ -1388,9 +2177,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="VENDOR_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="VENDOR_MODIFIEDBY" Type="Int32" />
           <Property Name="VENDOR_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="DRIVERS" Relationship="Self.FK__DRIVERS__DRIVER___34C8D9D1" FromRole="VENDORS" ToRole="DRIVERS" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="Self.FK__VENDORS__VENDOR___300424B4" FromRole="VENDORS" ToRole="MASTERSTATUS" />
-          <NavigationProperty Name="VEHICLES" Relationship="Self.FK__VEHICLES__VEHICL__6383C8BA" FromRole="VENDORS" ToRole="VEHICLES" />
+          <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___34C8D9D1" FromRole="VENDOR" ToRole="DRIVER" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__VENDORS__VENDOR___300424B4" FromRole="VENDOR" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__6383C8BA" FromRole="VENDOR" ToRole="VEHICLE" />
         </EntityType>
         <EntityType Name="Query">
           <Key>
@@ -1413,9 +2202,213 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USER_COUPONAPPLIED" Type="Boolean" />
           <Property Name="USER_REFEREDBY" Type="Int32" />
         </EntityType>
+        <Association Name="FK__APPLIEDCO__APPLI__51300E55">
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
+          <End Type="CHALOModel.APPLIEDCOUPON" Role="APPLIEDCOUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="APPLIEDCOUPON">
+              <PropertyRef Name="APPLIED_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__APPLIEDCO__APPLI__59C55456">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.APPLIEDCOUPON" Role="APPLIEDCOUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="APPLIEDCOUPON">
+              <PropertyRef Name="APPLIED_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COUPONS__COUPON___4C6B5938">
+          <End Type="CHALOModel.COUPONTYPE" Role="COUPONTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.COUPON" Role="COUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUPONTYPE">
+              <PropertyRef Name="COUPONTYPE_ID" />
+            </Principal>
+            <Dependent Role="COUPON">
+              <PropertyRef Name="COUPON_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COUPONS__COUPON___57DD0BE4">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.COUPON" Role="COUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="COUPON">
+              <PropertyRef Name="COUPON_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__COUPONTYP__COUPO__32AB8735">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.COUPONTYPE" Role="COUPONTYPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="COUPONTYPE">
+              <PropertyRef Name="COUPONTYPE_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERCOUPO__COUPO__3F115E1A">
+          <End Type="CHALOModel.COUPONTYPE" Role="COUPONTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERCOUPON" Role="USERCOUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COUPONTYPE">
+              <PropertyRef Name="COUPONTYPE_ID" />
+            </Principal>
+            <Dependent Role="USERCOUPON">
+              <PropertyRef Name="COUPON_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__TRANS__6EC0713C">
+          <End Type="CHALOModel.TRANSACTIONMODE" Role="TRANSACTIONMODE" Multiplicity="0..1" />
+          <End Type="CHALOModel.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONMODE">
+              <PropertyRef Name="MODE_ID" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="TRANS_MODE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__transacti__TRANS__6FB49575">
+          <End Type="CHALOModel.TRANSACTIONSTATU" Role="TRANSACTIONSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TRANSACTIONSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="TRANS_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERCOUPO__COUPO__3E1D39E1">
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERCOUPON" Role="USERCOUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="USERCOUPON">
+              <PropertyRef Name="COUPON_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__USERCOUPO__COUPO__58D1301D">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERCOUPON" Role="USERCOUPON" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="USERCOUPON">
+              <PropertyRef Name="COUPON_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLET__WALLET_S__5AB9788F">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLET" Role="WALLET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLET">
+              <PropertyRef Name="WALLET_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLET__WALLET_U__43D61337">
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLET" Role="WALLET" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="WALLET">
+              <PropertyRef Name="WALLET_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__TRANS__55F4C372">
+          <End Type="CHALOModel.WALLET" Role="WALLET" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLETTRANSACTION" Role="WALLETTRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WALLET">
+              <PropertyRef Name="WALLET_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTION">
+              <PropertyRef Name="TRANS_WALLETID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETADD__WALLE__5BAD9CC8">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLETADDTYPE" Role="WALLETADDTYPE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLETADDTYPE">
+              <PropertyRef Name="WALLETADD_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__TRANS__56E8E7AB">
+          <End Type="CHALOModel.WALLETADDTYPE" Role="WALLETADDTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLETTRANSACTION" Role="WALLETTRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WALLETADDTYPE">
+              <PropertyRef Name="WALLETADD_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTION">
+              <PropertyRef Name="TRANS_WALLETTYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__TRANS__74794A92">
+          <End Type="CHALOModel.WALLETTRANSACTIONSSTATU" Role="WALLETTRANSACTIONSSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLETTRANSACTION" Role="WALLETTRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WALLETTRANSACTIONSSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTION">
+              <PropertyRef Name="TRANS_WALLETSTATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__WALLETTRA__WALLE__5CA1C101">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.WALLETTRANSACTION" Role="WALLETTRANSACTION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="WALLETTRANSACTION">
+              <PropertyRef Name="TRANS_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__CH_USER__USER_RE__1CF15040">
-          <End Role="USER_REGISTERTYPE" Type="Self.USER_REGISTERTYPE" Multiplicity="0..1" />
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
+          <End Type="CHALOModel.USER_REGISTERTYPE" Role="USER_REGISTERTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USER_REGISTERTYPE">
               <PropertyRef Name="REGTYPE_ID" />
@@ -1426,8 +2419,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CH_USER__USER_ST__1DE57479">
-          <End Role="USER_STATUS" Type="Self.USER_STATUS" Multiplicity="0..1" />
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="*" />
+          <End Type="CHALOModel.USER_STATUS" Role="USER_STATUS" Multiplicity="0..1" />
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="USER_STATUS">
               <PropertyRef Name="STATUS_ID" />
@@ -1437,131 +2430,107 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__COUPONS__COUPON___29572725">
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
-          <End Role="COUPONS" Type="Self.COUPON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CH_USER">
-              <PropertyRef Name="USER_ID" />
-            </Principal>
-            <Dependent Role="COUPONS">
-              <PropertyRef Name="COUPON_USERID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__COUPONS__COUPON___2B3F6F97">
-          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
-          <End Role="COUPONS" Type="Self.COUPON" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CH_USER">
-              <PropertyRef Name="USER_ID" />
-            </Principal>
-            <Dependent Role="COUPONS">
-              <PropertyRef Name="COUPON_USERID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__CITIES__CITY_STA__44FF419A">
-          <End Role="STATE" Type="Self.STATE" Multiplicity="0..1" />
-          <End Role="CITIES" Type="Self.CITy" Multiplicity="*" />
+          <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="STATE">
               <PropertyRef Name="STATE_ID" />
             </Principal>
-            <Dependent Role="CITIES">
+            <Dependent Role="CITy">
               <PropertyRef Name="CITY_STATEID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CITIES__CITY_STA__45F365D3">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="CITIES" Type="Self.CITy" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="CITIES">
+            <Dependent Role="CITy">
               <PropertyRef Name="CITY_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__LOCATIONS__LOCAT__4AB81AF0">
-          <End Role="CITIES" Type="Self.CITy" Multiplicity="0..1" />
-          <End Role="LOCATIONS" Type="Self.LOCATION" Multiplicity="*" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CITIES">
+            <Principal Role="CITy">
               <PropertyRef Name="CITY_ID" />
             </Principal>
-            <Dependent Role="LOCATIONS">
+            <Dependent Role="LOCATION">
               <PropertyRef Name="LOCATION_CITYID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DRIVERS__DRIVER___34C8D9D1">
-          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="0..1" />
-          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="*" />
+          <End Type="CHALOModel.VENDOR" Role="VENDOR" Multiplicity="0..1" />
+          <End Type="CHALOModel.DRIVER" Role="DRIVER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VENDORS">
+            <Principal Role="VENDOR">
               <PropertyRef Name="VENDOR_ID" />
             </Principal>
-            <Dependent Role="DRIVERS">
+            <Dependent Role="DRIVER">
               <PropertyRef Name="DRIVER_VENDORID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__DRIVERS__DRIVER___35BCFE0A">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.DRIVER" Role="DRIVER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="DRIVERS">
+            <Dependent Role="DRIVER">
               <PropertyRef Name="DRIVER_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__VEHICLEDR__VD_DR__2A164134">
-          <End Role="DRIVERS" Type="Self.DRIVER" Multiplicity="0..1" />
-          <End Role="VEHICLEDRIVERS" Type="Self.VEHICLEDRIVER" Multiplicity="*" />
+          <End Type="CHALOModel.DRIVER" Role="DRIVER" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLEDRIVER" Role="VEHICLEDRIVER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="DRIVERS">
+            <Principal Role="DRIVER">
               <PropertyRef Name="DRIVER_ID" />
             </Principal>
-            <Dependent Role="VEHICLEDRIVERS">
+            <Dependent Role="VEHICLEDRIVER">
               <PropertyRef Name="VD_DRIVER_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__LOCATIONS__LOCAT__4BAC3F29">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="LOCATIONS" Type="Self.LOCATION" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="LOCATIONS">
+            <Dependent Role="LOCATION">
               <PropertyRef Name="LOCATION_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__ROUTES__ROUTE_ST__5070F446">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="ROUTES" Type="Self.ROUTE" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.ROUTE" Role="ROUTE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="ROUTES">
+            <Dependent Role="ROUTE">
               <PropertyRef Name="ROUTE_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__STATE__STATE_STA__403A8C7D">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="STATE" Type="Self.STATE" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
             <Dependent Role="STATE">
@@ -1570,46 +2539,46 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__VEHICLES__VEHICL__656C112C">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="VEHICLES">
+            <Dependent Role="VEHICLE">
               <PropertyRef Name="VEHICLE_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__VENDORS__VENDOR___300424B4">
-          <End Role="MASTERSTATUS" Type="Self.MASTERSTATU" Multiplicity="0..1" />
-          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="*" />
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.VENDOR" Role="VENDOR" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="MASTERSTATUS">
+            <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="VENDORS">
+            <Dependent Role="VENDOR">
               <PropertyRef Name="VENDOR_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__NOOFSEATS__SEAT___70DDC3D8">
-          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="0..1" />
-          <End Role="NOOFSEATS" Type="Self.NOOFSEAT" Multiplicity="*" />
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.NOOFSEAT" Role="NOOFSEAT" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPS">
+            <Principal Role="TRIP">
               <PropertyRef Name="TRIP_ID" />
             </Principal>
-            <Dependent Role="NOOFSEATS">
+            <Dependent Role="NOOFSEAT">
               <PropertyRef Name="SEAT_TRIP_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PAYMENTHI__PAYME__1AD3FDA4">
-          <End Role="USERTRIPS" Type="Self.USERTRIP" Multiplicity="0..1" />
-          <End Role="PAYMENTHISTORY" Type="Self.PAYMENTHISTORY" Multiplicity="*" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.PAYMENTHISTORY" Role="PAYMENTHISTORY" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="USERTRIPS">
+            <Principal Role="USERTRIP">
               <PropertyRef Name="USERTRIP_ID" />
             </Principal>
             <Dependent Role="PAYMENTHISTORY">
@@ -1618,8 +2587,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__PAYMENTHI__PAYME__1BC821DD">
-          <End Role="PAYMENTTYPE" Type="Self.PAYMENTTYPE" Multiplicity="0..1" />
-          <End Role="PAYMENTHISTORY" Type="Self.PAYMENTHISTORY" Multiplicity="*" />
+          <End Type="CHALOModel.PAYMENTTYPE" Role="PAYMENTTYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.PAYMENTHISTORY" Role="PAYMENTHISTORY" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="PAYMENTTYPE">
               <PropertyRef Name="PAYMENTTYPE_ID" />
@@ -1630,734 +2599,738 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TRIPS__TRIP_ROUT__6A30C649">
-          <End Role="ROUTES" Type="Self.ROUTE" Multiplicity="0..1" />
-          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="*" />
+          <End Type="CHALOModel.ROUTE" Role="ROUTE" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="ROUTES">
+            <Principal Role="ROUTE">
               <PropertyRef Name="ROUTE_ID" />
             </Principal>
-            <Dependent Role="TRIPS">
+            <Dependent Role="TRIP">
               <PropertyRef Name="TRIP_ROUTE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TRIPLOCAT__LL_ST__01142BA1">
-          <End Role="TRIPSTATUS" Type="Self.TRIPSTATU" Multiplicity="0..1" />
-          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATION" Multiplicity="*" />
+          <End Type="CHALOModel.TRIPSTATU" Role="TRIPSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPSTATUS">
+            <Principal Role="TRIPSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="TRIPLOCATIONS">
+            <Dependent Role="TRIPLOCATION">
               <PropertyRef Name="LL_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TRIPLOCAT__LL_TR__02084FDA">
-          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="0..1" />
-          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATION" Multiplicity="*" />
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPS">
+            <Principal Role="TRIP">
               <PropertyRef Name="TRIP_ID" />
             </Principal>
-            <Dependent Role="TRIPLOCATIONS">
+            <Dependent Role="TRIPLOCATION">
               <PropertyRef Name="LL_TRIP_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__USERTRIPS__USERT__14270015">
-          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATION" Multiplicity="0..1" />
-          <End Role="USERTRIPS" Type="Self.USERTRIP" Multiplicity="*" />
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPLOCATIONS">
+            <Principal Role="TRIPLOCATION">
               <PropertyRef Name="LL_ID" />
             </Principal>
-            <Dependent Role="USERTRIPS">
+            <Dependent Role="USERTRIP">
               <PropertyRef Name="USERTRIP_PICKUPLOC" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__USERTRIPS__USERT__151B244E">
-          <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATION" Multiplicity="0..1" />
-          <End Role="USERTRIPS" Type="Self.USERTRIP" Multiplicity="*" />
+          <End Type="CHALOModel.TRIPLOCATION" Role="TRIPLOCATION" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPLOCATIONS">
+            <Principal Role="TRIPLOCATION">
               <PropertyRef Name="LL_ID" />
             </Principal>
-            <Dependent Role="USERTRIPS">
+            <Dependent Role="USERTRIP">
               <PropertyRef Name="USERTRIP_DROPLOC" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TRIPS__TRIP_STAT__6B24EA82">
-          <End Role="TRIPSTATUS" Type="Self.TRIPSTATU" Multiplicity="0..1" />
-          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="*" />
+          <End Type="CHALOModel.TRIPSTATU" Role="TRIPSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPSTATUS">
+            <Principal Role="TRIPSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="TRIPS">
+            <Dependent Role="TRIP">
               <PropertyRef Name="TRIP_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__TRIPS__TRIP_VEHI__6C190EBB">
-          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="0..1" />
-          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="*" />
+          <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="0..1" />
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VEHICLES">
+            <Principal Role="VEHICLE">
               <PropertyRef Name="VEHICLE_ID" />
             </Principal>
-            <Dependent Role="TRIPS">
+            <Dependent Role="TRIP">
               <PropertyRef Name="TRIP_VEHICLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__USERTRIPS__USERT__1332DBDC">
-          <End Role="TRIPS" Type="Self.TRIP" Multiplicity="0..1" />
-          <End Role="USERTRIPS" Type="Self.USERTRIP" Multiplicity="*" />
+          <End Type="CHALOModel.TRIP" Role="TRIP" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPS">
+            <Principal Role="TRIP">
               <PropertyRef Name="TRIP_ID" />
             </Principal>
-            <Dependent Role="USERTRIPS">
+            <Dependent Role="USERTRIP">
               <PropertyRef Name="USERTRIP_TRIPID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__USERTRIPS__USERT__160F4887">
-          <End Role="TRIPSTATUS" Type="Self.TRIPSTATU" Multiplicity="0..1" />
-          <End Role="USERTRIPS" Type="Self.USERTRIP" Multiplicity="*" />
+          <End Type="CHALOModel.TRIPSTATU" Role="TRIPSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.USERTRIP" Role="USERTRIP" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="TRIPSTATUS">
+            <Principal Role="TRIPSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="USERTRIPS">
+            <Dependent Role="USERTRIP">
               <PropertyRef Name="USERTRIP_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__VEHICLEDR__VD_VE__2B0A656D">
-          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="0..1" />
-          <End Role="VEHICLEDRIVERS" Type="Self.VEHICLEDRIVER" Multiplicity="*" />
+          <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLEDRIVER" Role="VEHICLEDRIVER" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VEHICLES">
+            <Principal Role="VEHICLE">
               <PropertyRef Name="VEHICLE_ID" />
             </Principal>
-            <Dependent Role="VEHICLEDRIVERS">
+            <Dependent Role="VEHICLEDRIVER">
               <PropertyRef Name="VD_VEHICLE_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__VEHICLES__VEHICL__6383C8BA">
-          <End Role="VENDORS" Type="Self.VENDOR" Multiplicity="0..1" />
-          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <End Type="CHALOModel.VENDOR" Role="VENDOR" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="VENDORS">
+            <Principal Role="VENDOR">
               <PropertyRef Name="VENDOR_ID" />
             </Principal>
-            <Dependent Role="VEHICLES">
+            <Dependent Role="VEHICLE">
               <PropertyRef Name="VEHICLE_VENDORID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__VEHICLES__VEHICL__6477ECF3">
-          <End Role="VEHICLETYPE" Type="Self.VEHICLETYPE" Multiplicity="0..1" />
-          <End Role="VEHICLES" Type="Self.VEHICLE" Multiplicity="*" />
+          <End Type="CHALOModel.VEHICLETYPE" Role="VEHICLETYPE" Multiplicity="0..1" />
+          <End Type="CHALOModel.VEHICLE" Role="VEHICLE" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="VEHICLETYPE">
               <PropertyRef Name="VEHICLETYPE_ID" />
             </Principal>
-            <Dependent Role="VEHICLES">
+            <Dependent Role="VEHICLE">
               <PropertyRef Name="VEHICLE_TYPE" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CHALOEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="CH_USER" EntityType="Self.CH_USER" />
-          <EntitySet Name="CITIES" EntityType="Self.CITy" />
-          <EntitySet Name="COUPONS" EntityType="Self.COUPON" />
-          <EntitySet Name="DRIVERS" EntityType="Self.DRIVER" />
-          <EntitySet Name="LOCATIONS" EntityType="Self.LOCATION" />
-          <EntitySet Name="MASTERSTATUS" EntityType="Self.MASTERSTATU" />
-          <EntitySet Name="NOOFSEATS" EntityType="Self.NOOFSEAT" />
-          <EntitySet Name="PAYMENTHISTORies" EntityType="Self.PAYMENTHISTORY" />
-          <EntitySet Name="PAYMENTTYPEs" EntityType="Self.PAYMENTTYPE" />
-          <EntitySet Name="ROUTES" EntityType="Self.ROUTE" />
-          <EntitySet Name="STATEs" EntityType="Self.STATE" />
-          <EntitySet Name="temptrips" EntityType="Self.temptrip" />
-          <EntitySet Name="TRIPLOCATIONS" EntityType="Self.TRIPLOCATION" />
-          <EntitySet Name="TRIPS" EntityType="Self.TRIP" />
-          <EntitySet Name="TRIPSTATUS" EntityType="Self.TRIPSTATU" />
-          <EntitySet Name="TRIPTEMPs" EntityType="Self.TRIPTEMP" />
-          <EntitySet Name="USER_REGISTERTYPE" EntityType="Self.USER_REGISTERTYPE" />
-          <EntitySet Name="USER_STATUS" EntityType="Self.USER_STATUS" />
-          <EntitySet Name="USERTRIPS" EntityType="Self.USERTRIP" />
-          <EntitySet Name="VEHICLEDRIVERS" EntityType="Self.VEHICLEDRIVER" />
-          <EntitySet Name="VEHICLES" EntityType="Self.VEHICLE" />
-          <EntitySet Name="VEHICLETYPEs" EntityType="Self.VEHICLETYPE" />
-          <EntitySet Name="VENDORS" EntityType="Self.VENDOR" />
-          <EntitySet Name="Queries" EntityType="Self.Query" />
-          <AssociationSet Name="FK__CH_USER__USER_RE__1CF15040" Association="Self.FK__CH_USER__USER_RE__1CF15040">
-            <End Role="USER_REGISTERTYPE" EntitySet="USER_REGISTERTYPE" />
-            <End Role="CH_USER" EntitySet="CH_USER" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CH_USER__USER_ST__1DE57479" Association="Self.FK__CH_USER__USER_ST__1DE57479">
-            <End Role="USER_STATUS" EntitySet="USER_STATUS" />
-            <End Role="CH_USER" EntitySet="CH_USER" />
-          </AssociationSet>
-          <AssociationSet Name="FK__COUPONS__COUPON___29572725" Association="Self.FK__COUPONS__COUPON___29572725">
-            <End Role="CH_USER" EntitySet="CH_USER" />
-            <End Role="COUPONS" EntitySet="COUPONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__COUPONS__COUPON___2B3F6F97" Association="Self.FK__COUPONS__COUPON___2B3F6F97">
-            <End Role="CH_USER" EntitySet="CH_USER" />
-            <End Role="COUPONS" EntitySet="COUPONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__44FF419A" Association="Self.FK__CITIES__CITY_STA__44FF419A">
-            <End Role="STATE" EntitySet="STATEs" />
-            <End Role="CITIES" EntitySet="CITIES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__45F365D3" Association="Self.FK__CITIES__CITY_STA__45F365D3">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="CITIES" EntitySet="CITIES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__4AB81AF0" Association="Self.FK__LOCATIONS__LOCAT__4AB81AF0">
-            <End Role="CITIES" EntitySet="CITIES" />
-            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DRIVERS__DRIVER___34C8D9D1" Association="Self.FK__DRIVERS__DRIVER___34C8D9D1">
-            <End Role="VENDORS" EntitySet="VENDORS" />
-            <End Role="DRIVERS" EntitySet="DRIVERS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__DRIVERS__DRIVER___35BCFE0A" Association="Self.FK__DRIVERS__DRIVER___35BCFE0A">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="DRIVERS" EntitySet="DRIVERS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VEHICLEDR__VD_DR__2A164134" Association="Self.FK__VEHICLEDR__VD_DR__2A164134">
-            <End Role="DRIVERS" EntitySet="DRIVERS" />
-            <End Role="VEHICLEDRIVERS" EntitySet="VEHICLEDRIVERS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__4BAC3F29" Association="Self.FK__LOCATIONS__LOCAT__4BAC3F29">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="LOCATIONS" EntitySet="LOCATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__ROUTES__ROUTE_ST__5070F446" Association="Self.FK__ROUTES__ROUTE_ST__5070F446">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="ROUTES" EntitySet="ROUTES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__STATE__STATE_STA__403A8C7D" Association="Self.FK__STATE__STATE_STA__403A8C7D">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="STATE" EntitySet="STATEs" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__656C112C" Association="Self.FK__VEHICLES__VEHICL__656C112C">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="VEHICLES" EntitySet="VEHICLES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VENDORS__VENDOR___300424B4" Association="Self.FK__VENDORS__VENDOR___300424B4">
-            <End Role="MASTERSTATUS" EntitySet="MASTERSTATUS" />
-            <End Role="VENDORS" EntitySet="VENDORS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__NOOFSEATS__SEAT___70DDC3D8" Association="Self.FK__NOOFSEATS__SEAT___70DDC3D8">
-            <End Role="TRIPS" EntitySet="TRIPS" />
-            <End Role="NOOFSEATS" EntitySet="NOOFSEATS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PAYMENTHI__PAYME__1AD3FDA4" Association="Self.FK__PAYMENTHI__PAYME__1AD3FDA4">
-            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
-            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
-          </AssociationSet>
-          <AssociationSet Name="FK__PAYMENTHI__PAYME__1BC821DD" Association="Self.FK__PAYMENTHI__PAYME__1BC821DD">
-            <End Role="PAYMENTTYPE" EntitySet="PAYMENTTYPEs" />
-            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_ROUT__6A30C649" Association="Self.FK__TRIPS__TRIP_ROUT__6A30C649">
-            <End Role="ROUTES" EntitySet="ROUTES" />
-            <End Role="TRIPS" EntitySet="TRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TRIPLOCAT__LL_ST__01142BA1" Association="Self.FK__TRIPLOCAT__LL_ST__01142BA1">
-            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
-            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TRIPLOCAT__LL_TR__02084FDA" Association="Self.FK__TRIPLOCAT__LL_TR__02084FDA">
-            <End Role="TRIPS" EntitySet="TRIPS" />
-            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__USERTRIPS__USERT__14270015" Association="Self.FK__USERTRIPS__USERT__14270015">
-            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
-            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__USERTRIPS__USERT__151B244E" Association="Self.FK__USERTRIPS__USERT__151B244E">
-            <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
-            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_STAT__6B24EA82" Association="Self.FK__TRIPS__TRIP_STAT__6B24EA82">
-            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
-            <End Role="TRIPS" EntitySet="TRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__TRIPS__TRIP_VEHI__6C190EBB" Association="Self.FK__TRIPS__TRIP_VEHI__6C190EBB">
-            <End Role="VEHICLES" EntitySet="VEHICLES" />
-            <End Role="TRIPS" EntitySet="TRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__USERTRIPS__USERT__1332DBDC" Association="Self.FK__USERTRIPS__USERT__1332DBDC">
-            <End Role="TRIPS" EntitySet="TRIPS" />
-            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__USERTRIPS__USERT__160F4887" Association="Self.FK__USERTRIPS__USERT__160F4887">
-            <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
-            <End Role="USERTRIPS" EntitySet="USERTRIPS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VEHICLEDR__VD_VE__2B0A656D" Association="Self.FK__VEHICLEDR__VD_VE__2B0A656D">
-            <End Role="VEHICLES" EntitySet="VEHICLES" />
-            <End Role="VEHICLEDRIVERS" EntitySet="VEHICLEDRIVERS" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__6383C8BA" Association="Self.FK__VEHICLES__VEHICL__6383C8BA">
-            <End Role="VENDORS" EntitySet="VENDORS" />
-            <End Role="VEHICLES" EntitySet="VEHICLES" />
-          </AssociationSet>
-          <AssociationSet Name="FK__VEHICLES__VEHICL__6477ECF3" Association="Self.FK__VEHICLES__VEHICL__6477ECF3">
-            <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
-            <End Role="VEHICLES" EntitySet="VEHICLES" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="CHALOModelStoreContainer" CdmEntityContainer="CHALOEntities">
-          <EntitySetMapping Name="CH_USER">
-            <EntityTypeMapping TypeName="CHALOModel.CH_USER">
-              <MappingFragment StoreEntitySet="CH_USER">
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
-                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
-                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
-                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
-                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
-                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
-                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
-                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
-                <ScalarProperty Name="USER_STATUS" ColumnName="USER_STATUS" />
-                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
-                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
-                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
-                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
-                <ScalarProperty Name="USER_COUPONAPPLIED" ColumnName="USER_COUPONAPPLIED" />
-                <ScalarProperty Name="USER_REFEREDBY" ColumnName="USER_REFEREDBY" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CITIES">
-            <EntityTypeMapping TypeName="CHALOModel.CITy">
-              <MappingFragment StoreEntitySet="CITIES">
-                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
-                <ScalarProperty Name="CITY_STATEID" ColumnName="CITY_STATEID" />
-                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
-                <ScalarProperty Name="CITY_CREATEDBY" ColumnName="CITY_CREATEDBY" />
-                <ScalarProperty Name="CITY_CREATEDDATE" ColumnName="CITY_CREATEDDATE" />
-                <ScalarProperty Name="CITY_MODIFIEDBY" ColumnName="CITY_MODIFIEDBY" />
-                <ScalarProperty Name="CITY_MODIFIEDDATE" ColumnName="CITY_MODIFIEDDATE" />
-                <ScalarProperty Name="CITY_STATUS" ColumnName="CITY_STATUS" />
+          <FunctionImportMapping FunctionImportName="USP_GETVEHICLEBYTRIP" FunctionName="CHALOModel.Store.USP_GETVEHICLEBYTRIP" />
+          <FunctionImportMapping FunctionImportName="USP_SEARCHVEHICLES" FunctionName="CHALOModel.Store.USP_SEARCHVEHICLES" />
+          <EntitySetMapping Name="APPLIEDCOUPONS">
+            <EntityTypeMapping TypeName="CHALOModel.APPLIEDCOUPON">
+              <MappingFragment StoreEntitySet="APPLIEDCOUPONS">
+                <ScalarProperty Name="APPLIED_STATUS" ColumnName="APPLIED_STATUS" />
+                <ScalarProperty Name="APPLIED_MODIFIEDDATE" ColumnName="APPLIED_MODIFIEDDATE" />
+                <ScalarProperty Name="APPLIED_MODIFIEDBY" ColumnName="APPLIED_MODIFIEDBY" />
+                <ScalarProperty Name="APPLIED_CREATEDDATE" ColumnName="APPLIED_CREATEDDATE" />
+                <ScalarProperty Name="APPLIED_CREATEDBY" ColumnName="APPLIED_CREATEDBY" />
+                <ScalarProperty Name="APPLIED_ONETIME" ColumnName="APPLIED_ONETIME" />
+                <ScalarProperty Name="APPLIED_USERCOUPON" ColumnName="APPLIED_USERCOUPON" />
+                <ScalarProperty Name="APPLIED_ADMINCOUPON" ColumnName="APPLIED_ADMINCOUPON" />
+                <ScalarProperty Name="APPLIED_COUPONNAME" ColumnName="APPLIED_COUPONNAME" />
+                <ScalarProperty Name="APPLIED_COUPONID" ColumnName="APPLIED_COUPONID" />
+                <ScalarProperty Name="APPLIED_USERID" ColumnName="APPLIED_USERID" />
+                <ScalarProperty Name="APPLIED_ID" ColumnName="APPLIED_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="COUPONS">
             <EntityTypeMapping TypeName="CHALOModel.COUPON">
               <MappingFragment StoreEntitySet="COUPONS">
-                <ScalarProperty Name="COUPON_ID" ColumnName="COUPON_ID" />
-                <ScalarProperty Name="COUPON_USERID" ColumnName="COUPON_USERID" />
-                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
-                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
-                <ScalarProperty Name="COUPON_CREATEDBY" ColumnName="COUPON_CREATEDBY" />
-                <ScalarProperty Name="COUPON_CREATEDDATE" ColumnName="COUPON_CREATEDDATE" />
-                <ScalarProperty Name="COUPON_MODIFIEDBY" ColumnName="COUPON_MODIFIEDBY" />
+                <ScalarProperty Name="COUPON_STATUS" ColumnName="COUPON_STATUS" />
                 <ScalarProperty Name="COUPON_MODIFIEDDATE" ColumnName="COUPON_MODIFIEDDATE" />
-                <ScalarProperty Name="COUPON_ADMINCOUPON" ColumnName="COUPON_ADMINCOUPON" />
+                <ScalarProperty Name="COUPON_MODIFIEDBY" ColumnName="COUPON_MODIFIEDBY" />
+                <ScalarProperty Name="COUPON_CREATEDDATE" ColumnName="COUPON_CREATEDDATE" />
+                <ScalarProperty Name="COUPON_CREATEDBY" ColumnName="COUPON_CREATEDBY" />
+                <ScalarProperty Name="COUPON_TYPE" ColumnName="COUPON_TYPE" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_ID" ColumnName="COUPON_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="COUPONTYPEs">
+            <EntityTypeMapping TypeName="CHALOModel.COUPONTYPE">
+              <MappingFragment StoreEntitySet="COUPONTYPE">
+                <ScalarProperty Name="COUPONTYPE_ONETIME" ColumnName="COUPONTYPE_ONETIME" />
+                <ScalarProperty Name="COUPONTYPE_STATUS" ColumnName="COUPONTYPE_STATUS" />
+                <ScalarProperty Name="COUPON_MODIFIEDDATE" ColumnName="COUPON_MODIFIEDDATE" />
+                <ScalarProperty Name="COUPONTYPE_MODIFIEDBY" ColumnName="COUPONTYPE_MODIFIEDBY" />
+                <ScalarProperty Name="COUPONTYPE_CREATEDDATE" ColumnName="COUPONTYPE_CREATEDDATE" />
+                <ScalarProperty Name="COUPONTYPE_CREATEDBY" ColumnName="COUPONTYPE_CREATEDBY" />
+                <ScalarProperty Name="COUPONTYPE_NAME" ColumnName="COUPONTYPE_NAME" />
+                <ScalarProperty Name="COUPONTYPE_ID" ColumnName="COUPONTYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTIONMODEs">
+            <EntityTypeMapping TypeName="CHALOModel.TRANSACTIONMODE">
+              <MappingFragment StoreEntitySet="TRANSACTIONMODE">
+                <ScalarProperty Name="MODE_MODIFIEDDATE" ColumnName="MODE_MODIFIEDDATE" />
+                <ScalarProperty Name="MODE_MODIFIEDBY" ColumnName="MODE_MODIFIEDBY" />
+                <ScalarProperty Name="MODE_CREATEDDATE" ColumnName="MODE_CREATEDDATE" />
+                <ScalarProperty Name="MODE_CREATEDBY" ColumnName="MODE_CREATEDBY" />
+                <ScalarProperty Name="MODE_NAME" ColumnName="MODE_NAME" />
+                <ScalarProperty Name="MODE_ID" ColumnName="MODE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transactions">
+            <EntityTypeMapping TypeName="CHALOModel.transaction">
+              <MappingFragment StoreEntitySet="transactions">
+                <ScalarProperty Name="TRANS_DEBIT" ColumnName="TRANS_DEBIT" />
+                <ScalarProperty Name="TRANS_CREDIT" ColumnName="TRANS_CREDIT" />
+                <ScalarProperty Name="TRANS_MODIFIEDDATE" ColumnName="TRANS_MODIFIEDDATE" />
+                <ScalarProperty Name="TRANS_MODIFIEDBY" ColumnName="TRANS_MODIFIEDBY" />
+                <ScalarProperty Name="TRANS_CRETEATEDDATE" ColumnName="TRANS_CRETEATEDDATE" />
+                <ScalarProperty Name="TRANS_CREATEDBY" ColumnName="TRANS_CREATEDBY" />
+                <ScalarProperty Name="TRANS_STATUS" ColumnName="TRANS_STATUS" />
+                <ScalarProperty Name="TRANS_AMOUNT" ColumnName="TRANS_AMOUNT" />
+                <ScalarProperty Name="TRANS_MODENAME" ColumnName="TRANS_MODENAME" />
+                <ScalarProperty Name="TRANS_MODE" ColumnName="TRANS_MODE" />
+                <ScalarProperty Name="TRANS_NUMBER" ColumnName="TRANS_NUMBER" />
+                <ScalarProperty Name="TRANS_NAME" ColumnName="TRANS_NAME" />
+                <ScalarProperty Name="TRANS_ID" ColumnName="TRANS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACTIONSTATUS">
+            <EntityTypeMapping TypeName="CHALOModel.TRANSACTIONSTATU">
+              <MappingFragment StoreEntitySet="TRANSACTIONSTATUS">
+                <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERCOUPONS">
+            <EntityTypeMapping TypeName="CHALOModel.USERCOUPON">
+              <MappingFragment StoreEntitySet="USERCOUPONS">
+                <ScalarProperty Name="COUPON_STATUS" ColumnName="COUPON_STATUS" />
+                <ScalarProperty Name="COUPON_MODIFIEDDATE" ColumnName="COUPON_MODIFIEDDATE" />
+                <ScalarProperty Name="COUPON_MODIFIEDBY" ColumnName="COUPON_MODIFIEDBY" />
+                <ScalarProperty Name="COUPON_CREATEDDATE" ColumnName="COUPON_CREATEDDATE" />
+                <ScalarProperty Name="COUPON_CREATEDBY" ColumnName="COUPON_CREATEDBY" />
+                <ScalarProperty Name="COUPON_TYPE" ColumnName="COUPON_TYPE" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_USERID" ColumnName="COUPON_USERID" />
+                <ScalarProperty Name="COUPON_ID" ColumnName="COUPON_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WALLETs">
+            <EntityTypeMapping TypeName="CHALOModel.WALLET">
+              <MappingFragment StoreEntitySet="WALLET">
+                <ScalarProperty Name="WALLET_STATUS" ColumnName="WALLET_STATUS" />
+                <ScalarProperty Name="WALLET_MODIFIEDDATE" ColumnName="WALLET_MODIFIEDDATE" />
+                <ScalarProperty Name="WALLET_MODIFIEDBY" ColumnName="WALLET_MODIFIEDBY" />
+                <ScalarProperty Name="WALLET_CREATEDDATE" ColumnName="WALLET_CREATEDDATE" />
+                <ScalarProperty Name="WALLET_CREATEDBY" ColumnName="WALLET_CREATEDBY" />
+                <ScalarProperty Name="WALLET_AVAILABLEMONEY" ColumnName="WALLET_AVAILABLEMONEY" />
+                <ScalarProperty Name="WALLET_USERID" ColumnName="WALLET_USERID" />
+                <ScalarProperty Name="WALLET_ID" ColumnName="WALLET_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WALLETADDTYPES">
+            <EntityTypeMapping TypeName="CHALOModel.WALLETADDTYPE">
+              <MappingFragment StoreEntitySet="WALLETADDTYPES">
+                <ScalarProperty Name="WALLETADD_STATUS" ColumnName="WALLETADD_STATUS" />
+                <ScalarProperty Name="WALLETADD_MODIFIEDDATE" ColumnName="WALLETADD_MODIFIEDDATE" />
+                <ScalarProperty Name="WALLETADD_MODIFIEDBY" ColumnName="WALLETADD_MODIFIEDBY" />
+                <ScalarProperty Name="WALLETADD_CREATEDDATE" ColumnName="WALLETADD_CREATEDDATE" />
+                <ScalarProperty Name="WALLETADD_CREATEDBY" ColumnName="WALLETADD_CREATEDBY" />
+                <ScalarProperty Name="WALLETADD_NAME" ColumnName="WALLETADD_NAME" />
+                <ScalarProperty Name="WALLETADD_ID" ColumnName="WALLETADD_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WALLETTRANSACTIONS">
+            <EntityTypeMapping TypeName="CHALOModel.WALLETTRANSACTION">
+              <MappingFragment StoreEntitySet="WALLETTRANSACTIONS">
+                <ScalarProperty Name="TRANS_WALLETSTATUS" ColumnName="TRANS_WALLETSTATUS" />
+                <ScalarProperty Name="TRANS_STATUS" ColumnName="TRANS_STATUS" />
+                <ScalarProperty Name="TRANS_MODIFIEDDATE" ColumnName="TRANS_MODIFIEDDATE" />
+                <ScalarProperty Name="TRANS_MODIFIEDBY" ColumnName="TRANS_MODIFIEDBY" />
+                <ScalarProperty Name="TRANS_CREATEDDATE" ColumnName="TRANS_CREATEDDATE" />
+                <ScalarProperty Name="TRANS_CREATEDBY" ColumnName="TRANS_CREATEDBY" />
+                <ScalarProperty Name="TRANS_TRANSACTIONID" ColumnName="TRANS_TRANSACTIONID" />
+                <ScalarProperty Name="TRANS_COUPONAPPLIEDID" ColumnName="TRANS_COUPONAPPLIEDID" />
+                <ScalarProperty Name="TRANS_WALLETTYPE" ColumnName="TRANS_WALLETTYPE" />
+                <ScalarProperty Name="TRANS_COMMENT" ColumnName="TRANS_COMMENT" />
+                <ScalarProperty Name="TRANS_WALLETID" ColumnName="TRANS_WALLETID" />
+                <ScalarProperty Name="TRANS_ID" ColumnName="TRANS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WALLETTRANSACTIONSSTATUS">
+            <EntityTypeMapping TypeName="CHALOModel.WALLETTRANSACTIONSSTATU">
+              <MappingFragment StoreEntitySet="WALLETTRANSACTIONSSTATUS">
+                <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CH_USER">
+            <EntityTypeMapping TypeName="CHALOModel.CH_USER">
+              <MappingFragment StoreEntitySet="CH_USER">
+                <ScalarProperty Name="USER_REFEREDBY" ColumnName="USER_REFEREDBY" />
+                <ScalarProperty Name="USER_COUPONAPPLIED" ColumnName="USER_COUPONAPPLIED" />
+                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
+                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
+                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
+                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
+                <ScalarProperty Name="USER_STATUS" ColumnName="USER_STATUS" />
+                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
+                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
+                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
+                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
+                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
+                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CITIES">
+            <EntityTypeMapping TypeName="CHALOModel.CITy">
+              <MappingFragment StoreEntitySet="CITIES">
+                <ScalarProperty Name="CITY_STATUS" ColumnName="CITY_STATUS" />
+                <ScalarProperty Name="CITY_MODIFIEDDATE" ColumnName="CITY_MODIFIEDDATE" />
+                <ScalarProperty Name="CITY_MODIFIEDBY" ColumnName="CITY_MODIFIEDBY" />
+                <ScalarProperty Name="CITY_CREATEDDATE" ColumnName="CITY_CREATEDDATE" />
+                <ScalarProperty Name="CITY_CREATEDBY" ColumnName="CITY_CREATEDBY" />
+                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
+                <ScalarProperty Name="CITY_STATEID" ColumnName="CITY_STATEID" />
+                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DRIVERS">
             <EntityTypeMapping TypeName="CHALOModel.DRIVER">
               <MappingFragment StoreEntitySet="DRIVERS">
-                <ScalarProperty Name="DRIVER_ID" ColumnName="DRIVER_ID" />
-                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
-                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
-                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
-                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
-                <ScalarProperty Name="DRIVER_ADDRESS" ColumnName="DRIVER_ADDRESS" />
-                <ScalarProperty Name="DRIVER_USERNAME" ColumnName="DRIVER_USERNAME" />
-                <ScalarProperty Name="DRIVER_PASSWORD" ColumnName="DRIVER_PASSWORD" />
-                <ScalarProperty Name="DRIVER_LICENSENUMBER" ColumnName="DRIVER_LICENSENUMBER" />
-                <ScalarProperty Name="DRIVER_PANCARD" ColumnName="DRIVER_PANCARD" />
-                <ScalarProperty Name="DRIVER_VENDORID" ColumnName="DRIVER_VENDORID" />
-                <ScalarProperty Name="DRIVER_STATUS" ColumnName="DRIVER_STATUS" />
-                <ScalarProperty Name="DRIVER_CREATEDBY" ColumnName="DRIVER_CREATEDBY" />
-                <ScalarProperty Name="DRIVER_CREATEDDATE" ColumnName="DRIVER_CREATEDDATE" />
-                <ScalarProperty Name="DRIVER_MODIFIEDBY" ColumnName="DRIVER_MODIFIEDBY" />
                 <ScalarProperty Name="DRIVER_MODIFIEDDATE" ColumnName="DRIVER_MODIFIEDDATE" />
+                <ScalarProperty Name="DRIVER_MODIFIEDBY" ColumnName="DRIVER_MODIFIEDBY" />
+                <ScalarProperty Name="DRIVER_CREATEDDATE" ColumnName="DRIVER_CREATEDDATE" />
+                <ScalarProperty Name="DRIVER_CREATEDBY" ColumnName="DRIVER_CREATEDBY" />
+                <ScalarProperty Name="DRIVER_STATUS" ColumnName="DRIVER_STATUS" />
+                <ScalarProperty Name="DRIVER_VENDORID" ColumnName="DRIVER_VENDORID" />
+                <ScalarProperty Name="DRIVER_PANCARD" ColumnName="DRIVER_PANCARD" />
+                <ScalarProperty Name="DRIVER_LICENSENUMBER" ColumnName="DRIVER_LICENSENUMBER" />
+                <ScalarProperty Name="DRIVER_PASSWORD" ColumnName="DRIVER_PASSWORD" />
+                <ScalarProperty Name="DRIVER_USERNAME" ColumnName="DRIVER_USERNAME" />
+                <ScalarProperty Name="DRIVER_ADDRESS" ColumnName="DRIVER_ADDRESS" />
+                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
+                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
+                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
+                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
+                <ScalarProperty Name="DRIVER_ID" ColumnName="DRIVER_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONS">
             <EntityTypeMapping TypeName="CHALOModel.LOCATION">
               <MappingFragment StoreEntitySet="LOCATIONS">
-                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
-                <ScalarProperty Name="LOCATION_CITYID" ColumnName="LOCATION_CITYID" />
-                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
-                <ScalarProperty Name="LOCATION_LATITUDE" ColumnName="LOCATION_LATITUDE" />
-                <ScalarProperty Name="LOCATION_LONGITUDE" ColumnName="LOCATION_LONGITUDE" />
-                <ScalarProperty Name="LOCATION_CREATEDBY" ColumnName="LOCATION_CREATEDBY" />
-                <ScalarProperty Name="LOCATION_CREATEDDATE" ColumnName="LOCATION_CREATEDDATE" />
-                <ScalarProperty Name="LOCATION_MODIFIEDBY" ColumnName="LOCATION_MODIFIEDBY" />
-                <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
                 <ScalarProperty Name="LOCATION_STATUS" ColumnName="LOCATION_STATUS" />
+                <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
+                <ScalarProperty Name="LOCATION_MODIFIEDBY" ColumnName="LOCATION_MODIFIEDBY" />
+                <ScalarProperty Name="LOCATION_CREATEDDATE" ColumnName="LOCATION_CREATEDDATE" />
+                <ScalarProperty Name="LOCATION_CREATEDBY" ColumnName="LOCATION_CREATEDBY" />
+                <ScalarProperty Name="LOCATION_LONGITUDE" ColumnName="LOCATION_LONGITUDE" />
+                <ScalarProperty Name="LOCATION_LATITUDE" ColumnName="LOCATION_LATITUDE" />
+                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
+                <ScalarProperty Name="LOCATION_CITYID" ColumnName="LOCATION_CITYID" />
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="MASTERSTATUS">
             <EntityTypeMapping TypeName="CHALOModel.MASTERSTATU">
               <MappingFragment StoreEntitySet="MASTERSTATUS">
-                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
-                <ScalarProperty Name="SATUS_NAME" ColumnName="SATUS_NAME" />
-                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
-                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
-                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
                 <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="SATUS_NAME" ColumnName="SATUS_NAME" />
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="NOOFSEATS">
             <EntityTypeMapping TypeName="CHALOModel.NOOFSEAT">
               <MappingFragment StoreEntitySet="NOOFSEATS">
-                <ScalarProperty Name="SEAT_ID" ColumnName="SEAT_ID" />
-                <ScalarProperty Name="SEAT_TRIP_ID" ColumnName="SEAT_TRIP_ID" />
-                <ScalarProperty Name="SEAT_ACTUALSEATS" ColumnName="SEAT_ACTUALSEATS" />
-                <ScalarProperty Name="SEAT_AVAILABLESEATS" ColumnName="SEAT_AVAILABLESEATS" />
-                <ScalarProperty Name="SEAT_CREATEDBY" ColumnName="SEAT_CREATEDBY" />
-                <ScalarProperty Name="SEAT_CREATEDDATE" ColumnName="SEAT_CREATEDDATE" />
-                <ScalarProperty Name="SEAT_MODIFIEDBY" ColumnName="SEAT_MODIFIEDBY" />
                 <ScalarProperty Name="SEAT_MODIFIEDDATE" ColumnName="SEAT_MODIFIEDDATE" />
+                <ScalarProperty Name="SEAT_MODIFIEDBY" ColumnName="SEAT_MODIFIEDBY" />
+                <ScalarProperty Name="SEAT_CREATEDDATE" ColumnName="SEAT_CREATEDDATE" />
+                <ScalarProperty Name="SEAT_CREATEDBY" ColumnName="SEAT_CREATEDBY" />
+                <ScalarProperty Name="SEAT_AVAILABLESEATS" ColumnName="SEAT_AVAILABLESEATS" />
+                <ScalarProperty Name="SEAT_ACTUALSEATS" ColumnName="SEAT_ACTUALSEATS" />
+                <ScalarProperty Name="SEAT_TRIP_ID" ColumnName="SEAT_TRIP_ID" />
+                <ScalarProperty Name="SEAT_ID" ColumnName="SEAT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PAYMENTHISTORies">
             <EntityTypeMapping TypeName="CHALOModel.PAYMENTHISTORY">
               <MappingFragment StoreEntitySet="PAYMENTHISTORY">
-                <ScalarProperty Name="PAYMENTHISTORY_ID" ColumnName="PAYMENTHISTORY_ID" />
-                <ScalarProperty Name="PAYMENTHISTORY_USERTRIPID" ColumnName="PAYMENTHISTORY_USERTRIPID" />
-                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
-                <ScalarProperty Name="PAYMENTTYPE_AMOUNTPAID" ColumnName="PAYMENTTYPE_AMOUNTPAID" />
-                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
-                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
-                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
                 <ScalarProperty Name="PAYMENTTYPE_MODIFIEDDATE" ColumnName="PAYMENTTYPE_MODIFIEDDATE" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_AMOUNTPAID" ColumnName="PAYMENTTYPE_AMOUNTPAID" />
+                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
+                <ScalarProperty Name="PAYMENTHISTORY_USERTRIPID" ColumnName="PAYMENTHISTORY_USERTRIPID" />
+                <ScalarProperty Name="PAYMENTHISTORY_ID" ColumnName="PAYMENTHISTORY_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="PAYMENTTYPEs">
             <EntityTypeMapping TypeName="CHALOModel.PAYMENTTYPE">
               <MappingFragment StoreEntitySet="PAYMENTTYPE">
-                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
-                <ScalarProperty Name="PAYMENTTYPE_NAME" ColumnName="PAYMENTTYPE_NAME" />
-                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
-                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
-                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
                 <ScalarProperty Name="PAYMENT_MODIFIEDDATE" ColumnName="PAYMENT_MODIFIEDDATE" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_NAME" ColumnName="PAYMENTTYPE_NAME" />
+                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ROUTES">
             <EntityTypeMapping TypeName="CHALOModel.ROUTE">
               <MappingFragment StoreEntitySet="ROUTES">
-                <ScalarProperty Name="ROUTE_ID" ColumnName="ROUTE_ID" />
-                <ScalarProperty Name="ROUTE_NAME" ColumnName="ROUTE_NAME" />
-                <ScalarProperty Name="ROUTE_FROMNAME" ColumnName="ROUTE_FROMNAME" />
-                <ScalarProperty Name="ROUTE_TONAME" ColumnName="ROUTE_TONAME" />
-                <ScalarProperty Name="ROUTE_VIANAME" ColumnName="ROUTE_VIANAME" />
-                <ScalarProperty Name="ROUTE_FROMLAT" ColumnName="ROUTE_FROMLAT" />
-                <ScalarProperty Name="ROUTE_TOLAT" ColumnName="ROUTE_TOLAT" />
-                <ScalarProperty Name="ROUTE_VIALAT" ColumnName="ROUTE_VIALAT" />
-                <ScalarProperty Name="ROUTE_FROMLONG" ColumnName="ROUTE_FROMLONG" />
-                <ScalarProperty Name="ROUTE_TOLONG" ColumnName="ROUTE_TOLONG" />
-                <ScalarProperty Name="ROUTE_VIALONG" ColumnName="ROUTE_VIALONG" />
-                <ScalarProperty Name="ROUTE_CREATEDBY" ColumnName="ROUTE_CREATEDBY" />
-                <ScalarProperty Name="ROUTE_CREATEDDATE" ColumnName="ROUTE_CREATEDDATE" />
-                <ScalarProperty Name="ROUTE_MODIFIEDBY" ColumnName="ROUTE_MODIFIEDBY" />
-                <ScalarProperty Name="ROUTE_MODIFIEDDATE" ColumnName="ROUTE_MODIFIEDDATE" />
-                <ScalarProperty Name="ROUTE_STATUS" ColumnName="ROUTE_STATUS" />
                 <ScalarProperty Name="ROUTE_ALLLOCATIONS" ColumnName="ROUTE_ALLLOCATIONS" />
+                <ScalarProperty Name="ROUTE_STATUS" ColumnName="ROUTE_STATUS" />
+                <ScalarProperty Name="ROUTE_MODIFIEDDATE" ColumnName="ROUTE_MODIFIEDDATE" />
+                <ScalarProperty Name="ROUTE_MODIFIEDBY" ColumnName="ROUTE_MODIFIEDBY" />
+                <ScalarProperty Name="ROUTE_CREATEDDATE" ColumnName="ROUTE_CREATEDDATE" />
+                <ScalarProperty Name="ROUTE_CREATEDBY" ColumnName="ROUTE_CREATEDBY" />
+                <ScalarProperty Name="ROUTE_VIALONG" ColumnName="ROUTE_VIALONG" />
+                <ScalarProperty Name="ROUTE_TOLONG" ColumnName="ROUTE_TOLONG" />
+                <ScalarProperty Name="ROUTE_FROMLONG" ColumnName="ROUTE_FROMLONG" />
+                <ScalarProperty Name="ROUTE_VIALAT" ColumnName="ROUTE_VIALAT" />
+                <ScalarProperty Name="ROUTE_TOLAT" ColumnName="ROUTE_TOLAT" />
+                <ScalarProperty Name="ROUTE_FROMLAT" ColumnName="ROUTE_FROMLAT" />
+                <ScalarProperty Name="ROUTE_VIANAME" ColumnName="ROUTE_VIANAME" />
+                <ScalarProperty Name="ROUTE_TONAME" ColumnName="ROUTE_TONAME" />
+                <ScalarProperty Name="ROUTE_FROMNAME" ColumnName="ROUTE_FROMNAME" />
+                <ScalarProperty Name="ROUTE_NAME" ColumnName="ROUTE_NAME" />
+                <ScalarProperty Name="ROUTE_ID" ColumnName="ROUTE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="STATEs">
             <EntityTypeMapping TypeName="CHALOModel.STATE">
               <MappingFragment StoreEntitySet="STATE">
-                <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
-                <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
-                <ScalarProperty Name="STATE_CREATEDBY" ColumnName="STATE_CREATEDBY" />
-                <ScalarProperty Name="STATE_CREATEDDATE" ColumnName="STATE_CREATEDDATE" />
-                <ScalarProperty Name="STATE_MODIFIEDBY" ColumnName="STATE_MODIFIEDBY" />
-                <ScalarProperty Name="STATE_MODIFIEDDATE" ColumnName="STATE_MODIFIEDDATE" />
                 <ScalarProperty Name="STATE_STATUS" ColumnName="STATE_STATUS" />
+                <ScalarProperty Name="STATE_MODIFIEDDATE" ColumnName="STATE_MODIFIEDDATE" />
+                <ScalarProperty Name="STATE_MODIFIEDBY" ColumnName="STATE_MODIFIEDBY" />
+                <ScalarProperty Name="STATE_CREATEDDATE" ColumnName="STATE_CREATEDDATE" />
+                <ScalarProperty Name="STATE_CREATEDBY" ColumnName="STATE_CREATEDBY" />
+                <ScalarProperty Name="STATE_NAME" ColumnName="STATE_NAME" />
+                <ScalarProperty Name="STATE_ID" ColumnName="STATE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="temptrips">
             <EntityTypeMapping TypeName="CHALOModel.temptrip">
               <MappingFragment StoreEntitySet="temptrips">
-                <ScalarProperty Name="TEMPTRIP_ID" ColumnName="TEMPTRIP_ID" />
-                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
-                <ScalarProperty Name="fromtripid" ColumnName="fromtripid" />
-                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
-                <ScalarProperty Name="fromsortorder" ColumnName="fromsortorder" />
-                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
-                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
-                <ScalarProperty Name="fromkms" ColumnName="fromkms" />
-                <ScalarProperty Name="tollid" ColumnName="tollid" />
-                <ScalarProperty Name="totripid" ColumnName="totripid" />
-                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
-                <ScalarProperty Name="tosortorder" ColumnName="tosortorder" />
-                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
-                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
                 <ScalarProperty Name="tokms" ColumnName="tokms" />
+                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
+                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
+                <ScalarProperty Name="tosortorder" ColumnName="tosortorder" />
+                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
+                <ScalarProperty Name="totripid" ColumnName="totripid" />
+                <ScalarProperty Name="tollid" ColumnName="tollid" />
+                <ScalarProperty Name="fromkms" ColumnName="fromkms" />
+                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
+                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
+                <ScalarProperty Name="fromsortorder" ColumnName="fromsortorder" />
+                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
+                <ScalarProperty Name="fromtripid" ColumnName="fromtripid" />
+                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
+                <ScalarProperty Name="TEMPTRIP_ID" ColumnName="TEMPTRIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRIPLOCATIONS">
             <EntityTypeMapping TypeName="CHALOModel.TRIPLOCATION">
               <MappingFragment StoreEntitySet="TRIPLOCATIONS">
-                <ScalarProperty Name="LL_ID" ColumnName="LL_ID" />
-                <ScalarProperty Name="LL_TRIP_ID" ColumnName="LL_TRIP_ID" />
-                <ScalarProperty Name="LL_LAT" ColumnName="LL_LAT" />
-                <ScalarProperty Name="LL_LONG" ColumnName="LL_LONG" />
-                <ScalarProperty Name="LL_NAME" ColumnName="LL_NAME" />
-                <ScalarProperty Name="LL_CREATEDBY" ColumnName="LL_CREATEDBY" />
-                <ScalarProperty Name="LL_CREATEDDATE" ColumnName="LL_CREATEDDATE" />
-                <ScalarProperty Name="LL_MODIFIEDBY" ColumnName="LL_MODIFIEDBY" />
-                <ScalarProperty Name="LL_MODIFIEDDATE" ColumnName="LL_MODIFIEDDATE" />
-                <ScalarProperty Name="LL_VIA" ColumnName="LL_VIA" />
-                <ScalarProperty Name="LL_SORTORDER" ColumnName="LL_SORTORDER" />
-                <ScalarProperty Name="LL_AVERAGEREACHTIME" ColumnName="LL_AVERAGEREACHTIME" />
-                <ScalarProperty Name="LL_ACTUALREACHTIME" ColumnName="LL_ACTUALREACHTIME" />
-                <ScalarProperty Name="LL_DIFFPREV" ColumnName="LL_DIFFPREV" />
-                <ScalarProperty Name="LL_STATUS" ColumnName="LL_STATUS" />
-                <ScalarProperty Name="LL_ENDED" ColumnName="LL_ENDED" />
                 <ScalarProperty Name="LL_KMFROMPICKUP" ColumnName="LL_KMFROMPICKUP" />
+                <ScalarProperty Name="LL_ENDED" ColumnName="LL_ENDED" />
+                <ScalarProperty Name="LL_STATUS" ColumnName="LL_STATUS" />
+                <ScalarProperty Name="LL_DIFFPREV" ColumnName="LL_DIFFPREV" />
+                <ScalarProperty Name="LL_ACTUALREACHTIME" ColumnName="LL_ACTUALREACHTIME" />
+                <ScalarProperty Name="LL_AVERAGEREACHTIME" ColumnName="LL_AVERAGEREACHTIME" />
+                <ScalarProperty Name="LL_SORTORDER" ColumnName="LL_SORTORDER" />
+                <ScalarProperty Name="LL_VIA" ColumnName="LL_VIA" />
+                <ScalarProperty Name="LL_MODIFIEDDATE" ColumnName="LL_MODIFIEDDATE" />
+                <ScalarProperty Name="LL_MODIFIEDBY" ColumnName="LL_MODIFIEDBY" />
+                <ScalarProperty Name="LL_CREATEDDATE" ColumnName="LL_CREATEDDATE" />
+                <ScalarProperty Name="LL_CREATEDBY" ColumnName="LL_CREATEDBY" />
+                <ScalarProperty Name="LL_NAME" ColumnName="LL_NAME" />
+                <ScalarProperty Name="LL_LONG" ColumnName="LL_LONG" />
+                <ScalarProperty Name="LL_LAT" ColumnName="LL_LAT" />
+                <ScalarProperty Name="LL_TRIP_ID" ColumnName="LL_TRIP_ID" />
+                <ScalarProperty Name="LL_ID" ColumnName="LL_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRIPS">
             <EntityTypeMapping TypeName="CHALOModel.TRIP">
               <MappingFragment StoreEntitySet="TRIPS">
-                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
-                <ScalarProperty Name="TRIP_VEHICLE_ID" ColumnName="TRIP_VEHICLE_ID" />
-                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
-                <ScalarProperty Name="TRIP_EXPECTEDSTARTDATE" ColumnName="TRIP_EXPECTEDSTARTDATE" />
-                <ScalarProperty Name="TRIP_EXPECTEDENDDATE" ColumnName="TRIP_EXPECTEDENDDATE" />
-                <ScalarProperty Name="TRIP_ACTUALSTARTDATE" ColumnName="TRIP_ACTUALSTARTDATE" />
-                <ScalarProperty Name="TRIP_ACTUALENDDATE" ColumnName="TRIP_ACTUALENDDATE" />
-                <ScalarProperty Name="TRIP_STATUS" ColumnName="TRIP_STATUS" />
-                <ScalarProperty Name="TRIP_CREATEDBY" ColumnName="TRIP_CREATEDBY" />
-                <ScalarProperty Name="TRIP_CREATEDDATE" ColumnName="TRIP_CREATEDDATE" />
-                <ScalarProperty Name="TRIP_MODIFIEDBY" ColumnName="TRIP_MODIFIEDBY" />
-                <ScalarProperty Name="TRIP_MODIFIEDDATE" ColumnName="TRIP_MODIFIEDDATE" />
-                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
-                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
-                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
-                <ScalarProperty Name="TRIPS_ALLLOCATIONS" ColumnName="TRIPS_ALLLOCATIONS" />
-                <ScalarProperty Name="TRIP_STARTED" ColumnName="TRIP_STARTED" />
-                <ScalarProperty Name="TRIP_ENDED" ColumnName="TRIP_ENDED" />
                 <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
+                <ScalarProperty Name="TRIP_ENDED" ColumnName="TRIP_ENDED" />
+                <ScalarProperty Name="TRIP_STARTED" ColumnName="TRIP_STARTED" />
+                <ScalarProperty Name="TRIPS_ALLLOCATIONS" ColumnName="TRIPS_ALLLOCATIONS" />
+                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
+                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
+                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
+                <ScalarProperty Name="TRIP_MODIFIEDDATE" ColumnName="TRIP_MODIFIEDDATE" />
+                <ScalarProperty Name="TRIP_MODIFIEDBY" ColumnName="TRIP_MODIFIEDBY" />
+                <ScalarProperty Name="TRIP_CREATEDDATE" ColumnName="TRIP_CREATEDDATE" />
+                <ScalarProperty Name="TRIP_CREATEDBY" ColumnName="TRIP_CREATEDBY" />
+                <ScalarProperty Name="TRIP_STATUS" ColumnName="TRIP_STATUS" />
+                <ScalarProperty Name="TRIP_ACTUALENDDATE" ColumnName="TRIP_ACTUALENDDATE" />
+                <ScalarProperty Name="TRIP_ACTUALSTARTDATE" ColumnName="TRIP_ACTUALSTARTDATE" />
+                <ScalarProperty Name="TRIP_EXPECTEDENDDATE" ColumnName="TRIP_EXPECTEDENDDATE" />
+                <ScalarProperty Name="TRIP_EXPECTEDSTARTDATE" ColumnName="TRIP_EXPECTEDSTARTDATE" />
+                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
+                <ScalarProperty Name="TRIP_VEHICLE_ID" ColumnName="TRIP_VEHICLE_ID" />
+                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRIPSTATUS">
             <EntityTypeMapping TypeName="CHALOModel.TRIPSTATU">
               <MappingFragment StoreEntitySet="TRIPSTATUS">
-                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
-                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
-                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
-                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
-                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
                 <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TRIPTEMPs">
             <EntityTypeMapping TypeName="CHALOModel.TRIPTEMP">
               <MappingFragment StoreEntitySet="TRIPTEMP">
-                <ScalarProperty Name="TRIPTEMP_ID" ColumnName="TRIPTEMP_ID" />
-                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
-                <ScalarProperty Name="trip_name" ColumnName="trip_name" />
-                <ScalarProperty Name="trip_vehicle_id" ColumnName="trip_vehicle_id" />
-                <ScalarProperty Name="trip_route_id" ColumnName="trip_route_id" />
-                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
-                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
-                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
-                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
-                <ScalarProperty Name="tollid" ColumnName="tollid" />
-                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
-                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
-                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
-                <ScalarProperty Name="startdate" ColumnName="startdate" />
-                <ScalarProperty Name="VIA" ColumnName="VIA" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-                <ScalarProperty Name="seat_availableseats" ColumnName="seat_availableseats" />
-                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
-                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
-                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
-                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
                 <ScalarProperty Name="COST" ColumnName="COST" />
+                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
+                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
+                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
+                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
+                <ScalarProperty Name="seat_availableseats" ColumnName="seat_availableseats" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="VIA" ColumnName="VIA" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
+                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
+                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
+                <ScalarProperty Name="tollid" ColumnName="tollid" />
+                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
+                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
+                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
+                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
+                <ScalarProperty Name="trip_route_id" ColumnName="trip_route_id" />
+                <ScalarProperty Name="trip_vehicle_id" ColumnName="trip_vehicle_id" />
+                <ScalarProperty Name="trip_name" ColumnName="trip_name" />
+                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
+                <ScalarProperty Name="TRIPTEMP_ID" ColumnName="TRIPTEMP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USER_REGISTERTYPE">
             <EntityTypeMapping TypeName="CHALOModel.USER_REGISTERTYPE">
               <MappingFragment StoreEntitySet="USER_REGISTERTYPE">
-                <ScalarProperty Name="REGTYPE_ID" ColumnName="REGTYPE_ID" />
-                <ScalarProperty Name="REGTYPE_NAME" ColumnName="REGTYPE_NAME" />
-                <ScalarProperty Name="REGTYPE_CREATEDBY" ColumnName="REGTYPE_CREATEDBY" />
-                <ScalarProperty Name="REGTYPE_CREATEDDATE" ColumnName="REGTYPE_CREATEDDATE" />
-                <ScalarProperty Name="REGTYPE_MODIFIEDBY" ColumnName="REGTYPE_MODIFIEDBY" />
                 <ScalarProperty Name="REGTYPE_MODIFIEDDATE" ColumnName="REGTYPE_MODIFIEDDATE" />
+                <ScalarProperty Name="REGTYPE_MODIFIEDBY" ColumnName="REGTYPE_MODIFIEDBY" />
+                <ScalarProperty Name="REGTYPE_CREATEDDATE" ColumnName="REGTYPE_CREATEDDATE" />
+                <ScalarProperty Name="REGTYPE_CREATEDBY" ColumnName="REGTYPE_CREATEDBY" />
+                <ScalarProperty Name="REGTYPE_NAME" ColumnName="REGTYPE_NAME" />
+                <ScalarProperty Name="REGTYPE_ID" ColumnName="REGTYPE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USER_STATUS">
             <EntityTypeMapping TypeName="CHALOModel.USER_STATUS">
               <MappingFragment StoreEntitySet="USER_STATUS">
-                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
-                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
-                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
-                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
-                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
                 <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="USERTRIPS">
             <EntityTypeMapping TypeName="CHALOModel.USERTRIP">
               <MappingFragment StoreEntitySet="USERTRIPS">
-                <ScalarProperty Name="USERTRIP_ID" ColumnName="USERTRIP_ID" />
-                <ScalarProperty Name="USERTRIP_TRIPID" ColumnName="USERTRIP_TRIPID" />
-                <ScalarProperty Name="USERTRIP_PICKUPLOC" ColumnName="USERTRIP_PICKUPLOC" />
-                <ScalarProperty Name="USERTRIP_DROPLOC" ColumnName="USERTRIP_DROPLOC" />
-                <ScalarProperty Name="USERTRIP_VIA" ColumnName="USERTRIP_VIA" />
-                <ScalarProperty Name="USERTRIP_ESTIMATEDDURATION" ColumnName="USERTRIP_ESTIMATEDDURATION" />
-                <ScalarProperty Name="USERTRIP_ACTUALDURATION" ColumnName="USERTRIP_ACTUALDURATION" />
-                <ScalarProperty Name="USERTRIP_DISTANCE" ColumnName="USERTRIP_DISTANCE" />
-                <ScalarProperty Name="USERTRIP_ACTUALAMOUNT" ColumnName="USERTRIP_ACTUALAMOUNT" />
-                <ScalarProperty Name="USERTRIP_DISCOUNT" ColumnName="USERTRIP_DISCOUNT" />
-                <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
-                <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
-                <ScalarProperty Name="USERTRIP_APPLIEDCOUPON" ColumnName="USERTRIP_APPLIEDCOUPON" />
-                <ScalarProperty Name="USERTRIP_CREATEDBY" ColumnName="USERTRIP_CREATEDBY" />
-                <ScalarProperty Name="USERTRIP_CREATEDDATE" ColumnName="USERTRIP_CREATEDDATE" />
-                <ScalarProperty Name="USERTRIP_MODIFIEDBY" ColumnName="USERTRIP_MODIFIEDBY" />
                 <ScalarProperty Name="USERTRIP_MODIFIEDDATE" ColumnName="USERTRIP_MODIFIEDDATE" />
+                <ScalarProperty Name="USERTRIP_MODIFIEDBY" ColumnName="USERTRIP_MODIFIEDBY" />
+                <ScalarProperty Name="USERTRIP_CREATEDDATE" ColumnName="USERTRIP_CREATEDDATE" />
+                <ScalarProperty Name="USERTRIP_CREATEDBY" ColumnName="USERTRIP_CREATEDBY" />
+                <ScalarProperty Name="USERTRIP_APPLIEDCOUPON" ColumnName="USERTRIP_APPLIEDCOUPON" />
+                <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
+                <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_DISCOUNT" ColumnName="USERTRIP_DISCOUNT" />
+                <ScalarProperty Name="USERTRIP_ACTUALAMOUNT" ColumnName="USERTRIP_ACTUALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_DISTANCE" ColumnName="USERTRIP_DISTANCE" />
+                <ScalarProperty Name="USERTRIP_ACTUALDURATION" ColumnName="USERTRIP_ACTUALDURATION" />
+                <ScalarProperty Name="USERTRIP_ESTIMATEDDURATION" ColumnName="USERTRIP_ESTIMATEDDURATION" />
+                <ScalarProperty Name="USERTRIP_VIA" ColumnName="USERTRIP_VIA" />
+                <ScalarProperty Name="USERTRIP_DROPLOC" ColumnName="USERTRIP_DROPLOC" />
+                <ScalarProperty Name="USERTRIP_PICKUPLOC" ColumnName="USERTRIP_PICKUPLOC" />
+                <ScalarProperty Name="USERTRIP_TRIPID" ColumnName="USERTRIP_TRIPID" />
+                <ScalarProperty Name="USERTRIP_ID" ColumnName="USERTRIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VEHICLEDRIVERS">
             <EntityTypeMapping TypeName="CHALOModel.VEHICLEDRIVER">
               <MappingFragment StoreEntitySet="VEHICLEDRIVERS">
-                <ScalarProperty Name="VD_ID" ColumnName="VD_ID" />
-                <ScalarProperty Name="VD_VEHICLE_ID" ColumnName="VD_VEHICLE_ID" />
-                <ScalarProperty Name="VD_DRIVER_ID" ColumnName="VD_DRIVER_ID" />
-                <ScalarProperty Name="VD_CREATEDBY" ColumnName="VD_CREATEDBY" />
-                <ScalarProperty Name="VD_CREATEDDATE" ColumnName="VD_CREATEDDATE" />
-                <ScalarProperty Name="VD_MODIFIEDBY" ColumnName="VD_MODIFIEDBY" />
                 <ScalarProperty Name="VD_MODIFIEDDATE" ColumnName="VD_MODIFIEDDATE" />
+                <ScalarProperty Name="VD_MODIFIEDBY" ColumnName="VD_MODIFIEDBY" />
+                <ScalarProperty Name="VD_CREATEDDATE" ColumnName="VD_CREATEDDATE" />
+                <ScalarProperty Name="VD_CREATEDBY" ColumnName="VD_CREATEDBY" />
+                <ScalarProperty Name="VD_DRIVER_ID" ColumnName="VD_DRIVER_ID" />
+                <ScalarProperty Name="VD_VEHICLE_ID" ColumnName="VD_VEHICLE_ID" />
+                <ScalarProperty Name="VD_ID" ColumnName="VD_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VEHICLES">
             <EntityTypeMapping TypeName="CHALOModel.VEHICLE">
               <MappingFragment StoreEntitySet="VEHICLES">
-                <ScalarProperty Name="VEHICLE_ID" ColumnName="VEHICLE_ID" />
-                <ScalarProperty Name="VEHICLE_VENDORID" ColumnName="VEHICLE_VENDORID" />
-                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
-                <ScalarProperty Name="VEHICLE_TYPE" ColumnName="VEHICLE_TYPE" />
-                <ScalarProperty Name="VEHICLE_SEATS" ColumnName="VEHICLE_SEATS" />
-                <ScalarProperty Name="VEHICLE_REGISTERNO" ColumnName="VEHICLE_REGISTERNO" />
-                <ScalarProperty Name="VEHICLE_INSURANCENUMBER" ColumnName="VEHICLE_INSURANCENUMBER" />
-                <ScalarProperty Name="VEHICLE_POLLUTIONCHECK" ColumnName="VEHICLE_POLLUTIONCHECK" />
-                <ScalarProperty Name="VEHICLE_EXPIRYDATE" ColumnName="VEHICLE_EXPIRYDATE" />
-                <ScalarProperty Name="VEHICLE_INSURANCEEXPIRY" ColumnName="VEHICLE_INSURANCEEXPIRY" />
-                <ScalarProperty Name="VEHICLE_POLLUTIONEXPIRY" ColumnName="VEHICLE_POLLUTIONEXPIRY" />
-                <ScalarProperty Name="VEHICLE_MAINTANANCEEXPIRY" ColumnName="VEHICLE_MAINTANANCEEXPIRY" />
-                <ScalarProperty Name="VEHICLE_CREATEDBY" ColumnName="VEHICLE_CREATEDBY" />
-                <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
-                <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
-                <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
                 <ScalarProperty Name="VEHICLE_STATUS" ColumnName="VEHICLE_STATUS" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
+                <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
+                <ScalarProperty Name="VEHICLE_CREATEDBY" ColumnName="VEHICLE_CREATEDBY" />
+                <ScalarProperty Name="VEHICLE_MAINTANANCEEXPIRY" ColumnName="VEHICLE_MAINTANANCEEXPIRY" />
+                <ScalarProperty Name="VEHICLE_POLLUTIONEXPIRY" ColumnName="VEHICLE_POLLUTIONEXPIRY" />
+                <ScalarProperty Name="VEHICLE_INSURANCEEXPIRY" ColumnName="VEHICLE_INSURANCEEXPIRY" />
+                <ScalarProperty Name="VEHICLE_EXPIRYDATE" ColumnName="VEHICLE_EXPIRYDATE" />
+                <ScalarProperty Name="VEHICLE_POLLUTIONCHECK" ColumnName="VEHICLE_POLLUTIONCHECK" />
+                <ScalarProperty Name="VEHICLE_INSURANCENUMBER" ColumnName="VEHICLE_INSURANCENUMBER" />
+                <ScalarProperty Name="VEHICLE_REGISTERNO" ColumnName="VEHICLE_REGISTERNO" />
+                <ScalarProperty Name="VEHICLE_SEATS" ColumnName="VEHICLE_SEATS" />
+                <ScalarProperty Name="VEHICLE_TYPE" ColumnName="VEHICLE_TYPE" />
+                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
+                <ScalarProperty Name="VEHICLE_VENDORID" ColumnName="VEHICLE_VENDORID" />
+                <ScalarProperty Name="VEHICLE_ID" ColumnName="VEHICLE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VEHICLETYPEs">
             <EntityTypeMapping TypeName="CHALOModel.VEHICLETYPE">
               <MappingFragment StoreEntitySet="VEHICLETYPE">
-                <ScalarProperty Name="VEHICLETYPE_ID" ColumnName="VEHICLETYPE_ID" />
-                <ScalarProperty Name="VEHICLETYPE_NAME" ColumnName="VEHICLETYPE_NAME" />
-                <ScalarProperty Name="VEHICLE_CREATEDBY" ColumnName="VEHICLE_CREATEDBY" />
-                <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
-                <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
-                <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
-                <ScalarProperty Name="VEHICLETYPE_NOOFSEATS" ColumnName="VEHICLETYPE_NOOFSEATS" />
                 <ScalarProperty Name="VEHICLETYPE_COSTPERKM" ColumnName="VEHICLETYPE_COSTPERKM" />
+                <ScalarProperty Name="VEHICLETYPE_NOOFSEATS" ColumnName="VEHICLETYPE_NOOFSEATS" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDDATE" ColumnName="VEHICLE_MODIFIEDDATE" />
+                <ScalarProperty Name="VEHICLE_MODIFIEDBY" ColumnName="VEHICLE_MODIFIEDBY" />
+                <ScalarProperty Name="VEHICLE_CREATEDDATE" ColumnName="VEHICLE_CREATEDDATE" />
+                <ScalarProperty Name="VEHICLE_CREATEDBY" ColumnName="VEHICLE_CREATEDBY" />
+                <ScalarProperty Name="VEHICLETYPE_NAME" ColumnName="VEHICLETYPE_NAME" />
+                <ScalarProperty Name="VEHICLETYPE_ID" ColumnName="VEHICLETYPE_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VENDORS">
             <EntityTypeMapping TypeName="CHALOModel.VENDOR">
               <MappingFragment StoreEntitySet="VENDORS">
-                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
-                <ScalarProperty Name="VENDOR_ORGANIZATIONNAME" ColumnName="VENDOR_ORGANIZATIONNAME" />
-                <ScalarProperty Name="VENDOR_ORGANIZATIONMOBILE" ColumnName="VENDOR_ORGANIZATIONMOBILE" />
-                <ScalarProperty Name="VENDOR_ORGANIZATIONLANDLINE" ColumnName="VENDOR_ORGANIZATIONLANDLINE" />
-                <ScalarProperty Name="VENDOR_OWNFIRSTNAME" ColumnName="VENDOR_OWNFIRSTNAME" />
-                <ScalarProperty Name="VENDOR_OWNLASTNAME" ColumnName="VENDOR_OWNLASTNAME" />
-                <ScalarProperty Name="VENDOR_CONFIRSTNAME" ColumnName="VENDOR_CONFIRSTNAME" />
-                <ScalarProperty Name="VENDOR_CONLASTNAME" ColumnName="VENDOR_CONLASTNAME" />
-                <ScalarProperty Name="VENDOR_EMAILID" ColumnName="VENDOR_EMAILID" />
-                <ScalarProperty Name="VENDOR_ADDRESS" ColumnName="VENDOR_ADDRESS" />
-                <ScalarProperty Name="VENDOR_OWNMOBILE" ColumnName="VENDOR_OWNMOBILE" />
-                <ScalarProperty Name="VENDOR_CONMOBILE" ColumnName="VENDOR_CONMOBILE" />
-                <ScalarProperty Name="VENDOR_OWNLANDLINE" ColumnName="VENDOR_OWNLANDLINE" />
-                <ScalarProperty Name="VENDOR_CONLANDLINE" ColumnName="VENDOR_CONLANDLINE" />
-                <ScalarProperty Name="VENDOR_USERNAME" ColumnName="VENDOR_USERNAME" />
-                <ScalarProperty Name="VENDOR_PASSWORD" ColumnName="VENDOR_PASSWORD" />
-                <ScalarProperty Name="VENDOR_STATUS" ColumnName="VENDOR_STATUS" />
-                <ScalarProperty Name="VENDOR_CREATEDBY" ColumnName="VENDOR_CREATEDBY" />
-                <ScalarProperty Name="VENDOR_CREATEDDATE" ColumnName="VENDOR_CREATEDDATE" />
-                <ScalarProperty Name="VENDOR_MODIFIEDBY" ColumnName="VENDOR_MODIFIEDBY" />
                 <ScalarProperty Name="VENDOR_MODIFIEDDATE" ColumnName="VENDOR_MODIFIEDDATE" />
+                <ScalarProperty Name="VENDOR_MODIFIEDBY" ColumnName="VENDOR_MODIFIEDBY" />
+                <ScalarProperty Name="VENDOR_CREATEDDATE" ColumnName="VENDOR_CREATEDDATE" />
+                <ScalarProperty Name="VENDOR_CREATEDBY" ColumnName="VENDOR_CREATEDBY" />
+                <ScalarProperty Name="VENDOR_STATUS" ColumnName="VENDOR_STATUS" />
+                <ScalarProperty Name="VENDOR_PASSWORD" ColumnName="VENDOR_PASSWORD" />
+                <ScalarProperty Name="VENDOR_USERNAME" ColumnName="VENDOR_USERNAME" />
+                <ScalarProperty Name="VENDOR_CONLANDLINE" ColumnName="VENDOR_CONLANDLINE" />
+                <ScalarProperty Name="VENDOR_OWNLANDLINE" ColumnName="VENDOR_OWNLANDLINE" />
+                <ScalarProperty Name="VENDOR_CONMOBILE" ColumnName="VENDOR_CONMOBILE" />
+                <ScalarProperty Name="VENDOR_OWNMOBILE" ColumnName="VENDOR_OWNMOBILE" />
+                <ScalarProperty Name="VENDOR_ADDRESS" ColumnName="VENDOR_ADDRESS" />
+                <ScalarProperty Name="VENDOR_EMAILID" ColumnName="VENDOR_EMAILID" />
+                <ScalarProperty Name="VENDOR_CONLASTNAME" ColumnName="VENDOR_CONLASTNAME" />
+                <ScalarProperty Name="VENDOR_CONFIRSTNAME" ColumnName="VENDOR_CONFIRSTNAME" />
+                <ScalarProperty Name="VENDOR_OWNLASTNAME" ColumnName="VENDOR_OWNLASTNAME" />
+                <ScalarProperty Name="VENDOR_OWNFIRSTNAME" ColumnName="VENDOR_OWNFIRSTNAME" />
+                <ScalarProperty Name="VENDOR_ORGANIZATIONLANDLINE" ColumnName="VENDOR_ORGANIZATIONLANDLINE" />
+                <ScalarProperty Name="VENDOR_ORGANIZATIONMOBILE" ColumnName="VENDOR_ORGANIZATIONMOBILE" />
+                <ScalarProperty Name="VENDOR_ORGANIZATIONNAME" ColumnName="VENDOR_ORGANIZATIONNAME" />
+                <ScalarProperty Name="VENDOR_ID" ColumnName="VENDOR_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Queries">
             <EntityTypeMapping TypeName="CHALOModel.Query">
               <MappingFragment StoreEntitySet="Query">
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
-                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
-                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
-                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
-                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
-                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
-                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
-                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
-                <ScalarProperty Name="USER_STATUS" ColumnName="USER_STATUS" />
-                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
-                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
-                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
-                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
-                <ScalarProperty Name="USER_COUPONAPPLIED" ColumnName="USER_COUPONAPPLIED" />
                 <ScalarProperty Name="USER_REFEREDBY" ColumnName="USER_REFEREDBY" />
+                <ScalarProperty Name="USER_COUPONAPPLIED" ColumnName="USER_COUPONAPPLIED" />
+                <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
+                <ScalarProperty Name="USER_MODIFIEDBY" ColumnName="USER_MODIFIEDBY" />
+                <ScalarProperty Name="USER_CREATEDATE" ColumnName="USER_CREATEDATE" />
+                <ScalarProperty Name="USER_CREATEDBY" ColumnName="USER_CREATEDBY" />
+                <ScalarProperty Name="USER_STATUS" ColumnName="USER_STATUS" />
+                <ScalarProperty Name="USER_REGISTERTYPE" ColumnName="USER_REGISTERTYPE" />
+                <ScalarProperty Name="USER_DEVICEID" ColumnName="USER_DEVICEID" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_USERNAME" ColumnName="USER_USERNAME" />
+                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
+                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
+                <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
+                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

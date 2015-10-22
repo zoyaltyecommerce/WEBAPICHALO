@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookinginfoController.cs" />
     <Compile Include="Controllers\CH_USERController.cs" />
+    <Compile Include="Controllers\common.cs" />
     <Compile Include="Controllers\GetlocationsController.cs" />
     <Compile Include="Controllers\GetvehiclebytripController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -222,6 +223,9 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\APPLIEDCOUPON.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CHALO.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,9 +250,13 @@
     <Compile Include="Models\COUPON.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\COUPONTYPE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DRIVER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\encryptdecrypt.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LOCATION.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
@@ -277,6 +285,15 @@
     <Compile Include="Models\temptrip.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\transaction.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTIONMODE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TRANSACTIONSTATU.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TRIP.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -287,6 +304,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRIPTEMP.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USERCOUPON.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USERTRIP.cs">
@@ -308,6 +328,18 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VENDOR.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WALLET.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WALLETADDTYPE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WALLETTRANSACTION.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WALLETTRANSACTIONSSTATU.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

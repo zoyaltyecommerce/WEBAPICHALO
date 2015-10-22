@@ -12,6 +12,8 @@ namespace CHALO.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class CHALOEntities : DbContext
     {
@@ -25,9 +27,19 @@ namespace CHALO.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
+        public virtual DbSet<COUPON> COUPONS { get; set; }
+        public virtual DbSet<COUPONTYPE> COUPONTYPEs { get; set; }
+        public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
+        public virtual DbSet<transaction> transactions { get; set; }
+        public virtual DbSet<TRANSACTIONSTATU> TRANSACTIONSTATUS { get; set; }
+        public virtual DbSet<USERCOUPON> USERCOUPONS { get; set; }
+        public virtual DbSet<WALLET> WALLETs { get; set; }
+        public virtual DbSet<WALLETADDTYPE> WALLETADDTYPES { get; set; }
+        public virtual DbSet<WALLETTRANSACTION> WALLETTRANSACTIONS { get; set; }
+        public virtual DbSet<WALLETTRANSACTIONSSTATU> WALLETTRANSACTIONSSTATUS { get; set; }
         public virtual DbSet<CH_USER> CH_USER { get; set; }
         public virtual DbSet<CITy> CITIES { get; set; }
-        public virtual DbSet<COUPON> COUPONS { get; set; }
         public virtual DbSet<DRIVER> DRIVERS { get; set; }
         public virtual DbSet<LOCATION> LOCATIONS { get; set; }
         public virtual DbSet<MASTERSTATU> MASTERSTATUS { get; set; }
@@ -49,5 +61,35 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
+    
+        public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
+        {
+            var dROPLOCATIONParameter = dROPLOCATION != null ?
+                new ObjectParameter("DROPLOCATION", dROPLOCATION) :
+                new ObjectParameter("DROPLOCATION", typeof(string));
+    
+            var pICKUPLOCATIONParameter = pICKUPLOCATION != null ?
+                new ObjectParameter("PICKUPLOCATION", pICKUPLOCATION) :
+                new ObjectParameter("PICKUPLOCATION", typeof(string));
+    
+            var tRIP_IDParameter = tRIP_ID.HasValue ?
+                new ObjectParameter("TRIP_ID", tRIP_ID) :
+                new ObjectParameter("TRIP_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USP_GETVEHICLEBYTRIP", dROPLOCATIONParameter, pICKUPLOCATIONParameter, tRIP_IDParameter);
+        }
+    
+        public virtual int USP_SEARCHVEHICLES(string dROPLOCATION, string pICKUPLOCATION)
+        {
+            var dROPLOCATIONParameter = dROPLOCATION != null ?
+                new ObjectParameter("DROPLOCATION", dROPLOCATION) :
+                new ObjectParameter("DROPLOCATION", typeof(string));
+    
+            var pICKUPLOCATIONParameter = pICKUPLOCATION != null ?
+                new ObjectParameter("PICKUPLOCATION", pICKUPLOCATION) :
+                new ObjectParameter("PICKUPLOCATION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USP_SEARCHVEHICLES", dROPLOCATIONParameter, pICKUPLOCATIONParameter);
+        }
     }
 }
