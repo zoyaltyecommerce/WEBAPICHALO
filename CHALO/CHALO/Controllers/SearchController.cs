@@ -15,7 +15,9 @@ namespace CHALO.Controllers
         public IEnumerable<LOCATION> Get()
         {
             CHALOEntities db = new CHALOEntities();
-            List<LOCATION> list = db.LOCATIONS.Where(c => c.LOCATION_STATUS==1).ToList().OrderBy(c=>c.LOCATION_NAME).ToList();
+           // List<LOCATION> list = new List<LOCATION>();
+            List<LOCATION> list = db.Database.SqlQuery<LOCATION>("EXEC USP_GETLOCS").ToList();
+           // List<LOCATION> list = db.LOCATIONS.Where(c => c.LOCATION_STATUS==1).ToList().OrderBy(c=>c.LOCATION_NAME).ToList();
           
             return list;
         }

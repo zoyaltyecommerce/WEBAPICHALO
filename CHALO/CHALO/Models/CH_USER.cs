@@ -18,6 +18,7 @@ namespace CHALO.Models
         public CH_USER()
         {
             this.APPLIEDCOUPONS = new HashSet<APPLIEDCOUPON>();
+            this.transactions = new HashSet<transaction>();
             this.USERCOUPONS = new HashSet<USERCOUPON>();
             this.WALLETs = new HashSet<WALLET>();
         }
@@ -41,6 +42,8 @@ namespace CHALO.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<transaction> transactions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERCOUPON> USERCOUPONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

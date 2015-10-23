@@ -27,8 +27,10 @@ namespace CHALO.Models
         public Nullable<System.DateTime> TRANS_MODIFIEDDATE { get; set; }
         public Nullable<bool> TRANS_CREDIT { get; set; }
         public Nullable<bool> TRANS_DEBIT { get; set; }
+        public Nullable<int> TRANS_USERID { get; set; }
     
         public virtual TRANSACTIONMODE TRANSACTIONMODE { get; set; }
         public virtual TRANSACTIONSTATU TRANSACTIONSTATU { get; set; }
+        public virtual CH_USER CH_USER { get; set; }
     }
 }

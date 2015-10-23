@@ -64,8 +64,8 @@ namespace CHALO.Controllers
                         USERCOUPON objusercoupon=common.addusercoupon(objuser.USER_ID);
                          
                         //firsttimeuser
-                        bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), code);
-
+                        bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), code, Convert.ToString(listcoupons[0].COUPON_USERID),listcoupons[0].COUPON_ID);
+                       
                         return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
                     }
                     else
@@ -84,7 +84,7 @@ namespace CHALO.Controllers
                     CH_USER objuser = db.CH_USER.Add(user);
                     db.SaveChanges();
                     USERCOUPON objusercoupon = common.addusercoupon(objuser.USER_ID);
-                    bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), "");
+                    bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), "","",0);
 
                     return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
                 }

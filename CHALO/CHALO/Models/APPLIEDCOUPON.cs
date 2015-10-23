@@ -26,6 +26,7 @@ namespace CHALO.Models
         public Nullable<int> APPLIED_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> APPLIED_MODIFIEDDATE { get; set; }
         public Nullable<int> APPLIED_STATUS { get; set; }
+        public Nullable<bool> APPLIED_REFERRALBONUS { get; set; }
     
         public virtual CH_USER CH_USER { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }

@@ -18,21 +18,21 @@ namespace CHALO.Controllers
             try
             {
 
-               users = db.CH_USER.Where(c => c.USER_USERNAME == username && c.USER_PASSWORD == encryptdecrypt.Encrypt(password)).ToList();
+                users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_username='"+ username +"' and user_password='"+ encryptdecrypt.Encrypt(password) +"' and user_status=1").ToList();
                // users = db.LOCATIONS.ToList();
             }
             catch (Exception ex)
             {
 
             }
-            return Ok(users);
+            //return CreatedAtRoute("DefaultApi", new { id = users[0].USER_ID }, users);
             //CH_USER cH_USER = db.CH_USER.Find(userid);
             //if (cH_USER == null)
             //{
             //    return NotFound();
             //}
 
-            //return Ok(cH_USER);
+            return Ok(users);
         }
       
       

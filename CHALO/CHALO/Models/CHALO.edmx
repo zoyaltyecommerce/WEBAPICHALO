@@ -21,6 +21,7 @@
           <Property Name="APPLIED_MODIFIEDBY" Type="int" />
           <Property Name="APPLIED_MODIFIEDDATE" Type="datetime" />
           <Property Name="APPLIED_STATUS" Type="int" />
+          <Property Name="APPLIED_REFERRALBONUS" Type="bit" />
         </EntityType>
         <EntityType Name="COUPONS">
           <Key>
@@ -77,6 +78,7 @@
           <Property Name="TRANS_MODIFIEDDATE" Type="datetime" />
           <Property Name="TRANS_CREDIT" Type="bit" />
           <Property Name="TRANS_DEBIT" Type="bit" />
+          <Property Name="TRANS_USERID" Type="int" />
         </EntityType>
         <EntityType Name="TRANSACTIONSTATUS">
           <Key>
@@ -793,6 +795,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__transacti__TRANS__76619304">
+          <End Role="CH_USER" Type="Self.CH_USER" Multiplicity="0..1" />
+          <End Role="transactions" Type="Self.transactions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="transactions">
+              <PropertyRef Name="TRANS_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__TRIPLOCAT__LL_ST__01142BA1">
           <End Role="TRIPSTATUS" Type="Self.TRIPSTATUS" Multiplicity="0..1" />
           <End Role="TRIPLOCATIONS" Type="Self.TRIPLOCATIONS" Multiplicity="*" />
@@ -1236,6 +1250,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="TRANSACTIONSTATUS" EntitySet="TRANSACTIONSTATUS" />
             <End Role="transactions" EntitySet="transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK__transacti__TRANS__76619304" Association="Self.FK__transacti__TRANS__76619304">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="transactions" EntitySet="transactions" />
+          </AssociationSet>
           <AssociationSet Name="FK__TRIPLOCAT__LL_ST__01142BA1" Association="Self.FK__TRIPLOCAT__LL_ST__01142BA1">
             <End Role="TRIPSTATUS" EntitySet="TRIPSTATUS" />
             <End Role="TRIPLOCATIONS" EntitySet="TRIPLOCATIONS" />
@@ -1417,6 +1435,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="TRANSACTIONSTATU" EntitySet="TRANSACTIONSTATUS" />
             <End Role="transaction" EntitySet="transactions" />
           </AssociationSet>
+          <AssociationSet Name="FK__transacti__TRANS__76619304" Association="CHALOModel.FK__transacti__TRANS__76619304">
+            <End Role="CH_USER" EntitySet="CH_USER" />
+            <End Role="transaction" EntitySet="transactions" />
+          </AssociationSet>
           <AssociationSet Name="FK__USERCOUPO__COUPO__3E1D39E1" Association="CHALOModel.FK__USERCOUPO__COUPO__3E1D39E1">
             <End Role="CH_USER" EntitySet="CH_USER" />
             <End Role="USERCOUPON" EntitySet="USERCOUPONS" />
@@ -1582,6 +1604,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="APPLIED_MODIFIEDBY" Type="Int32" />
           <Property Name="APPLIED_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="APPLIED_STATUS" Type="Int32" />
+          <Property Name="APPLIED_REFERRALBONUS" Type="Boolean" />
           <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="APPLIEDCOUPON" ToRole="CH_USER" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" FromRole="APPLIEDCOUPON" ToRole="MASTERSTATU" />
         </EntityType>
@@ -1646,8 +1669,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="TRANS_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="TRANS_CREDIT" Type="Boolean" />
           <Property Name="TRANS_DEBIT" Type="Boolean" />
+          <Property Name="TRANS_USERID" Type="Int32" />
           <NavigationProperty Name="TRANSACTIONMODE" Relationship="CHALOModel.FK__transacti__TRANS__6EC0713C" FromRole="transaction" ToRole="TRANSACTIONMODE" />
           <NavigationProperty Name="TRANSACTIONSTATU" Relationship="CHALOModel.FK__transacti__TRANS__6FB49575" FromRole="transaction" ToRole="TRANSACTIONSTATU" />
+          <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__transacti__TRANS__76619304" FromRole="transaction" ToRole="CH_USER" />
         </EntityType>
         <EntityType Name="TRANSACTIONSTATU">
           <Key>
@@ -1763,6 +1788,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USER_COUPONAPPLIED" Type="Boolean" />
           <Property Name="USER_REFEREDBY" Type="Int32" />
           <NavigationProperty Name="APPLIEDCOUPONS" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="CH_USER" ToRole="APPLIEDCOUPON" />
+          <NavigationProperty Name="transactions" Relationship="CHALOModel.FK__transacti__TRANS__76619304" FromRole="CH_USER" ToRole="transaction" />
           <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3E1D39E1" FromRole="CH_USER" ToRole="USERCOUPON" />
           <NavigationProperty Name="WALLETs" Relationship="CHALOModel.FK__WALLET__WALLET_U__43D61337" FromRole="CH_USER" ToRole="WALLET" />
           <NavigationProperty Name="USER_REGISTERTYPE1" Relationship="CHALOModel.FK__CH_USER__USER_RE__1CF15040" FromRole="CH_USER" ToRole="USER_REGISTERTYPE" />
@@ -2298,6 +2324,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__transacti__TRANS__76619304">
+          <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
+          <End Type="CHALOModel.transaction" Role="transaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CH_USER">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="transaction">
+              <PropertyRef Name="TRANS_USERID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__USERCOUPO__COUPO__3E1D39E1">
           <End Type="CHALOModel.CH_USER" Role="CH_USER" Multiplicity="0..1" />
           <End Type="CHALOModel.USERCOUPON" Role="USERCOUPON" Multiplicity="*" />
@@ -2753,6 +2791,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySetMapping Name="APPLIEDCOUPONS">
             <EntityTypeMapping TypeName="CHALOModel.APPLIEDCOUPON">
               <MappingFragment StoreEntitySet="APPLIEDCOUPONS">
+                <ScalarProperty Name="APPLIED_REFERRALBONUS" ColumnName="APPLIED_REFERRALBONUS" />
                 <ScalarProperty Name="APPLIED_STATUS" ColumnName="APPLIED_STATUS" />
                 <ScalarProperty Name="APPLIED_MODIFIEDDATE" ColumnName="APPLIED_MODIFIEDDATE" />
                 <ScalarProperty Name="APPLIED_MODIFIEDBY" ColumnName="APPLIED_MODIFIEDBY" />
@@ -2812,6 +2851,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySetMapping Name="transactions">
             <EntityTypeMapping TypeName="CHALOModel.transaction">
               <MappingFragment StoreEntitySet="transactions">
+                <ScalarProperty Name="TRANS_USERID" ColumnName="TRANS_USERID" />
                 <ScalarProperty Name="TRANS_DEBIT" ColumnName="TRANS_DEBIT" />
                 <ScalarProperty Name="TRANS_CREDIT" ColumnName="TRANS_CREDIT" />
                 <ScalarProperty Name="TRANS_MODIFIEDDATE" ColumnName="TRANS_MODIFIEDDATE" />
