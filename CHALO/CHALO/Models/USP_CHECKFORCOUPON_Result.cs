@@ -10,9 +10,8 @@
 namespace CHALO.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class COUPON
+    public partial class USP_CHECKFORCOUPON_Result
     {
         public int COUPON_ID { get; set; }
         public string COUPON_NAME { get; set; }
@@ -24,8 +23,5 @@ namespace CHALO.Models
         public Nullable<System.DateTime> COUPON_MODIFIEDDATE { get; set; }
         public Nullable<int> COUPON_STATUS { get; set; }
         public Nullable<bool> COUPON_ONETIME { get; set; }
-    
-        public virtual COUPONTYPE COUPONTYPE { get; set; }
-        public virtual MASTERSTATU MASTERSTATU { get; set; }
     }
 }

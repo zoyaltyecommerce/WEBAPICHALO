@@ -15,7 +15,7 @@ namespace CHALO.Controllers
     {
         private CHALOEntities db = new CHALOEntities();
 
-        public IHttpActionResult Register(string Firstname, string Email, string Pass, string Mobile, string code)
+        public IHttpActionResult Register(string Firstname, string Email, string Pass, string Mobile, string code,string regtype,string socialid)
         {
             common objcommon = new common();
             CH_USER user = new CH_USER();
@@ -26,7 +26,15 @@ namespace CHALO.Controllers
             user.USER_MOBILE = Mobile.Trim();
             user.USER_PASSWORD = encryptdecrypt.Encrypt(Pass.Trim());
             user.USER_STATUS = 1;
+            if(regtype=="" || regtype==null)
+            { 
             user.USER_REGISTERTYPE = 1;
+            }
+            else
+            {
+                user.USER_REGISTERTYPE = Convert.ToInt32(regtype);
+                user.USER_REGID = socialid;
+            }
             user.USER_MODIFIEDBY = 1;
             user.USER_MODIFIEDDATE = DateTime.Now;
             user.USER_CREATEDBY = 1;

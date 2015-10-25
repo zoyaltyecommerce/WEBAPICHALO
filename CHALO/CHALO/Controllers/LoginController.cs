@@ -11,15 +11,26 @@ namespace CHALO.Controllers
     public class LoginController : ApiController
     {
         private CHALOEntities db = new CHALOEntities();
-        public IHttpActionResult GetLogin(string username, string password)
+        public IHttpActionResult GetLogin(string username, string password, string appid)
         {
-             List<CH_USER> users = new List<CH_USER>();
-           // List<LOCATION> users = new List<LOCATION>();
+            List<CH_USER> users = new List<CH_USER>();
+            // List<LOCATION> users = new List<LOCATION>();
             try
             {
 
-                users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_username='"+ username +"' and user_password='"+ encryptdecrypt.Encrypt(password) +"' and user_status=1").ToList();
-               // users = db.LOCATIONS.ToList();
+                if (appid != null && appid != "")
+                {
+
+                    users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_username='" + username + "' and user_status=1").ToList();
+                }
+                else
+                {
+
+                    users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_username='" + username + "' and user_password='" + encryptdecrypt.Encrypt(password) + "' and user_status=1").ToList();
+
+                }
+
+                // users = db.LOCATIONS.ToList();
             }
             catch (Exception ex)
             {
@@ -34,7 +45,7 @@ namespace CHALO.Controllers
 
             return Ok(users);
         }
-      
-      
+
+
     }
 }

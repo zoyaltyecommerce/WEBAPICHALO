@@ -32,11 +32,11 @@ namespace CHALO.Models
         public Nullable<decimal> USERTRIP_DISCOUNT { get; set; }
         public Nullable<decimal> USERTRIP_TOTALAMOUNT { get; set; }
         public Nullable<int> USERTRIP_STATUS { get; set; }
-        public string USERTRIP_APPLIEDCOUPON { get; set; }
         public Nullable<int> USERTRIP_CREATEDBY { get; set; }
         public Nullable<System.DateTime> USERTRIP_CREATEDDATE { get; set; }
         public Nullable<int> USERTRIP_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> USERTRIP_MODIFIEDDATE { get; set; }
+        public Nullable<int> USERTRIP_APPLIEDCOUPON { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PAYMENTHISTORY> PAYMENTHISTORies { get; set; }

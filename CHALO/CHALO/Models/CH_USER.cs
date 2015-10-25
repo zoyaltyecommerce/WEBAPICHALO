@@ -39,6 +39,7 @@ namespace CHALO.Models
         public Nullable<System.DateTime> USER_MODIFIEDDATE { get; set; }
         public Nullable<bool> USER_COUPONAPPLIED { get; set; }
         public Nullable<int> USER_REFEREDBY { get; set; }
+        public string USER_REGID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }

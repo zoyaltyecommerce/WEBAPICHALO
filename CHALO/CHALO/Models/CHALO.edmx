@@ -23,6 +23,16 @@
           <Property Name="APPLIED_STATUS" Type="int" />
           <Property Name="APPLIED_REFERRALBONUS" Type="bit" />
         </EntityType>
+        <EntityType Name="COUPONENTIYPURPOSE">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="int" Nullable="false" />
+          <Property Name="COUPON_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="COUPON_MONEY" Type="int" />
+          <Property Name="COUPON_TYPE" Type="int" />
+          <Property Name="VALIDITY" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="COUPONS">
           <Key>
             <PropertyRef Name="COUPON_ID" />
@@ -36,6 +46,7 @@
           <Property Name="COUPON_MODIFIEDBY" Type="int" />
           <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
           <Property Name="COUPON_STATUS" Type="int" />
+          <Property Name="COUPON_ONETIME" Type="bit" />
         </EntityType>
         <EntityType Name="COUPONTYPE">
           <Key>
@@ -49,6 +60,17 @@
           <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
           <Property Name="COUPONTYPE_STATUS" Type="int" />
           <Property Name="COUPONTYPE_ONETIME" Type="bit" />
+        </EntityType>
+        <EntityType Name="PAYMENTTRIPSTATUS">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_CREATEDBY" Type="int" />
+          <Property Name="STATUS_CREATEDDATE" Type="datetime" />
+          <Property Name="STATUS_MODIFIEDBY" Type="int" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
         </EntityType>
         <EntityType Name="TRANSACTIONMODE">
           <Key>
@@ -179,6 +201,7 @@
           <Property Name="USER_MODIFIEDDATE" Type="datetime" />
           <Property Name="USER_COUPONAPPLIED" Type="bit" />
           <Property Name="USER_REFEREDBY" Type="int" />
+          <Property Name="USER_REGID" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="CITIES">
           <Key>
@@ -265,6 +288,7 @@
           <Property Name="PAYMENTTYPE_CREATEDDATE" Type="datetime" />
           <Property Name="PAYMENT_MODIFIEDBY" Type="int" />
           <Property Name="PAYMENTTYPE_MODIFIEDDATE" Type="datetime" />
+          <Property Name="PAYMENTHISTORY_STATUS" Type="int" />
         </EntityType>
         <EntityType Name="PAYMENTTYPE">
           <Key>
@@ -476,11 +500,11 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USERTRIP_DISCOUNT" Type="decimal" Precision="10" Scale="2" />
           <Property Name="USERTRIP_TOTALAMOUNT" Type="decimal" Precision="10" Scale="2" />
           <Property Name="USERTRIP_STATUS" Type="int" />
-          <Property Name="USERTRIP_APPLIEDCOUPON" Type="varchar" MaxLength="200" />
           <Property Name="USERTRIP_CREATEDBY" Type="int" />
           <Property Name="USERTRIP_CREATEDDATE" Type="datetime" />
           <Property Name="USERTRIP_MODIFIEDBY" Type="int" />
           <Property Name="USERTRIP_MODIFIEDDATE" Type="datetime" />
+          <Property Name="USERTRIP_APPLIEDCOUPON" Type="int" />
         </EntityType>
         <EntityType Name="VEHICLEDRIVERS">
           <Key>
@@ -744,6 +768,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Principal>
             <Dependent Role="PAYMENTHISTORY">
               <PropertyRef Name="PAYMENTTYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PAYMENTHI__PAYME__7C1A6C5A">
+          <End Role="PAYMENTTRIPSTATUS" Type="Self.PAYMENTTRIPSTATUS" Multiplicity="0..1" />
+          <End Role="PAYMENTHISTORY" Type="Self.PAYMENTHISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAYMENTTRIPSTATUS">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="PAYMENTHISTORY">
+              <PropertyRef Name="PAYMENTHISTORY_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1107,6 +1143,45 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="CHECKWALLETAMOUNT" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
+          <Parameter Name="USER_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="noofseatsavailability" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
+          <Parameter Name="TRIP_ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="USP_BOOKCAB" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
+          <Parameter Name="USER_ID" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_ID" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_TRIPID" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_PICKUPLOC" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_DROPLOC" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_VIA" Type="varchar" Mode="In" />
+          <Parameter Name="USERTRIP_ESTIMATEDDURATION" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_ACTUALDURATION" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_DISTANCE" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_ACTUALAMOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="USERTRIP_DISCOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="USERTRIP_TOTALAMOUNT" Type="decimal" Mode="In" />
+          <Parameter Name="USERTRIP_STATUS" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_APPLIEDCOUPON" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_CREATEDBY" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_CREATEDDATE" Type="datetime" Mode="In" />
+          <Parameter Name="USERTRIP_MODIFIEDBY" Type="int" Mode="In" />
+          <Parameter Name="USERTRIP_MODIFIEDDATE" Type="datetime" Mode="In" />
+          <Parameter Name="TRANS_STATUS" Type="int" Mode="In" />
+          <Parameter Name="PAYMENTTYPE_ID" Type="int" Mode="In" />
+          <Parameter Name="APPLIEDCOUPONNAME" Type="varchar" Mode="In" />
+          <Parameter Name="ISONETIME" Type="bit" Mode="In" />
+          <Parameter Name="OPERATION" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="USP_CHECKFORCOUPON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
+          <Parameter Name="USER_ID" Type="int" Mode="In" />
+          <Parameter Name="COUPONCODE" Type="varchar" Mode="In" />
+          <Parameter Name="OPERATION" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="USP_GETLOCS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
+          <Parameter Name="LOCATION_ID" Type="int" Mode="In" />
+        </Function>
         <Function Name="USP_GETVEHICLEBYTRIP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DROPLOCATION" Type="varchar" Mode="In" />
           <Parameter Name="PICKUPLOCATION" Type="varchar" Mode="In" />
@@ -1118,8 +1193,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
         </Function>
         <EntityContainer Name="CHALOModelStoreContainer">
           <EntitySet Name="APPLIEDCOUPONS" EntityType="Self.APPLIEDCOUPONS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="COUPONENTIYPURPOSE" EntityType="Self.COUPONENTIYPURPOSE" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="COUPONTYPE" EntityType="Self.COUPONTYPE" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="Self.PAYMENTTRIPSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONMODE" EntityType="Self.TRANSACTIONMODE" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="transactions" EntityType="Self.transactions" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONSTATUS" EntityType="Self.TRANSACTIONSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
@@ -1232,6 +1309,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </AssociationSet>
           <AssociationSet Name="FK__PAYMENTHI__PAYME__1BC821DD" Association="Self.FK__PAYMENTHI__PAYME__1BC821DD">
             <End Role="PAYMENTTYPE" EntitySet="PAYMENTTYPE" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORY" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__7C1A6C5A" Association="Self.FK__PAYMENTHI__PAYME__7C1A6C5A">
+            <End Role="PAYMENTTRIPSTATUS" EntitySet="PAYMENTTRIPSTATUS" />
             <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORY" />
           </AssociationSet>
           <AssociationSet Name="FK__ROUTES__ROUTE_ST__5070F446" Association="Self.FK__ROUTES__ROUTE_ST__5070F446">
@@ -1369,9 +1450,50 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="DROPLOCATION" Mode="In" Type="String" />
             <Parameter Name="PICKUPLOCATION" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="USP_BOOKCAB" ReturnType="Collection(CHALOModel.USP_BOOKCAB_Result)">
+            <Parameter Name="USER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_ID" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_TRIPID" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_PICKUPLOC" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_DROPLOC" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_VIA" Mode="In" Type="String" />
+            <Parameter Name="USERTRIP_ESTIMATEDDURATION" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_ACTUALDURATION" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_DISTANCE" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_ACTUALAMOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="USERTRIP_DISCOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="USERTRIP_TOTALAMOUNT" Mode="In" Type="Decimal" />
+            <Parameter Name="USERTRIP_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_APPLIEDCOUPON" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_CREATEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="USERTRIP_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="USERTRIP_MODIFIEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="TRANS_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="PAYMENTTYPE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="APPLIEDCOUPONNAME" Mode="In" Type="String" />
+            <Parameter Name="ISONETIME" Mode="In" Type="Boolean" />
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_GETLOCS" ReturnType="Collection(CHALOModel.USP_GETLOCS_Result)">
+          <Parameter Name="LOCATION_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="USP_CHECKFORCOUPON" ReturnType="Collection(CHALOModel.USP_CHECKFORCOUPON_Result)">
+            <Parameter Name="USER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="COUPONCODE" Mode="In" Type="String" />
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="CHECKWALLETAMOUNT" ReturnType="Collection(CHALOModel.CHECKWALLETAMOUNT_Result)">
+          <Parameter Name="USER_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="noofseatsavailability" ReturnType="Collection(CHALOModel.noofseatsavailability_Result)">
+          <Parameter Name="TRIP_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
           <EntitySet Name="APPLIEDCOUPONS" EntityType="CHALOModel.APPLIEDCOUPON" />
+          <EntitySet Name="COUPONENTIYPURPOSEs" EntityType="CHALOModel.COUPONENTIYPURPOSE" />
           <EntitySet Name="COUPONS" EntityType="CHALOModel.COUPON" />
           <EntitySet Name="COUPONTYPEs" EntityType="CHALOModel.COUPONTYPE" />
+          <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="CHALOModel.PAYMENTTRIPSTATU" />
           <EntitySet Name="TRANSACTIONMODEs" EntityType="CHALOModel.TRANSACTIONMODE" />
           <EntitySet Name="transactions" EntityType="CHALOModel.transaction" />
           <EntitySet Name="TRANSACTIONSTATUS" EntityType="CHALOModel.TRANSACTIONSTATU" />
@@ -1426,6 +1548,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <AssociationSet Name="FK__USERCOUPO__COUPO__3F115E1A" Association="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A">
             <End Role="COUPONTYPE" EntitySet="COUPONTYPEs" />
             <End Role="USERCOUPON" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PAYMENTHI__PAYME__7C1A6C5A" Association="CHALOModel.FK__PAYMENTHI__PAYME__7C1A6C5A">
+            <End Role="PAYMENTTRIPSTATU" EntitySet="PAYMENTTRIPSTATUS" />
+            <End Role="PAYMENTHISTORY" EntitySet="PAYMENTHISTORies" />
           </AssociationSet>
           <AssociationSet Name="FK__transacti__TRANS__6EC0713C" Association="CHALOModel.FK__transacti__TRANS__6EC0713C">
             <End Role="TRANSACTIONMODE" EntitySet="TRANSACTIONMODEs" />
@@ -1588,6 +1714,58 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="VEHICLE" EntitySet="VEHICLES" />
           </AssociationSet>
           </EntityContainer>
+        <ComplexType Name="USP_BOOKCAB_Result">
+          <Property Type="Int32" Name="PAYMENTTYPE_ID" Nullable="false" />
+          <Property Type="String" Name="PAYMENTTYPE_NAME" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="PAYMENTTYPE_CREATEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="PAYMENTTYPE_CREATEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PAYMENT_MODIFIEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="PAYMENT_MODIFIEDDATE" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="USP_GETLOCS_Result">
+          <Property Type="Int32" Name="LOCATION_ID" Nullable="false" />
+          <Property Type="Int32" Name="LOCATION_CITYID" Nullable="true" />
+          <Property Type="String" Name="LOCATION_NAME" Nullable="true" />
+          <Property Type="Decimal" Name="LOCATION_LATITUDE" Nullable="true" Precision="10" Scale="7" />
+          <Property Type="Decimal" Name="LOCATION_LONGITUDE" Nullable="true" Precision="10" Scale="7" />
+          <Property Type="Int32" Name="LOCATION_CREATEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="LOCATION_CREATEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="LOCATION_MODIFIEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="LOCATION_MODIFIEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="LOCATION_STATUS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="USP_CHECKFORCOUPON_Result">
+          <Property Type="Int32" Name="COUPON_ID" Nullable="false" />
+          <Property Type="String" Name="COUPON_NAME" Nullable="true" MaxLength="30" />
+          <Property Type="Int32" Name="COUPON_MONEY" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_TYPE" Nullable="true" />
+          <Property Type="Int32" Name="COUPON_CREATEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="COUPON_CREATEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="COUPON_MODIFIEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="COUPON_MODIFIEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="COUPON_STATUS" Nullable="true" />
+          <Property Type="Boolean" Name="COUPON_ONETIME" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="CHECKWALLETAMOUNT_Result">
+          <Property Type="Int32" Name="WALLET_ID" Nullable="false" />
+          <Property Type="Int32" Name="WALLET_USERID" Nullable="true" />
+          <Property Type="Decimal" Name="WALLET_AVAILABLEMONEY" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Int32" Name="WALLET_CREATEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="WALLET_CREATEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="WALLET_MODIFIEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="WALLET_MODIFIEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="WALLET_STATUS" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="noofseatsavailability_Result">
+          <Property Type="Int32" Name="SEAT_ID" Nullable="false" />
+          <Property Type="Int32" Name="SEAT_TRIP_ID" Nullable="true" />
+          <Property Type="Int32" Name="SEAT_ACTUALSEATS" Nullable="true" />
+          <Property Type="Int32" Name="SEAT_AVAILABLESEATS" Nullable="true" />
+          <Property Type="Int32" Name="SEAT_CREATEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="SEAT_CREATEDDATE" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="SEAT_MODIFIEDBY" Nullable="true" />
+          <Property Type="DateTime" Name="SEAT_MODIFIEDDATE" Nullable="true" Precision="23" />
+        </ComplexType>
         <EntityType Name="APPLIEDCOUPON">
           <Key>
             <PropertyRef Name="APPLIED_ID" />
@@ -1608,6 +1786,16 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="APPLIEDCOUPON" ToRole="CH_USER" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" FromRole="APPLIEDCOUPON" ToRole="MASTERSTATU" />
         </EntityType>
+        <EntityType Name="COUPONENTIYPURPOSE">
+          <Key>
+            <PropertyRef Name="COUPON_ID" />
+          </Key>
+          <Property Name="COUPON_ID" Type="Int32" Nullable="false" />
+          <Property Name="COUPON_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="COUPON_MONEY" Type="Int32" />
+          <Property Name="COUPON_TYPE" Type="Int32" />
+          <Property Name="VALIDITY" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="COUPON">
           <Key>
             <PropertyRef Name="COUPON_ID" />
@@ -1621,6 +1809,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="COUPON_MODIFIEDBY" Type="Int32" />
           <Property Name="COUPON_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="COUPON_STATUS" Type="Int32" />
+          <Property Name="COUPON_ONETIME" Type="Boolean" />
           <NavigationProperty Name="COUPONTYPE" Relationship="CHALOModel.FK__COUPONS__COUPON___4C6B5938" FromRole="COUPON" ToRole="COUPONTYPE" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__COUPONS__COUPON___57DD0BE4" FromRole="COUPON" ToRole="MASTERSTATU" />
         </EntityType>
@@ -1639,6 +1828,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___4C6B5938" FromRole="COUPONTYPE" ToRole="COUPON" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__COUPONTYP__COUPO__32AB8735" FromRole="COUPONTYPE" ToRole="MASTERSTATU" />
           <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A" FromRole="COUPONTYPE" ToRole="USERCOUPON" />
+        </EntityType>
+        <EntityType Name="PAYMENTTRIPSTATU">
+          <Key>
+            <PropertyRef Name="STATUS_ID" />
+          </Key>
+          <Property Name="STATUS_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_CREATEDBY" Type="Int32" />
+          <Property Name="STATUS_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
+          <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__7C1A6C5A" FromRole="PAYMENTTRIPSTATU" ToRole="PAYMENTHISTORY" />
         </EntityType>
         <EntityType Name="TRANSACTIONMODE">
           <Key>
@@ -1787,6 +1988,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USER_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="USER_COUPONAPPLIED" Type="Boolean" />
           <Property Name="USER_REFEREDBY" Type="Int32" />
+          <Property Name="USER_REGID" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="APPLIEDCOUPONS" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="CH_USER" ToRole="APPLIEDCOUPON" />
           <NavigationProperty Name="transactions" Relationship="CHALOModel.FK__transacti__TRANS__76619304" FromRole="CH_USER" ToRole="transaction" />
           <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3E1D39E1" FromRole="CH_USER" ToRole="USERCOUPON" />
@@ -1902,6 +2104,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="PAYMENTTYPE_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="PAYMENT_MODIFIEDBY" Type="Int32" />
           <Property Name="PAYMENTTYPE_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="PAYMENTHISTORY_STATUS" Type="Int32" />
+          <NavigationProperty Name="PAYMENTTRIPSTATU" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__7C1A6C5A" FromRole="PAYMENTHISTORY" ToRole="PAYMENTTRIPSTATU" />
           <NavigationProperty Name="USERTRIP" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1AD3FDA4" FromRole="PAYMENTHISTORY" ToRole="USERTRIP" />
           <NavigationProperty Name="PAYMENTTYPE" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1BC821DD" FromRole="PAYMENTHISTORY" ToRole="PAYMENTTYPE" />
         </EntityType>
@@ -2112,11 +2316,11 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USERTRIP_DISCOUNT" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="USERTRIP_TOTALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="USERTRIP_STATUS" Type="Int32" />
-          <Property Name="USERTRIP_APPLIEDCOUPON" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="USERTRIP_CREATEDBY" Type="Int32" />
           <Property Name="USERTRIP_CREATEDDATE" Type="DateTime" Precision="3" />
           <Property Name="USERTRIP_MODIFIEDBY" Type="Int32" />
           <Property Name="USERTRIP_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="USERTRIP_APPLIEDCOUPON" Type="Int32" />
           <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__1AD3FDA4" FromRole="USERTRIP" ToRole="PAYMENTHISTORY" />
           <NavigationProperty Name="TRIPLOCATION" Relationship="CHALOModel.FK__USERTRIPS__USERT__14270015" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
           <NavigationProperty Name="TRIPLOCATION1" Relationship="CHALOModel.FK__USERTRIPS__USERT__151B244E" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
@@ -2297,6 +2501,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Principal>
             <Dependent Role="USERCOUPON">
               <PropertyRef Name="COUPON_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PAYMENTHI__PAYME__7C1A6C5A">
+          <End Type="CHALOModel.PAYMENTTRIPSTATU" Role="PAYMENTTRIPSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.PAYMENTHISTORY" Role="PAYMENTHISTORY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PAYMENTTRIPSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="PAYMENTHISTORY">
+              <PropertyRef Name="PAYMENTHISTORY_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2788,6 +3004,78 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
         <EntityContainerMapping StorageEntityContainer="CHALOModelStoreContainer" CdmEntityContainer="CHALOEntities">
           <FunctionImportMapping FunctionImportName="USP_GETVEHICLEBYTRIP" FunctionName="CHALOModel.Store.USP_GETVEHICLEBYTRIP" />
           <FunctionImportMapping FunctionImportName="USP_SEARCHVEHICLES" FunctionName="CHALOModel.Store.USP_SEARCHVEHICLES" />
+          <FunctionImportMapping FunctionImportName="USP_BOOKCAB" FunctionName="CHALOModel.Store.USP_BOOKCAB">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.USP_BOOKCAB_Result">
+                <ScalarProperty Name="PAYMENTTYPE_ID" ColumnName="PAYMENTTYPE_ID" />
+                <ScalarProperty Name="PAYMENTTYPE_NAME" ColumnName="PAYMENTTYPE_NAME" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDBY" ColumnName="PAYMENTTYPE_CREATEDBY" />
+                <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
+                <ScalarProperty Name="PAYMENT_MODIFIEDDATE" ColumnName="PAYMENT_MODIFIEDDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_GETLOCS" FunctionName="CHALOModel.Store.USP_GETLOCS">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.USP_GETLOCS_Result">
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+                <ScalarProperty Name="LOCATION_CITYID" ColumnName="LOCATION_CITYID" />
+                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
+                <ScalarProperty Name="LOCATION_LATITUDE" ColumnName="LOCATION_LATITUDE" />
+                <ScalarProperty Name="LOCATION_LONGITUDE" ColumnName="LOCATION_LONGITUDE" />
+                <ScalarProperty Name="LOCATION_CREATEDBY" ColumnName="LOCATION_CREATEDBY" />
+                <ScalarProperty Name="LOCATION_CREATEDDATE" ColumnName="LOCATION_CREATEDDATE" />
+                <ScalarProperty Name="LOCATION_MODIFIEDBY" ColumnName="LOCATION_MODIFIEDBY" />
+                <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
+                <ScalarProperty Name="LOCATION_STATUS" ColumnName="LOCATION_STATUS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_CHECKFORCOUPON" FunctionName="CHALOModel.Store.USP_CHECKFORCOUPON">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.USP_CHECKFORCOUPON_Result">
+                <ScalarProperty Name="COUPON_ID" ColumnName="COUPON_ID" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_TYPE" ColumnName="COUPON_TYPE" />
+                <ScalarProperty Name="COUPON_CREATEDBY" ColumnName="COUPON_CREATEDBY" />
+                <ScalarProperty Name="COUPON_CREATEDDATE" ColumnName="COUPON_CREATEDDATE" />
+                <ScalarProperty Name="COUPON_MODIFIEDBY" ColumnName="COUPON_MODIFIEDBY" />
+                <ScalarProperty Name="COUPON_MODIFIEDDATE" ColumnName="COUPON_MODIFIEDDATE" />
+                <ScalarProperty Name="COUPON_STATUS" ColumnName="COUPON_STATUS" />
+                <ScalarProperty Name="COUPON_ONETIME" ColumnName="COUPON_ONETIME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CHECKWALLETAMOUNT" FunctionName="CHALOModel.Store.CHECKWALLETAMOUNT">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.CHECKWALLETAMOUNT_Result">
+                <ScalarProperty Name="WALLET_ID" ColumnName="WALLET_ID" />
+                <ScalarProperty Name="WALLET_USERID" ColumnName="WALLET_USERID" />
+                <ScalarProperty Name="WALLET_AVAILABLEMONEY" ColumnName="WALLET_AVAILABLEMONEY" />
+                <ScalarProperty Name="WALLET_CREATEDBY" ColumnName="WALLET_CREATEDBY" />
+                <ScalarProperty Name="WALLET_CREATEDDATE" ColumnName="WALLET_CREATEDDATE" />
+                <ScalarProperty Name="WALLET_MODIFIEDBY" ColumnName="WALLET_MODIFIEDBY" />
+                <ScalarProperty Name="WALLET_MODIFIEDDATE" ColumnName="WALLET_MODIFIEDDATE" />
+                <ScalarProperty Name="WALLET_STATUS" ColumnName="WALLET_STATUS" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="noofseatsavailability" FunctionName="CHALOModel.Store.noofseatsavailability">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.noofseatsavailability_Result">
+                <ScalarProperty Name="SEAT_ID" ColumnName="SEAT_ID" />
+                <ScalarProperty Name="SEAT_TRIP_ID" ColumnName="SEAT_TRIP_ID" />
+                <ScalarProperty Name="SEAT_ACTUALSEATS" ColumnName="SEAT_ACTUALSEATS" />
+                <ScalarProperty Name="SEAT_AVAILABLESEATS" ColumnName="SEAT_AVAILABLESEATS" />
+                <ScalarProperty Name="SEAT_CREATEDBY" ColumnName="SEAT_CREATEDBY" />
+                <ScalarProperty Name="SEAT_CREATEDDATE" ColumnName="SEAT_CREATEDDATE" />
+                <ScalarProperty Name="SEAT_MODIFIEDBY" ColumnName="SEAT_MODIFIEDBY" />
+                <ScalarProperty Name="SEAT_MODIFIEDDATE" ColumnName="SEAT_MODIFIEDDATE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="APPLIEDCOUPONS">
             <EntityTypeMapping TypeName="CHALOModel.APPLIEDCOUPON">
               <MappingFragment StoreEntitySet="APPLIEDCOUPONS">
@@ -2807,9 +3095,21 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="COUPONENTIYPURPOSEs">
+            <EntityTypeMapping TypeName="CHALOModel.COUPONENTIYPURPOSE">
+              <MappingFragment StoreEntitySet="COUPONENTIYPURPOSE">
+                <ScalarProperty Name="VALIDITY" ColumnName="VALIDITY" />
+                <ScalarProperty Name="COUPON_TYPE" ColumnName="COUPON_TYPE" />
+                <ScalarProperty Name="COUPON_MONEY" ColumnName="COUPON_MONEY" />
+                <ScalarProperty Name="COUPON_NAME" ColumnName="COUPON_NAME" />
+                <ScalarProperty Name="COUPON_ID" ColumnName="COUPON_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="COUPONS">
             <EntityTypeMapping TypeName="CHALOModel.COUPON">
               <MappingFragment StoreEntitySet="COUPONS">
+                <ScalarProperty Name="COUPON_ONETIME" ColumnName="COUPON_ONETIME" />
                 <ScalarProperty Name="COUPON_STATUS" ColumnName="COUPON_STATUS" />
                 <ScalarProperty Name="COUPON_MODIFIEDDATE" ColumnName="COUPON_MODIFIEDDATE" />
                 <ScalarProperty Name="COUPON_MODIFIEDBY" ColumnName="COUPON_MODIFIEDBY" />
@@ -2833,6 +3133,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
                 <ScalarProperty Name="COUPONTYPE_CREATEDBY" ColumnName="COUPONTYPE_CREATEDBY" />
                 <ScalarProperty Name="COUPONTYPE_NAME" ColumnName="COUPONTYPE_NAME" />
                 <ScalarProperty Name="COUPONTYPE_ID" ColumnName="COUPONTYPE_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PAYMENTTRIPSTATUS">
+            <EntityTypeMapping TypeName="CHALOModel.PAYMENTTRIPSTATU">
+              <MappingFragment StoreEntitySet="PAYMENTTRIPSTATUS">
+                <ScalarProperty Name="STATUS_MODIFIEDDATE" ColumnName="STATUS_MODIFIEDDATE" />
+                <ScalarProperty Name="STATUS_MODIFIEDBY" ColumnName="STATUS_MODIFIEDBY" />
+                <ScalarProperty Name="STATUS_CREATEDDATE" ColumnName="STATUS_CREATEDDATE" />
+                <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2956,6 +3268,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySetMapping Name="CH_USER">
             <EntityTypeMapping TypeName="CHALOModel.CH_USER">
               <MappingFragment StoreEntitySet="CH_USER">
+                <ScalarProperty Name="USER_REGID" ColumnName="USER_REGID" />
                 <ScalarProperty Name="USER_REFEREDBY" ColumnName="USER_REFEREDBY" />
                 <ScalarProperty Name="USER_COUPONAPPLIED" ColumnName="USER_COUPONAPPLIED" />
                 <ScalarProperty Name="USER_MODIFIEDDATE" ColumnName="USER_MODIFIEDDATE" />
@@ -3056,6 +3369,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySetMapping Name="PAYMENTHISTORies">
             <EntityTypeMapping TypeName="CHALOModel.PAYMENTHISTORY">
               <MappingFragment StoreEntitySet="PAYMENTHISTORY">
+                <ScalarProperty Name="PAYMENTHISTORY_STATUS" ColumnName="PAYMENTHISTORY_STATUS" />
                 <ScalarProperty Name="PAYMENTTYPE_MODIFIEDDATE" ColumnName="PAYMENTTYPE_MODIFIEDDATE" />
                 <ScalarProperty Name="PAYMENT_MODIFIEDBY" ColumnName="PAYMENT_MODIFIEDBY" />
                 <ScalarProperty Name="PAYMENTTYPE_CREATEDDATE" ColumnName="PAYMENTTYPE_CREATEDDATE" />
@@ -3251,11 +3565,11 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySetMapping Name="USERTRIPS">
             <EntityTypeMapping TypeName="CHALOModel.USERTRIP">
               <MappingFragment StoreEntitySet="USERTRIPS">
+                <ScalarProperty Name="USERTRIP_APPLIEDCOUPON" ColumnName="USERTRIP_APPLIEDCOUPON" />
                 <ScalarProperty Name="USERTRIP_MODIFIEDDATE" ColumnName="USERTRIP_MODIFIEDDATE" />
                 <ScalarProperty Name="USERTRIP_MODIFIEDBY" ColumnName="USERTRIP_MODIFIEDBY" />
                 <ScalarProperty Name="USERTRIP_CREATEDDATE" ColumnName="USERTRIP_CREATEDDATE" />
                 <ScalarProperty Name="USERTRIP_CREATEDBY" ColumnName="USERTRIP_CREATEDBY" />
-                <ScalarProperty Name="USERTRIP_APPLIEDCOUPON" ColumnName="USERTRIP_APPLIEDCOUPON" />
                 <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
                 <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
                 <ScalarProperty Name="USERTRIP_DISCOUNT" ColumnName="USERTRIP_DISCOUNT" />

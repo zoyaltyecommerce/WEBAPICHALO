@@ -19,17 +19,68 @@ namespace CHALO.Controllers
         public IHttpActionResult PostBookinginfo(bookinglist obj)
         {
 
-            List<USERTRIP> list = new List<USERTRIP>();
-            //if (!ModelState.IsValid)
-            //{
-            //    return BadRequest(ModelState);
-            //}
+            //  List<USERTRIP> list = new List<USERTRIP>();
 
-            //db.CH_USER.Add(cH_USER);
-            //db.SaveChanges();
+            CHALOEntities db = new CHALOEntities();
+            List<NOOFSEAT> NOOFSEATS = new List<NOOFSEAT>();
+            List<WALLET> objwallet = new List<WALLET>();
+            // List<LOCATION> users = new List<LOCATION>();
+            try
+            {
 
-            return CreatedAtRoute("DefaultApi", new { id = "1" }, list);
+                NOOFSEATS = db.Database.SqlQuery<NOOFSEAT>("EXEC noofseatsavailability @TRIP_ID='" + obj.trip_id + "'").ToList();
+
+                if (NOOFSEATS.Count > 0)
+                {
+                    if (obj.paymenttype == "1")
+                    {
+                        objwallet = db.Database.SqlQuery<WALLET>("EXEC CHECKWALLETAMOUNT @USER_ID='" + obj.userid + "'").ToList();
+                        if (objwallet[0].WALLET_AVAILABLEMONEY >= obj.totalamount)
+                        {
+                            List<USERTRIP> usertrip=bookride(obj);
+                        }
+                        else
+                        {
+                            return Json(new { nowallet = "you have " + objwallet[0].WALLET_AVAILABLEMONEY + " RS in your wallet whish is not sufficient to book your cab" });
+                        }
+                    }
+                    else if(obj.paymenttype=="2")
+                    {
+                        List<USERTRIP> usertrip = bookride(obj);
+                    }
+                }
+                else
+                {
+                    return Json(new { noseats = "seatsover" });
+                }
+                // users = db.LOCATIONS.ToList();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+
+
+            return CreatedAtRoute("DefaultApi", new { id = "1" }, objwallet);
         }
+
+        internal List<USERTRIP> bookride(bookinglist obj)
+        {
+            CHALOEntities db = new CHALOEntities();
+            List<USERTRIP> USERTRIPs = new List<USERTRIP>();
+            try
+            {
+                USERTRIPs = db.Database.SqlQuery<USERTRIP>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB'").ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return USERTRIPs;
+        }
+
         public class bookinglist
         {
             public int TRIPTEMP_ID { get; set; }
@@ -54,6 +105,14 @@ namespace CHALO.Controllers
             public string vehicle_number { get; set; }
             public string vehicletype_name { get; set; }
             public decimal COST { get; set; }
+            public int userid { get; set; }
+            public decimal discount { get; set; }
+            public decimal totalamount { get; set; }
+            public int appliedcoupon { get; set; }
+            public string APPLIEDCOUPONNAME { get; set; }
+            public bool ISONETIME { get; set; }
+
+            public string paymenttype { get; set; }
         }
     }
 }

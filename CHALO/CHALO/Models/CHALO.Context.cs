@@ -28,8 +28,10 @@ namespace CHALO.Models
         }
     
         public virtual DbSet<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
+        public virtual DbSet<COUPONENTIYPURPOSE> COUPONENTIYPURPOSEs { get; set; }
         public virtual DbSet<COUPON> COUPONS { get; set; }
         public virtual DbSet<COUPONTYPE> COUPONTYPEs { get; set; }
+        public virtual DbSet<PAYMENTTRIPSTATU> PAYMENTTRIPSTATUS { get; set; }
         public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<TRANSACTIONSTATU> TRANSACTIONSTATUS { get; set; }
@@ -90,6 +92,147 @@ namespace CHALO.Models
                 new ObjectParameter("PICKUPLOCATION", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USP_SEARCHVEHICLES", dROPLOCATIONParameter, pICKUPLOCATIONParameter);
+        }
+    
+        public virtual ObjectResult<USP_BOOKCAB_Result> USP_BOOKCAB(Nullable<int> uSER_ID, Nullable<int> uSERTRIP_ID, Nullable<int> uSERTRIP_TRIPID, Nullable<int> uSERTRIP_PICKUPLOC, Nullable<int> uSERTRIP_DROPLOC, string uSERTRIP_VIA, Nullable<int> uSERTRIP_ESTIMATEDDURATION, Nullable<int> uSERTRIP_ACTUALDURATION, Nullable<int> uSERTRIP_DISTANCE, Nullable<decimal> uSERTRIP_ACTUALAMOUNT, Nullable<decimal> uSERTRIP_DISCOUNT, Nullable<decimal> uSERTRIP_TOTALAMOUNT, Nullable<int> uSERTRIP_STATUS, Nullable<int> uSERTRIP_APPLIEDCOUPON, Nullable<int> uSERTRIP_CREATEDBY, Nullable<System.DateTime> uSERTRIP_CREATEDDATE, Nullable<int> uSERTRIP_MODIFIEDBY, Nullable<System.DateTime> uSERTRIP_MODIFIEDDATE, Nullable<int> tRANS_STATUS, Nullable<int> pAYMENTTYPE_ID, string aPPLIEDCOUPONNAME, Nullable<bool> iSONETIME, string oPERATION)
+        {
+            var uSER_IDParameter = uSER_ID.HasValue ?
+                new ObjectParameter("USER_ID", uSER_ID) :
+                new ObjectParameter("USER_ID", typeof(int));
+    
+            var uSERTRIP_IDParameter = uSERTRIP_ID.HasValue ?
+                new ObjectParameter("USERTRIP_ID", uSERTRIP_ID) :
+                new ObjectParameter("USERTRIP_ID", typeof(int));
+    
+            var uSERTRIP_TRIPIDParameter = uSERTRIP_TRIPID.HasValue ?
+                new ObjectParameter("USERTRIP_TRIPID", uSERTRIP_TRIPID) :
+                new ObjectParameter("USERTRIP_TRIPID", typeof(int));
+    
+            var uSERTRIP_PICKUPLOCParameter = uSERTRIP_PICKUPLOC.HasValue ?
+                new ObjectParameter("USERTRIP_PICKUPLOC", uSERTRIP_PICKUPLOC) :
+                new ObjectParameter("USERTRIP_PICKUPLOC", typeof(int));
+    
+            var uSERTRIP_DROPLOCParameter = uSERTRIP_DROPLOC.HasValue ?
+                new ObjectParameter("USERTRIP_DROPLOC", uSERTRIP_DROPLOC) :
+                new ObjectParameter("USERTRIP_DROPLOC", typeof(int));
+    
+            var uSERTRIP_VIAParameter = uSERTRIP_VIA != null ?
+                new ObjectParameter("USERTRIP_VIA", uSERTRIP_VIA) :
+                new ObjectParameter("USERTRIP_VIA", typeof(string));
+    
+            var uSERTRIP_ESTIMATEDDURATIONParameter = uSERTRIP_ESTIMATEDDURATION.HasValue ?
+                new ObjectParameter("USERTRIP_ESTIMATEDDURATION", uSERTRIP_ESTIMATEDDURATION) :
+                new ObjectParameter("USERTRIP_ESTIMATEDDURATION", typeof(int));
+    
+            var uSERTRIP_ACTUALDURATIONParameter = uSERTRIP_ACTUALDURATION.HasValue ?
+                new ObjectParameter("USERTRIP_ACTUALDURATION", uSERTRIP_ACTUALDURATION) :
+                new ObjectParameter("USERTRIP_ACTUALDURATION", typeof(int));
+    
+            var uSERTRIP_DISTANCEParameter = uSERTRIP_DISTANCE.HasValue ?
+                new ObjectParameter("USERTRIP_DISTANCE", uSERTRIP_DISTANCE) :
+                new ObjectParameter("USERTRIP_DISTANCE", typeof(int));
+    
+            var uSERTRIP_ACTUALAMOUNTParameter = uSERTRIP_ACTUALAMOUNT.HasValue ?
+                new ObjectParameter("USERTRIP_ACTUALAMOUNT", uSERTRIP_ACTUALAMOUNT) :
+                new ObjectParameter("USERTRIP_ACTUALAMOUNT", typeof(decimal));
+    
+            var uSERTRIP_DISCOUNTParameter = uSERTRIP_DISCOUNT.HasValue ?
+                new ObjectParameter("USERTRIP_DISCOUNT", uSERTRIP_DISCOUNT) :
+                new ObjectParameter("USERTRIP_DISCOUNT", typeof(decimal));
+    
+            var uSERTRIP_TOTALAMOUNTParameter = uSERTRIP_TOTALAMOUNT.HasValue ?
+                new ObjectParameter("USERTRIP_TOTALAMOUNT", uSERTRIP_TOTALAMOUNT) :
+                new ObjectParameter("USERTRIP_TOTALAMOUNT", typeof(decimal));
+    
+            var uSERTRIP_STATUSParameter = uSERTRIP_STATUS.HasValue ?
+                new ObjectParameter("USERTRIP_STATUS", uSERTRIP_STATUS) :
+                new ObjectParameter("USERTRIP_STATUS", typeof(int));
+    
+            var uSERTRIP_APPLIEDCOUPONParameter = uSERTRIP_APPLIEDCOUPON.HasValue ?
+                new ObjectParameter("USERTRIP_APPLIEDCOUPON", uSERTRIP_APPLIEDCOUPON) :
+                new ObjectParameter("USERTRIP_APPLIEDCOUPON", typeof(int));
+    
+            var uSERTRIP_CREATEDBYParameter = uSERTRIP_CREATEDBY.HasValue ?
+                new ObjectParameter("USERTRIP_CREATEDBY", uSERTRIP_CREATEDBY) :
+                new ObjectParameter("USERTRIP_CREATEDBY", typeof(int));
+    
+            var uSERTRIP_CREATEDDATEParameter = uSERTRIP_CREATEDDATE.HasValue ?
+                new ObjectParameter("USERTRIP_CREATEDDATE", uSERTRIP_CREATEDDATE) :
+                new ObjectParameter("USERTRIP_CREATEDDATE", typeof(System.DateTime));
+    
+            var uSERTRIP_MODIFIEDBYParameter = uSERTRIP_MODIFIEDBY.HasValue ?
+                new ObjectParameter("USERTRIP_MODIFIEDBY", uSERTRIP_MODIFIEDBY) :
+                new ObjectParameter("USERTRIP_MODIFIEDBY", typeof(int));
+    
+            var uSERTRIP_MODIFIEDDATEParameter = uSERTRIP_MODIFIEDDATE.HasValue ?
+                new ObjectParameter("USERTRIP_MODIFIEDDATE", uSERTRIP_MODIFIEDDATE) :
+                new ObjectParameter("USERTRIP_MODIFIEDDATE", typeof(System.DateTime));
+    
+            var tRANS_STATUSParameter = tRANS_STATUS.HasValue ?
+                new ObjectParameter("TRANS_STATUS", tRANS_STATUS) :
+                new ObjectParameter("TRANS_STATUS", typeof(int));
+    
+            var pAYMENTTYPE_IDParameter = pAYMENTTYPE_ID.HasValue ?
+                new ObjectParameter("PAYMENTTYPE_ID", pAYMENTTYPE_ID) :
+                new ObjectParameter("PAYMENTTYPE_ID", typeof(int));
+    
+            var aPPLIEDCOUPONNAMEParameter = aPPLIEDCOUPONNAME != null ?
+                new ObjectParameter("APPLIEDCOUPONNAME", aPPLIEDCOUPONNAME) :
+                new ObjectParameter("APPLIEDCOUPONNAME", typeof(string));
+    
+            var iSONETIMEParameter = iSONETIME.HasValue ?
+                new ObjectParameter("ISONETIME", iSONETIME) :
+                new ObjectParameter("ISONETIME", typeof(bool));
+    
+            var oPERATIONParameter = oPERATION != null ?
+                new ObjectParameter("OPERATION", oPERATION) :
+                new ObjectParameter("OPERATION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_BOOKCAB_Result>("USP_BOOKCAB", uSER_IDParameter, uSERTRIP_IDParameter, uSERTRIP_TRIPIDParameter, uSERTRIP_PICKUPLOCParameter, uSERTRIP_DROPLOCParameter, uSERTRIP_VIAParameter, uSERTRIP_ESTIMATEDDURATIONParameter, uSERTRIP_ACTUALDURATIONParameter, uSERTRIP_DISTANCEParameter, uSERTRIP_ACTUALAMOUNTParameter, uSERTRIP_DISCOUNTParameter, uSERTRIP_TOTALAMOUNTParameter, uSERTRIP_STATUSParameter, uSERTRIP_APPLIEDCOUPONParameter, uSERTRIP_CREATEDBYParameter, uSERTRIP_CREATEDDATEParameter, uSERTRIP_MODIFIEDBYParameter, uSERTRIP_MODIFIEDDATEParameter, tRANS_STATUSParameter, pAYMENTTYPE_IDParameter, aPPLIEDCOUPONNAMEParameter, iSONETIMEParameter, oPERATIONParameter);
+        }
+    
+        public virtual ObjectResult<USP_GETLOCS_Result> USP_GETLOCS(Nullable<int> lOCATION_ID)
+        {
+            var lOCATION_IDParameter = lOCATION_ID.HasValue ?
+                new ObjectParameter("LOCATION_ID", lOCATION_ID) :
+                new ObjectParameter("LOCATION_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_GETLOCS_Result>("USP_GETLOCS", lOCATION_IDParameter);
+        }
+    
+        public virtual ObjectResult<USP_CHECKFORCOUPON_Result> USP_CHECKFORCOUPON(Nullable<int> uSER_ID, string cOUPONCODE, string oPERATION)
+        {
+            var uSER_IDParameter = uSER_ID.HasValue ?
+                new ObjectParameter("USER_ID", uSER_ID) :
+                new ObjectParameter("USER_ID", typeof(int));
+    
+            var cOUPONCODEParameter = cOUPONCODE != null ?
+                new ObjectParameter("COUPONCODE", cOUPONCODE) :
+                new ObjectParameter("COUPONCODE", typeof(string));
+    
+            var oPERATIONParameter = oPERATION != null ?
+                new ObjectParameter("OPERATION", oPERATION) :
+                new ObjectParameter("OPERATION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_CHECKFORCOUPON_Result>("USP_CHECKFORCOUPON", uSER_IDParameter, cOUPONCODEParameter, oPERATIONParameter);
+        }
+    
+        public virtual ObjectResult<CHECKWALLETAMOUNT_Result> CHECKWALLETAMOUNT(Nullable<int> uSER_ID)
+        {
+            var uSER_IDParameter = uSER_ID.HasValue ?
+                new ObjectParameter("USER_ID", uSER_ID) :
+                new ObjectParameter("USER_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CHECKWALLETAMOUNT_Result>("CHECKWALLETAMOUNT", uSER_IDParameter);
+        }
+    
+        public virtual ObjectResult<noofseatsavailability_Result> noofseatsavailability(Nullable<int> tRIP_ID)
+        {
+            var tRIP_IDParameter = tRIP_ID.HasValue ?
+                new ObjectParameter("TRIP_ID", tRIP_ID) :
+                new ObjectParameter("TRIP_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<noofseatsavailability_Result>("noofseatsavailability", tRIP_IDParameter);
         }
     }
 }

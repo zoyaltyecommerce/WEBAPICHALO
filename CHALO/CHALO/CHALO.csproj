@@ -207,6 +207,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApplycouponController.cs" />
     <Compile Include="Controllers\BookinginfoController.cs" />
     <Compile Include="Controllers\CH_USERController.cs" />
     <Compile Include="Controllers\common.cs" />
@@ -241,6 +242,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CHALO.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\CHECKWALLETAMOUNT_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CH_USER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -248,6 +252,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COUPON.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\COUPONENTIYPURPOSE.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COUPONTYPE.cs">
@@ -267,7 +274,13 @@
     <Compile Include="Models\NOOFSEAT.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\noofseatsavailability_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\PAYMENTHISTORY.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PAYMENTTRIPSTATU.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAYMENTTYPE.cs">
@@ -318,6 +331,15 @@
     <Compile Include="Models\USER_STATUS.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USP_BOOKCAB_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USP_CHECKFORCOUPON_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USP_GETLOCS_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VEHICLE.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -351,6 +373,7 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="DRIVERIMAGES\santhosh.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

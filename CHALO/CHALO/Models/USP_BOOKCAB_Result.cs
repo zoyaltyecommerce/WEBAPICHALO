@@ -10,22 +10,14 @@
 namespace CHALO.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class PAYMENTHISTORY
+    public partial class USP_BOOKCAB_Result
     {
-        public int PAYMENTHISTORY_ID { get; set; }
-        public Nullable<int> PAYMENTHISTORY_USERTRIPID { get; set; }
-        public Nullable<int> PAYMENTTYPE_ID { get; set; }
-        public Nullable<decimal> PAYMENTTYPE_AMOUNTPAID { get; set; }
+        public int PAYMENTTYPE_ID { get; set; }
+        public string PAYMENTTYPE_NAME { get; set; }
         public Nullable<int> PAYMENTTYPE_CREATEDBY { get; set; }
         public Nullable<System.DateTime> PAYMENTTYPE_CREATEDDATE { get; set; }
         public Nullable<int> PAYMENT_MODIFIEDBY { get; set; }
-        public Nullable<System.DateTime> PAYMENTTYPE_MODIFIEDDATE { get; set; }
-        public Nullable<int> PAYMENTHISTORY_STATUS { get; set; }
-    
-        public virtual PAYMENTTRIPSTATU PAYMENTTRIPSTATU { get; set; }
-        public virtual USERTRIP USERTRIP { get; set; }
-        public virtual PAYMENTTYPE PAYMENTTYPE { get; set; }
+        public Nullable<System.DateTime> PAYMENT_MODIFIEDDATE { get; set; }
     }
 }

@@ -12,20 +12,12 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class COUPON
+    public partial class COUPONENTIYPURPOSE
     {
         public int COUPON_ID { get; set; }
         public string COUPON_NAME { get; set; }
         public Nullable<int> COUPON_MONEY { get; set; }
         public Nullable<int> COUPON_TYPE { get; set; }
-        public Nullable<int> COUPON_CREATEDBY { get; set; }
-        public Nullable<System.DateTime> COUPON_CREATEDDATE { get; set; }
-        public Nullable<int> COUPON_MODIFIEDBY { get; set; }
-        public Nullable<System.DateTime> COUPON_MODIFIEDDATE { get; set; }
-        public Nullable<int> COUPON_STATUS { get; set; }
-        public Nullable<bool> COUPON_ONETIME { get; set; }
-    
-        public virtual COUPONTYPE COUPONTYPE { get; set; }
-        public virtual MASTERSTATU MASTERSTATU { get; set; }
+        public string VALIDITY { get; set; }
     }
 }
