@@ -24,6 +24,7 @@ namespace CHALO.Controllers
             CHALOEntities db = new CHALOEntities();
             List<NOOFSEAT> NOOFSEATS = new List<NOOFSEAT>();
             List<WALLET> objwallet = new List<WALLET>();
+            string usertrip = "";
             // List<LOCATION> users = new List<LOCATION>();
             try
             {
@@ -37,7 +38,8 @@ namespace CHALO.Controllers
                         objwallet = db.Database.SqlQuery<WALLET>("EXEC CHECKWALLETAMOUNT @USER_ID='" + obj.userid + "'").ToList();
                         if (objwallet[0].WALLET_AVAILABLEMONEY >= obj.totalamount)
                         {
-                            List<USERTRIP> usertrip=bookride(obj);
+                            usertrip=bookride(obj);
+                            return Json(new { Success = usertrip });
                         }
                         else
                         {
@@ -46,7 +48,12 @@ namespace CHALO.Controllers
                     }
                     else if(obj.paymenttype=="2")
                     {
-                        List<USERTRIP> usertrip = bookride(obj);
+                         usertrip = bookride(obj);
+                         return Json(new { Success = usertrip });
+                    }
+                    else
+                    {
+                        return Json(new { errorthing = "error" });
                     }
                 }
                 else
@@ -57,28 +64,33 @@ namespace CHALO.Controllers
             }
             catch (Exception ex)
             {
-
+                return Json(new { errorthing = "error" });
             }
 
 
 
-            return CreatedAtRoute("DefaultApi", new { id = "1" }, objwallet);
+           
         }
 
-        internal List<USERTRIP> bookride(bookinglist obj)
+        internal string bookride(bookinglist obj)
         {
             CHALOEntities db = new CHALOEntities();
-            List<USERTRIP> USERTRIPs = new List<USERTRIP>();
+            List<bookeddetails> USERTRIPs = new List<bookeddetails>();
+            string result = "";
+           // List<USERTRIP> USERTRIPs = new List<USERTRIP>();
             try
             {
-                USERTRIPs = db.Database.SqlQuery<USERTRIP>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB'").ToList();
-
+                USERTRIPs = db.Database.SqlQuery<bookeddetails>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB'").ToList();
+                if(USERTRIPs.Count>0)
+                {
+                    result = USERTRIPs[0].SUCCESS;
+                }
             }
             catch (Exception ex)
             {
 
             }
-            return USERTRIPs;
+            return result;
         }
 
         public class bookinglist
@@ -113,6 +125,11 @@ namespace CHALO.Controllers
             public bool ISONETIME { get; set; }
 
             public string paymenttype { get; set; }
+        }
+
+        public class bookeddetails
+        {
+            public string SUCCESS { get; set; }
         }
     }
 }

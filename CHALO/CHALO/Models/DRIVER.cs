@@ -36,6 +36,7 @@ namespace CHALO.Models
         public Nullable<System.DateTime> DRIVER_CREATEDDATE { get; set; }
         public Nullable<int> DRIVER_MODIFIEDBY { get; set; }
         public Nullable<System.DateTime> DRIVER_MODIFIEDDATE { get; set; }
+        public string DRIVER_IMAGEURL { get; set; }
     
         public virtual VENDOR VENDOR { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }

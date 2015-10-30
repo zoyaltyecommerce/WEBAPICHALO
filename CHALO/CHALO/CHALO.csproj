@@ -213,8 +213,11 @@
     <Compile Include="Controllers\common.cs" />
     <Compile Include="Controllers\GetlocationsController.cs" />
     <Compile Include="Controllers\GetvehiclebytripController.cs" />
+    <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\profileController.cs" />
+    <Compile Include="Controllers\PromotionsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SEARCHVIAController.cs" />
@@ -310,6 +313,9 @@
     <Compile Include="Models\TRIP.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TRIPHISTORYENTITY.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TRIPLOCATION.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -338,6 +344,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USP_GETLOCS_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\USP_TRIPHISTORY_Result.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VEHICLE.cs">
@@ -377,6 +386,32 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="img\android.png" />
+    <Content Include="img\apple.jpg" />
+    <Content Include="img\apple.png" />
+    <Content Include="img\apple_ios_store.png" />
+    <Content Include="img\avatar1.jpg" />
+    <Content Include="img\avatar2.jpg" />
+    <Content Include="img\avatar3.jpg" />
+    <Content Include="img\avatar4.jpg" />
+    <Content Include="img\avatar5.jpg" />
+    <Content Include="img\avatar6.jpg" />
+    <Content Include="img\avatar7.jpg" />
+    <Content Include="img\avatar8.jpg" />
+    <Content Include="img\avatar9.jpg" />
+    <Content Include="img\avatar_all.png" />
+    <Content Include="img\dashboard.png" />
+    <Content Include="img\google_play_store.png" />
+    <Content Include="img\header_one.jpg" />
+    <Content Include="img\header_two.jpg" />
+    <Content Include="img\iphone.jpg" />
+    <Content Include="img\laptop.png" />
+    <Content Include="img\laptop1.png" />
+    <Content Include="img\logo.png" />
+    <Content Include="img\perspective.png" />
+    <Content Include="img\shattered.png" />
+    <Content Include="img\windows_store.png" />
+    <Content Include="img\word_map.png" />
     <Content Include="Models\CHALO.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CHALO.edmx</DependentUpon>
@@ -427,6 +462,50 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Views\Home\css\animate.min.css" />
+    <Content Include="Views\Home\css\bootstrap-theme.css" />
+    <Content Include="Views\Home\css\bootstrap-theme.min.css" />
+    <Content Include="Views\Home\css\bootstrap.css" />
+    <Content Include="Views\Home\css\bootstrap.min.css" />
+    <Content Include="Views\Home\css\style.css" />
+    <Content Include="Views\Home\font-awesome\css\font-awesome.css" />
+    <Content Include="Views\Home\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Views\Home\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Views\Home\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Views\Home\img\android.png" />
+    <Content Include="Views\Home\img\apple.jpg" />
+    <Content Include="Views\Home\img\apple.png" />
+    <Content Include="Views\Home\img\apple_ios_store.png" />
+    <Content Include="Views\Home\img\avatar1.jpg" />
+    <Content Include="Views\Home\img\avatar2.jpg" />
+    <Content Include="Views\Home\img\avatar3.jpg" />
+    <Content Include="Views\Home\img\avatar4.jpg" />
+    <Content Include="Views\Home\img\avatar5.jpg" />
+    <Content Include="Views\Home\img\avatar6.jpg" />
+    <Content Include="Views\Home\img\avatar7.jpg" />
+    <Content Include="Views\Home\img\avatar8.jpg" />
+    <Content Include="Views\Home\img\avatar9.jpg" />
+    <Content Include="Views\Home\img\avatar_all.png" />
+    <Content Include="Views\Home\img\dashboard.png" />
+    <Content Include="Views\Home\img\google_play_store.png" />
+    <Content Include="Views\Home\img\header_one.jpg" />
+    <Content Include="Views\Home\img\header_two.jpg" />
+    <Content Include="Views\Home\img\iphone.jpg" />
+    <Content Include="Views\Home\img\laptop.png" />
+    <Content Include="Views\Home\img\logo.png" />
+    <Content Include="Views\Home\img\perspective.png" />
+    <Content Include="Views\Home\img\shattered.png" />
+    <Content Include="Views\Home\img\windows_store.png" />
+    <Content Include="Views\Home\img\word_map.png" />
+    <Content Include="Views\Home\index.html" />
+    <Content Include="Views\Home\js\bootstrap.js" />
+    <Content Include="Views\Home\js\bootstrap.min.js" />
+    <Content Include="Views\Home\js\cbpAnimatedHeader.js" />
+    <Content Include="Views\Home\js\classie.js" />
+    <Content Include="Views\Home\js\inspinia.js" />
+    <Content Include="Views\Home\js\jquery-2.1.1.js" />
+    <Content Include="Views\Home\js\pace.min.js" />
+    <Content Include="Views\Home\js\wow.min.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -442,9 +521,48 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\css\bootstrap-theme.css.map" />
+    <Content Include="Views\Home\css\bootstrap.css.map" />
+    <Content Include="Views\Home\css\style.less" />
+    <Content Include="Views\Home\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Views\Home\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Views\Home\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Views\Home\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Views\Home\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Views\Home\font-awesome\less\core.less" />
+    <Content Include="Views\Home\font-awesome\less\fixed-width.less" />
+    <Content Include="Views\Home\font-awesome\less\font-awesome.less" />
+    <Content Include="Views\Home\font-awesome\less\icons.less" />
+    <Content Include="Views\Home\font-awesome\less\larger.less" />
+    <Content Include="Views\Home\font-awesome\less\list.less" />
+    <Content Include="Views\Home\font-awesome\less\mixins.less" />
+    <Content Include="Views\Home\font-awesome\less\path.less" />
+    <Content Include="Views\Home\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Views\Home\font-awesome\less\spinning.less" />
+    <Content Include="Views\Home\font-awesome\less\stacked.less" />
+    <Content Include="Views\Home\font-awesome\less\variables.less" />
+    <Content Include="Views\Home\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_core.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_icons.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_larger.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_list.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_mixins.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_path.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_spinning.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_stacked.scss" />
+    <Content Include="Views\Home\font-awesome\scss\_variables.scss" />
+    <Content Include="Views\Home\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Views\Home\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Views\Home\fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="css\" />
+    <Folder Include="font-awesome\" />
+    <Folder Include="js\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

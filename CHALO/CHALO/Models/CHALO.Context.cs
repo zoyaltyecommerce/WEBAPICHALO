@@ -35,6 +35,7 @@ namespace CHALO.Models
         public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<TRANSACTIONSTATU> TRANSACTIONSTATUS { get; set; }
+        public virtual DbSet<TRIPHISTORYENTITY> TRIPHISTORYENTITies { get; set; }
         public virtual DbSet<USERCOUPON> USERCOUPONS { get; set; }
         public virtual DbSet<WALLET> WALLETs { get; set; }
         public virtual DbSet<WALLETADDTYPE> WALLETADDTYPES { get; set; }
@@ -233,6 +234,23 @@ namespace CHALO.Models
                 new ObjectParameter("TRIP_ID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<noofseatsavailability_Result>("noofseatsavailability", tRIP_IDParameter);
+        }
+    
+        public virtual ObjectResult<USP_TRIPHISTORY_Result> USP_TRIPHISTORY(Nullable<int> tRIP_ID, Nullable<int> uSER_ID, string oPERATION)
+        {
+            var tRIP_IDParameter = tRIP_ID.HasValue ?
+                new ObjectParameter("TRIP_ID", tRIP_ID) :
+                new ObjectParameter("TRIP_ID", typeof(int));
+    
+            var uSER_IDParameter = uSER_ID.HasValue ?
+                new ObjectParameter("USER_ID", uSER_ID) :
+                new ObjectParameter("USER_ID", typeof(int));
+    
+            var oPERATIONParameter = oPERATION != null ?
+                new ObjectParameter("OPERATION", oPERATION) :
+                new ObjectParameter("OPERATION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_TRIPHISTORY_Result>("USP_TRIPHISTORY", tRIP_IDParameter, uSER_IDParameter, oPERATIONParameter);
         }
     }
 }

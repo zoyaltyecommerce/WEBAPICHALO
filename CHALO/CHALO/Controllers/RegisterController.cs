@@ -40,8 +40,8 @@ namespace CHALO.Controllers
             user.USER_CREATEDBY = 1;
             user.USER_CREATEDATE = DateTime.Now;
             user.USER_USERNAME = Email.Trim();
-           
-            List<CH_USER> listusers = db.CH_USER.Where(c => c.USER_USERNAME == Email.Trim() || c.USER_MOBILE == Mobile.Trim()).ToList();
+
+            List<CH_USER> listusers = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_username='" + Email.Trim() + "' or USER_MOBILE='" + Mobile.Trim() + "'").ToList();
 
             if (listusers.Count > 0)
             {
@@ -73,8 +73,9 @@ namespace CHALO.Controllers
                          
                         //firsttimeuser
                         bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), code, Convert.ToString(listcoupons[0].COUPON_USERID),listcoupons[0].COUPON_ID);
-                       
-                        return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
+
+                        List<CH_USER> result = db.Database.SqlQuery<CH_USER>("select * from ch_user where USER_ID=" + objuser.USER_ID + "").ToList();
+                    return Ok(result);
                     }
                     else
                     {
@@ -94,7 +95,8 @@ namespace CHALO.Controllers
                     USERCOUPON objusercoupon = common.addusercoupon(objuser.USER_ID);
                     bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), "","",0);
 
-                    return CreatedAtRoute("DefaultApi", new { id = user.USER_ID }, user);
+                    List<CH_USER> result = db.Database.SqlQuery<CH_USER>("select * from ch_user where USER_ID="+ objuser.USER_ID +"").ToList();
+                    return Ok(result);
                 }
 
                 

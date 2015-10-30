@@ -21,6 +21,7 @@ namespace CHALO.Models
             this.transactions = new HashSet<transaction>();
             this.USERCOUPONS = new HashSet<USERCOUPON>();
             this.WALLETs = new HashSet<WALLET>();
+            this.USERTRIPS = new HashSet<USERTRIP>();
         }
     
         public int USER_ID { get; set; }
@@ -51,5 +52,7 @@ namespace CHALO.Models
         public virtual ICollection<WALLET> WALLETs { get; set; }
         public virtual USER_REGISTERTYPE USER_REGISTERTYPE1 { get; set; }
         public virtual USER_STATUS USER_STATUS1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<USERTRIP> USERTRIPS { get; set; }
     }
 }
