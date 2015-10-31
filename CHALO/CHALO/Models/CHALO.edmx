@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CHALOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="APPLIEDCOUPONS">
           <Key>
             <PropertyRef Name="APPLIED_ID" />
@@ -60,6 +60,13 @@
           <Property Name="COUPON_MODIFIEDDATE" Type="datetime" />
           <Property Name="COUPONTYPE_STATUS" Type="int" />
           <Property Name="COUPONTYPE_ONETIME" Type="bit" />
+        </EntityType>
+        <EntityType Name="LOCATIONENTITY">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="int" Nullable="false" />
+          <Property Name="LOCATION_NAME" Type="varchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="PAYMENTTRIPSTATUS">
           <Key>
@@ -1219,6 +1226,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
         </Function>
         <Function Name="USP_GETLOCS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
           <Parameter Name="LOCATION_ID" Type="int" Mode="In" />
+          <Parameter Name="OPERATION" Type="varchar" Mode="In" />
+          <Parameter Name="FROMLOCATION" Type="varchar" Mode="In" />
+          <Parameter Name="CITY_NAME" Type="varchar" Mode="In" />
         </Function>
         <Function Name="USP_TRIPHISTORY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
           <Parameter Name="TRIP_ID" Type="int" Mode="In" />
@@ -1239,6 +1249,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="COUPONENTIYPURPOSE" EntityType="Self.COUPONENTIYPURPOSE" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="COUPONS" EntityType="Self.COUPONS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="COUPONTYPE" EntityType="Self.COUPONTYPE" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="LOCATIONENTITY" EntityType="Self.LOCATIONENTITY" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="Self.PAYMENTTRIPSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONMODE" EntityType="Self.TRANSACTIONMODE" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="transactions" EntityType="Self.transactions" Schema="CHALOINDIA" store:Type="Tables" />
@@ -1524,7 +1535,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="OPERATION" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="USP_GETLOCS" ReturnType="Collection(CHALOModel.USP_GETLOCS_Result)">
-          <Parameter Name="LOCATION_ID" Mode="In" Type="Int32" />
+            <Parameter Name="LOCATION_ID" Mode="In" Type="Int32" />
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+            <Parameter Name="FROMLOCATION" Mode="In" Type="String" />
+            <Parameter Name="CITY_NAME" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="USP_CHECKFORCOUPON" ReturnType="Collection(CHALOModel.USP_CHECKFORCOUPON_Result)">
             <Parameter Name="USER_ID" Mode="In" Type="Int32" />
@@ -1771,6 +1785,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="USER_ID" Mode="In" Type="Int32" />
             <Parameter Name="OPERATION" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="LOCATIONENTITies" EntityType="CHALOModel.LOCATIONENTITY" />
           </EntityContainer>
         <ComplexType Name="USP_BOOKCAB_Result">
           <Property Type="Int32" Name="PAYMENTTYPE_ID" Nullable="false" />
@@ -3114,6 +3129,13 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Type="String" Name="USERTRIP_APPLIEDCOUPONNAME" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="TRIP_NAME" Nullable="true" />
         </ComplexType>
+        <EntityType Name="LOCATIONENTITY">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="Int32" Nullable="false" />
+          <Property Name="LOCATION_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3853,6 +3875,14 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="LOCATIONENTITies">
+            <EntityTypeMapping TypeName="CHALOModel.LOCATIONENTITY">
+              <MappingFragment StoreEntitySet="LOCATIONENTITY">
+                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

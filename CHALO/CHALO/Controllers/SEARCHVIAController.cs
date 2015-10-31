@@ -17,14 +17,6 @@ namespace CHALO.Controllers
         {
             var entityContext = new CHALOEntities();
             List<TRIPTEMP> smdetails = entityContext.Database.SqlQuery<TRIPTEMP>("exec USP_SEARCHVEHICLES @DROPLOCATION='" + to + "',@PICKUPLOCATION='" + from + "'").ToList();
-
-          //  string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(smdetails);
-          //  return Ok(jsonString);
-            //CHALOEntities db = new CHALOEntities();
-            //IEnumerable<Translayer> empDetails = db.Database.SqlQuery<Translayer>("exec USP_SEARCHVEHICLES @DROPLOCATION='" + to + "',@PICKUPLOCATION='" + from + "'").ToList();
-
-            //List<Translayer> list = db.Database.SqlQuery<Translayer>("exec USP_SEARCHVEHICLES @DROPLOCATION='" + to + "',@PICKUPLOCATION='" + from + "'").ToList();
-            //var result = JArray.FromObject(lists);
             return Ok(smdetails);
         }
       

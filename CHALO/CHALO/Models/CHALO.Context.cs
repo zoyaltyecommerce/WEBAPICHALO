@@ -64,6 +64,7 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
+        public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
     
         public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
         {
@@ -192,13 +193,25 @@ namespace CHALO.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_BOOKCAB_Result>("USP_BOOKCAB", uSER_IDParameter, uSERTRIP_IDParameter, uSERTRIP_TRIPIDParameter, uSERTRIP_PICKUPLOCParameter, uSERTRIP_DROPLOCParameter, uSERTRIP_VIAParameter, uSERTRIP_ESTIMATEDDURATIONParameter, uSERTRIP_ACTUALDURATIONParameter, uSERTRIP_DISTANCEParameter, uSERTRIP_ACTUALAMOUNTParameter, uSERTRIP_DISCOUNTParameter, uSERTRIP_TOTALAMOUNTParameter, uSERTRIP_STATUSParameter, uSERTRIP_APPLIEDCOUPONParameter, uSERTRIP_CREATEDBYParameter, uSERTRIP_CREATEDDATEParameter, uSERTRIP_MODIFIEDBYParameter, uSERTRIP_MODIFIEDDATEParameter, tRANS_STATUSParameter, pAYMENTTYPE_IDParameter, aPPLIEDCOUPONNAMEParameter, iSONETIMEParameter, oPERATIONParameter);
         }
     
-        public virtual ObjectResult<USP_GETLOCS_Result> USP_GETLOCS(Nullable<int> lOCATION_ID)
+        public virtual ObjectResult<USP_GETLOCS_Result> USP_GETLOCS(Nullable<int> lOCATION_ID, string oPERATION, string fROMLOCATION, string cITY_NAME)
         {
             var lOCATION_IDParameter = lOCATION_ID.HasValue ?
                 new ObjectParameter("LOCATION_ID", lOCATION_ID) :
                 new ObjectParameter("LOCATION_ID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_GETLOCS_Result>("USP_GETLOCS", lOCATION_IDParameter);
+            var oPERATIONParameter = oPERATION != null ?
+                new ObjectParameter("OPERATION", oPERATION) :
+                new ObjectParameter("OPERATION", typeof(string));
+    
+            var fROMLOCATIONParameter = fROMLOCATION != null ?
+                new ObjectParameter("FROMLOCATION", fROMLOCATION) :
+                new ObjectParameter("FROMLOCATION", typeof(string));
+    
+            var cITY_NAMEParameter = cITY_NAME != null ?
+                new ObjectParameter("CITY_NAME", cITY_NAME) :
+                new ObjectParameter("CITY_NAME", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_GETLOCS_Result>("USP_GETLOCS", lOCATION_IDParameter, oPERATIONParameter, fROMLOCATIONParameter, cITY_NAMEParameter);
         }
     
         public virtual ObjectResult<USP_CHECKFORCOUPON_Result> USP_CHECKFORCOUPON(Nullable<int> uSER_ID, string cOUPONCODE, string oPERATION)

@@ -9,7 +9,7 @@ namespace CHALO.Controllers
 {
     public class HistoryController : ApiController
     {
-        public IHttpActionResult Gethistory(int userid,int tripid)
+        public IHttpActionResult Gethistory(string userid,string tripid)
         {
             CHALOEntities db=new CHALOEntities();
 
