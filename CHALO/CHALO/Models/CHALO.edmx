@@ -98,6 +98,18 @@
           <Property Name="STATUS_MODIFIEDBY" Type="int" />
           <Property Name="STATUS_MODIFIEDDATE" Type="datetime" />
         </EntityType>
+        <EntityType Name="SUPPORT">
+          <Key>
+            <PropertyRef Name="SUPPORT_ID" />
+          </Key>
+          <Property Name="SUPPORT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SUPPORT_USERID" Type="int" />
+          <Property Name="SUPPORT_SUBJECT" Type="varchar(max)" />
+          <Property Name="SUPPORT_DESCRIPTION" Type="varchar(max)" />
+          <Property Name="SUPPORT_CREATEDBY" Type="int" />
+          <Property Name="SUPPORT_CREATEDDATE" Type="datetime" />
+          <Property Name="SUPPORT_MODIFIEDBY" Type="int" />
+        </EntityType>
         <EntityType Name="TRANSACTIONMODE">
           <Key>
             <PropertyRef Name="MODE_ID" />
@@ -1360,6 +1372,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="DRIVERTRIPSENTITY" EntityType="Self.DRIVERTRIPSENTITY" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="LOCATIONENTITY" EntityType="Self.LOCATIONENTITY" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="Self.PAYMENTTRIPSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="SUPPORT" EntityType="Self.SUPPORT" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONMODE" EntityType="Self.TRANSACTIONMODE" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="transactions" EntityType="Self.transactions" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONSTATUS" EntityType="Self.TRANSACTIONSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
@@ -1726,6 +1739,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="DRIVERTRIPSENTITies" EntityType="CHALOModel.DRIVERTRIPSENTITY" />
           <EntitySet Name="LOCATIONENTITies" EntityType="CHALOModel.LOCATIONENTITY" />
           <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="CHALOModel.PAYMENTTRIPSTATU" />
+          <EntitySet Name="SUPPORTs" EntityType="CHALOModel.SUPPORT" />
           <EntitySet Name="TRANSACTIONMODEs" EntityType="CHALOModel.TRANSACTIONMODE" />
           <EntitySet Name="transactions" EntityType="CHALOModel.transaction" />
           <EntitySet Name="TRANSACTIONSTATUS" EntityType="CHALOModel.TRANSACTIONSTATU" />
@@ -2140,6 +2154,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PAYMENTHISTORies" Relationship="CHALOModel.FK__PAYMENTHI__PAYME__7C1A6C5A" FromRole="PAYMENTTRIPSTATU" ToRole="PAYMENTHISTORY" />
+        </EntityType>
+        <EntityType Name="SUPPORT">
+          <Key>
+            <PropertyRef Name="SUPPORT_ID" />
+          </Key>
+          <Property Name="SUPPORT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SUPPORT_USERID" Type="Int32" />
+          <Property Name="SUPPORT_SUBJECT" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SUPPORT_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SUPPORT_CREATEDBY" Type="Int32" />
+          <Property Name="SUPPORT_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="SUPPORT_MODIFIEDBY" Type="Int32" />
         </EntityType>
         <EntityType Name="TRANSACTIONMODE">
           <Key>
@@ -3595,6 +3621,19 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
                 <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
                 <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
                 <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUPPORTs">
+            <EntityTypeMapping TypeName="CHALOModel.SUPPORT">
+              <MappingFragment StoreEntitySet="SUPPORT">
+                <ScalarProperty Name="SUPPORT_MODIFIEDBY" ColumnName="SUPPORT_MODIFIEDBY" />
+                <ScalarProperty Name="SUPPORT_CREATEDDATE" ColumnName="SUPPORT_CREATEDDATE" />
+                <ScalarProperty Name="SUPPORT_CREATEDBY" ColumnName="SUPPORT_CREATEDBY" />
+                <ScalarProperty Name="SUPPORT_DESCRIPTION" ColumnName="SUPPORT_DESCRIPTION" />
+                <ScalarProperty Name="SUPPORT_SUBJECT" ColumnName="SUPPORT_SUBJECT" />
+                <ScalarProperty Name="SUPPORT_USERID" ColumnName="SUPPORT_USERID" />
+                <ScalarProperty Name="SUPPORT_ID" ColumnName="SUPPORT_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -34,6 +34,7 @@ namespace CHALO.Models
         public virtual DbSet<DRIVERTRIPSENTITY> DRIVERTRIPSENTITies { get; set; }
         public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
         public virtual DbSet<PAYMENTTRIPSTATU> PAYMENTTRIPSTATUS { get; set; }
+        public virtual DbSet<SUPPORT> SUPPORTs { get; set; }
         public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<TRANSACTIONSTATU> TRANSACTIONSTATUS { get; set; }

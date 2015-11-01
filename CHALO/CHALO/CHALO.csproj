@@ -222,6 +222,7 @@
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SEARCHVIAController.cs" />
+    <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
     <Compile Include="Global.asax.cs">
@@ -307,6 +308,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\STATE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SUPPORT.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\temptrip.cs">

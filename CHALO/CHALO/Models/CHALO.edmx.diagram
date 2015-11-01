@@ -5,46 +5,47 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="8f1e59ab08c14d71b714d712c974de91" Name="Diagram1">
-        <EntityTypeShape EntityType="CHALOModel.APPLIEDCOUPON" Width="1.5" PointX="6" PointY="30.25" />
+        <EntityTypeShape EntityType="CHALOModel.APPLIEDCOUPON" Width="1.5" PointX="3" PointY="25.25" />
         <EntityTypeShape EntityType="CHALOModel.COUPONENTIYPURPOSE" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CHALOModel.COUPON" Width="1.5" PointX="5.25" PointY="49.875" />
-        <EntityTypeShape EntityType="CHALOModel.COUPONTYPE" Width="1.5" PointX="3" PointY="68.125" />
+        <EntityTypeShape EntityType="CHALOModel.COUPON" Width="1.5" PointX="8.25" PointY="26.25" />
+        <EntityTypeShape EntityType="CHALOModel.COUPONTYPE" Width="1.5" PointX="3" PointY="21.25" />
         <EntityTypeShape EntityType="CHALOModel.DRIVERTRIPSENTITY" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="CHALOModel.LOCATIONENTITY" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CHALOModel.PAYMENTTRIPSTATU" Width="1.5" PointX="18" PointY="59.625" />
-        <EntityTypeShape EntityType="CHALOModel.TRANSACTIONMODE" Width="1.5" PointX="6.75" PointY="35.5" />
-        <EntityTypeShape EntityType="CHALOModel.transaction" Width="1.5" PointX="9" PointY="36" />
-        <EntityTypeShape EntityType="CHALOModel.TRANSACTIONSTATU" Width="1.5" PointX="6.75" PointY="18.5" />
-        <EntityTypeShape EntityType="CHALOModel.TRIPHISTORYENTITY" Width="1.5" PointX="4.75" PointY="3.75" />
-        <EntityTypeShape EntityType="CHALOModel.TripUsersEntity" Width="1.5" PointX="0.75" PointY="5.75" />
-        <EntityTypeShape EntityType="CHALOModel.USERCOUPON" Width="1.5" PointX="8.25" PointY="49.75" />
+        <EntityTypeShape EntityType="CHALOModel.PAYMENTTRIPSTATU" Width="1.5" PointX="15" PointY="43.375" />
+        <EntityTypeShape EntityType="CHALOModel.SUPPORT" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="CHALOModel.TRANSACTIONMODE" Width="1.5" PointX="3" PointY="10.125" />
+        <EntityTypeShape EntityType="CHALOModel.transaction" Width="1.5" PointX="5.25" PointY="14.75" />
+        <EntityTypeShape EntityType="CHALOModel.TRANSACTIONSTATU" Width="1.5" PointX="3" PointY="6.25" />
+        <EntityTypeShape EntityType="CHALOModel.TRIPHISTORYENTITY" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CHALOModel.TripUsersEntity" Width="1.5" PointX="5.75" PointY="8.75" />
+        <EntityTypeShape EntityType="CHALOModel.USERCOUPON" Width="1.5" PointX="5.25" PointY="26.125" />
         <EntityTypeShape EntityType="CHALOModel.WALLET" Width="1.5" PointX="3" PointY="30.625" />
-        <EntityTypeShape EntityType="CHALOModel.WALLETADDTYPE" Width="1.5" PointX="3" PointY="24.75" />
-        <EntityTypeShape EntityType="CHALOModel.WALLETTRANSACTION" Width="1.5" PointX="8.25" PointY="23.625" />
-        <EntityTypeShape EntityType="CHALOModel.WALLETTRANSACTIONSSTATU" Width="1.5" PointX="6" PointY="22.5" />
-        <EntityTypeShape EntityType="CHALOModel.CH_USER" Width="1.5" PointX="3.75" PointY="35.375" />
-        <EntityTypeShape EntityType="CHALOModel.CITy" Width="1.5" PointX="5.25" PointY="26.375" />
-        <EntityTypeShape EntityType="CHALOModel.DRIVER" Width="1.5" PointX="5.25" PointY="43.375" />
-        <EntityTypeShape EntityType="CHALOModel.LOCATION" Width="1.5" PointX="8.5" PointY="28.875" />
+        <EntityTypeShape EntityType="CHALOModel.WALLETADDTYPE" Width="1.5" PointX="3" PointY="55.75" />
+        <EntityTypeShape EntityType="CHALOModel.WALLETTRANSACTION" Width="1.5" PointX="5.25" PointY="42" />
+        <EntityTypeShape EntityType="CHALOModel.WALLETTRANSACTIONSSTATU" Width="1.5" PointX="3" PointY="42.875" />
+        <EntityTypeShape EntityType="CHALOModel.CH_USER" Width="1.5" PointX="3" PointY="14.125" />
+        <EntityTypeShape EntityType="CHALOModel.CITy" Width="1.5" PointX="5.25" PointY="49" />
+        <EntityTypeShape EntityType="CHALOModel.DRIVER" Width="1.5" PointX="5.25" PointY="32.625" />
+        <EntityTypeShape EntityType="CHALOModel.LOCATION" Width="1.5" PointX="7.5" PointY="39.25" />
         <EntityTypeShape EntityType="CHALOModel.MASTERSTATU" Width="1.5" PointX="0.75" PointY="29.75" />
-        <EntityTypeShape EntityType="CHALOModel.NOOFSEAT" Width="1.5" PointX="12.75" PointY="53.875" />
-        <EntityTypeShape EntityType="CHALOModel.PAYMENTHISTORY" Width="1.5" PointX="20.25" PointY="53.625" />
-        <EntityTypeShape EntityType="CHALOModel.PAYMENTTYPE" Width="1.5" PointX="18" PointY="48.625" />
-        <EntityTypeShape EntityType="CHALOModel.ROUTE" Width="1.5" PointX="3" PointY="62.75" />
-        <EntityTypeShape EntityType="CHALOModel.STATE" Width="1.5" PointX="3" PointY="21.25" />
-        <EntityTypeShape EntityType="CHALOModel.temptrip" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CHALOModel.TRIPLOCATION" Width="1.5" PointX="15.75" PointY="52.75" />
-        <EntityTypeShape EntityType="CHALOModel.TRIP" Width="1.5" PointX="10.5" PointY="52.375" />
-        <EntityTypeShape EntityType="CHALOModel.TRIPSTATU" Width="1.5" PointX="8.25" PointY="54.875" />
-        <EntityTypeShape EntityType="CHALOModel.TRIPTEMP" Width="1.5" PointX="6.75" PointY="5.75" />
-        <EntityTypeShape EntityType="CHALOModel.USER_REGISTERTYPE" Width="1.5" PointX="1.5" PointY="38.5" />
-        <EntityTypeShape EntityType="CHALOModel.USER_STATUS" Width="1.5" PointX="1.5" PointY="35.5" />
-        <EntityTypeShape EntityType="CHALOModel.USERTRIP" Width="1.5" PointX="18" PointY="52" />
-        <EntityTypeShape EntityType="CHALOModel.VEHICLEDRIVER" Width="1.5" PointX="10.5" PointY="44.5" />
-        <EntityTypeShape EntityType="CHALOModel.VEHICLE" Width="1.5" PointX="8.25" PointY="43.25" />
-        <EntityTypeShape EntityType="CHALOModel.VEHICLETYPE" Width="1.5" PointX="6" PointY="39.5" />
-        <EntityTypeShape EntityType="CHALOModel.VENDOR" Width="1.5" PointX="3" PointY="56.375" />
-        <EntityTypeShape EntityType="CHALOModel.Query" Width="1.5" PointX="8.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CHALOModel.NOOFSEAT" Width="1.5" PointX="12.75" PointY="54.5" />
+        <EntityTypeShape EntityType="CHALOModel.PAYMENTHISTORY" Width="1.5" PointX="17.25" PointY="48.5" />
+        <EntityTypeShape EntityType="CHALOModel.PAYMENTTYPE" Width="1.5" PointX="15" PointY="54.5" />
+        <EntityTypeShape EntityType="CHALOModel.ROUTE" Width="1.5" PointX="3" PointY="63.125" />
+        <EntityTypeShape EntityType="CHALOModel.STATE" Width="1.5" PointX="3" PointY="68.5" />
+        <EntityTypeShape EntityType="CHALOModel.temptrip" Width="1.5" PointX="7.75" PointY="8.75" />
+        <EntityTypeShape EntityType="CHALOModel.TRIPLOCATION" Width="1.5" PointX="12.75" PointY="47.625" />
+        <EntityTypeShape EntityType="CHALOModel.TRIP" Width="1.5" PointX="10.5" PointY="47.25" />
+        <EntityTypeShape EntityType="CHALOModel.TRIPSTATU" Width="1.5" PointX="8.25" PointY="48.75" />
+        <EntityTypeShape EntityType="CHALOModel.TRIPTEMP" Width="1.5" PointX="9.75" PointY="0.75" />
+        <EntityTypeShape EntityType="CHALOModel.USER_REGISTERTYPE" Width="1.5" PointX="0.75" PointY="14.125" />
+        <EntityTypeShape EntityType="CHALOModel.USER_STATUS" Width="1.5" PointX="0.75" PointY="17.25" />
+        <EntityTypeShape EntityType="CHALOModel.USERTRIP" Width="1.5" PointX="15" PointY="46.875" />
+        <EntityTypeShape EntityType="CHALOModel.VEHICLEDRIVER" Width="1.5" PointX="10.5" PointY="33.75" />
+        <EntityTypeShape EntityType="CHALOModel.VEHICLE" Width="1.5" PointX="8.25" PointY="32.5" />
+        <EntityTypeShape EntityType="CHALOModel.VEHICLETYPE" Width="1.5" PointX="6" PointY="21.75" />
+        <EntityTypeShape EntityType="CHALOModel.VENDOR" Width="1.5" PointX="3" PointY="34.75" />
+        <EntityTypeShape EntityType="CHALOModel.Query" Width="1.5" PointX="9.75" PointY="7.75" />
         <AssociationConnector Association="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" />
         <AssociationConnector Association="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" />
         <AssociationConnector Association="CHALOModel.FK__COUPONS__COUPON___4C6B5938" />
