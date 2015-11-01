@@ -36,9 +36,9 @@ namespace CHALO.Controllers
                 user.USER_REGID = socialid;
             }
             user.USER_MODIFIEDBY = 1;
-            user.USER_MODIFIEDDATE = DateTime.Now;
+            user.USER_MODIFIEDDATE =common.getdate();
             user.USER_CREATEDBY = 1;
-            user.USER_CREATEDATE = DateTime.Now;
+            user.USER_CREATEDATE = common.getdate();
             user.USER_USERNAME = Email.Trim();
 
             List<CH_USER> listusers = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_username='" + Email.Trim() + "' or USER_MOBILE='" + Mobile.Trim() + "'").ToList();

@@ -15,7 +15,7 @@ namespace CHALO.Controllers
             CHALOEntities db = new CHALOEntities();
             SUPPORT objuser = new SUPPORT();
             objuser.SUPPORT_CREATEDBY = 1;
-            objuser.SUPPORT_CREATEDDATE = DateTime.Now;
+            objuser.SUPPORT_CREATEDDATE = common.getdate();
             objuser.SUPPORT_DESCRIPTION = desc;
             objuser.SUPPORT_MODIFIEDBY = 1;
             objuser.SUPPORT_SUBJECT = subject;

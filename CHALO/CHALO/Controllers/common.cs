@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using CHALO.Models;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net;
 
 namespace CHALO.Controllers
 {
@@ -241,6 +244,24 @@ namespace CHALO.Controllers
             WALLETTRANSACTION OBJTRANSNEW=db.WALLETTRANSACTIONS.Add(OBJTRANS);
             db.SaveChanges();
             return OBJTRANSNEW;
+        }
+
+        internal static bool sendmessage(string message,string mobile)
+        {
+            bool status = false;
+            var request = WebRequest.Create("http://sms99.co.in/pushsms.php?username=trsanthosh&password=K0nnectsu.&sender=CHALOI&message=" + message + "&numbers=" + mobile + "");
+            request.ContentType = "text"; //your contentType, Json, text,etc. -- or comment, for text
+            request.Method = "GET"; //method, GET, POST, etc -- or comment for GET
+            using (WebResponse resp = request.GetResponse())
+            {
+                if (resp == null)
+                { 
+                    new Exception("Response is null");
+
+                }
+            }
+            
+            return status;
         }
 
     }

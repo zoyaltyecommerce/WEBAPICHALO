@@ -212,6 +212,7 @@
     <Compile Include="Controllers\CH_USERController.cs" />
     <Compile Include="Controllers\common.cs" />
     <Compile Include="Controllers\DetailedhistoryController.cs" />
+    <Compile Include="Controllers\ForgotController.cs" />
     <Compile Include="Controllers\GetlocationsController.cs" />
     <Compile Include="Controllers\GetvehiclebytripController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
