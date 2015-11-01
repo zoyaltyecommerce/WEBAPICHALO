@@ -80,7 +80,7 @@ namespace CHALO.Controllers
            // List<USERTRIP> USERTRIPs = new List<USERTRIP>();
             try
             {
-                USERTRIPs = db.Database.SqlQuery<bookeddetails>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB'").ToList();
+                USERTRIPs = db.Database.SqlQuery<bookeddetails>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB',@usertrip_pickupavergetime='"+ obj.fromaveragereachtimenormal + "',@usertrip_pickupactualtime='"+ obj.fromactualreachtimenormal + "',@usertrip_dropaveragetime='"+ obj.toactualreachtimenormal + "',@usertrip_dropactualtime='"+ obj.toactualreachtimenormal +"'").ToList();
                 if(USERTRIPs.Count>0)
                 {
                     result = USERTRIPs[0].SUCCESS;
@@ -125,6 +125,10 @@ namespace CHALO.Controllers
             public bool ISONETIME { get; set; }
 
             public string paymenttype { get; set; }
+            public DateTime fromaveragereachtimenormal { get; set; }
+            public DateTime fromactualreachtimenormal { get; set; }
+			 public DateTime  toaveragereachtimenormal { get; set; }
+            public DateTime  toactualreachtimenormal { get; set; }
         }
 
         public class bookeddetails

@@ -492,6 +492,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="vehicle_number" Type="varchar" MaxLength="200" />
           <Property Name="vehicletype_name" Type="varchar" MaxLength="200" />
           <Property Name="COST" Type="decimal" Precision="10" Scale="0" />
+          <Property Name="fromaveragereachtimenormal" Type="datetime" />
+          <Property Name="fromactualreachtimenormal" Type="datetime" />
+          <Property Name="toaveragereachtimenormal" Type="datetime" />
+          <Property Name="toactualreachtimenormal" Type="datetime" />
         </EntityType>
         <EntityType Name="USER_REGISTERTYPE">
           <Key>
@@ -538,6 +542,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="USERTRIP_APPLIEDCOUPON" Type="int" />
           <Property Name="USERTRIP_USERID" Type="int" />
           <Property Name="USERTRIP_APPLIEDCOUPONNAME" Type="varchar" MaxLength="200" />
+          <Property Name="USERTRIP_PICKUPAVERAGETIME" Type="datetime" />
+          <Property Name="USERTRIP_PICKUPACTUALTIME" Type="datetime" />
+          <Property Name="USERTRIP_DROPAVERAGETIME" Type="datetime" />
+          <Property Name="USERTRIP_DROPACTUALTIME" Type="datetime" />
         </EntityType>
         <EntityType Name="VEHICLEDRIVERS">
           <Key>
@@ -1217,6 +1225,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Parameter Name="PAYMENTTYPE_ID" Type="int" Mode="In" />
           <Parameter Name="APPLIEDCOUPONNAME" Type="varchar" Mode="In" />
           <Parameter Name="ISONETIME" Type="bit" Mode="In" />
+          <Parameter Name="usertrip_pickupavergetime" Type="datetime" Mode="In" />
+          <Parameter Name="usertrip_pickupactualtime" Type="datetime" Mode="In" />
+          <Parameter Name="usertrip_dropaveragetime" Type="datetime" Mode="In" />
+          <Parameter Name="usertrip_dropactualtime" Type="datetime" Mode="In" />
           <Parameter Name="OPERATION" Type="varchar" Mode="In" />
         </Function>
         <Function Name="USP_CHECKFORCOUPON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
@@ -1532,6 +1544,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="PAYMENTTYPE_ID" Mode="In" Type="Int32" />
             <Parameter Name="APPLIEDCOUPONNAME" Mode="In" Type="String" />
             <Parameter Name="ISONETIME" Mode="In" Type="Boolean" />
+            <Parameter Name="usertrip_pickupavergetime" Mode="In" Type="DateTime" />
+            <Parameter Name="usertrip_pickupactualtime" Mode="In" Type="DateTime" />
+            <Parameter Name="usertrip_dropaveragetime" Mode="In" Type="DateTime" />
+            <Parameter Name="usertrip_dropactualtime" Mode="In" Type="DateTime" />
             <Parameter Name="OPERATION" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="USP_GETLOCS" ReturnType="Collection(CHALOModel.USP_GETLOCS_Result)">
@@ -1579,7 +1595,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="TRIPLOCATIONS" EntityType="CHALOModel.TRIPLOCATION" />
           <EntitySet Name="TRIPS" EntityType="CHALOModel.TRIP" />
           <EntitySet Name="TRIPSTATUS" EntityType="CHALOModel.TRIPSTATU" />
-          <EntitySet Name="TRIPTEMPs" EntityType="CHALOModel.TRIPTEMP" />
           <EntitySet Name="USER_REGISTERTYPE" EntityType="CHALOModel.USER_REGISTERTYPE" />
           <EntitySet Name="USER_STATUS" EntityType="CHALOModel.USER_STATUS" />
           <EntitySet Name="USERTRIPS" EntityType="CHALOModel.USERTRIP" />
@@ -1786,6 +1801,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="OPERATION" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="LOCATIONENTITies" EntityType="CHALOModel.LOCATIONENTITY" />
+          <EntitySet Name="TRIPTEMPs" EntityType="CHALOModel.TRIPTEMP" />
           </EntityContainer>
         <ComplexType Name="USP_BOOKCAB_Result">
           <Property Type="Int32" Name="PAYMENTTYPE_ID" Nullable="false" />
@@ -2347,33 +2363,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="TRIPS" Relationship="CHALOModel.FK__TRIPS__TRIP_STAT__6B24EA82" FromRole="TRIPSTATU" ToRole="TRIP" />
           <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__160F4887" FromRole="TRIPSTATU" ToRole="USERTRIP" />
         </EntityType>
-        <EntityType Name="TRIPTEMP">
-          <Key>
-            <PropertyRef Name="TRIPTEMP_ID" />
-          </Key>
-          <Property Name="TRIPTEMP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="trip_id" Type="Int32" />
-          <Property Name="trip_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="trip_vehicle_id" Type="Int32" />
-          <Property Name="trip_route_id" Type="Int32" />
-          <Property Name="fromllid" Type="Int32" />
-          <Property Name="fromlocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="fromactualreachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="fromaveragereachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="tollid" Type="Int32" />
-          <Property Name="tolocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="toaveragereachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="toactualreachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="startdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="duration" Type="Int32" />
-          <Property Name="seat_availableseats" Type="Int32" />
-          <Property Name="DISTANCE" Type="Int32" />
-          <Property Name="driver_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="vehicle_number" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="vehicletype_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="COST" Type="Decimal" Precision="10" Scale="0" />
-        </EntityType>
         <EntityType Name="USER_REGISTERTYPE">
           <Key>
             <PropertyRef Name="REGTYPE_ID" />
@@ -2427,6 +2416,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="TRIPLOCATION1" Relationship="CHALOModel.FK__USERTRIPS__USERT__151B244E" FromRole="USERTRIP" ToRole="TRIPLOCATION" />
           <NavigationProperty Name="TRIP" Relationship="CHALOModel.FK__USERTRIPS__USERT__1332DBDC" FromRole="USERTRIP" ToRole="TRIP" />
           <NavigationProperty Name="TRIPSTATU" Relationship="CHALOModel.FK__USERTRIPS__USERT__160F4887" FromRole="USERTRIP" ToRole="TRIPSTATU" />
+          <Property Name="USERTRIP_PICKUPAVERAGETIME" Type="DateTime" Precision="3" />
+          <Property Name="USERTRIP_PICKUPACTUALTIME" Type="DateTime" Precision="3" />
+          <Property Name="USERTRIP_DROPAVERAGETIME" Type="DateTime" Precision="3" />
+          <Property Name="USERTRIP_DROPACTUALTIME" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="VEHICLEDRIVER">
           <Key>
@@ -3136,6 +3129,37 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="LOCATION_ID" Type="Int32" Nullable="false" />
           <Property Name="LOCATION_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="TRIPTEMP">
+          <Key>
+            <PropertyRef Name="TRIPTEMP_ID" />
+          </Key>
+          <Property Name="TRIPTEMP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="trip_id" Type="Int32" />
+          <Property Name="trip_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="trip_vehicle_id" Type="Int32" />
+          <Property Name="trip_route_id" Type="Int32" />
+          <Property Name="fromllid" Type="Int32" />
+          <Property Name="fromlocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fromactualreachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="fromaveragereachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="tollid" Type="Int32" />
+          <Property Name="tolocationname" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="toaveragereachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="toactualreachtime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="startdate" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="duration" Type="Int32" />
+          <Property Name="seat_availableseats" Type="Int32" />
+          <Property Name="DISTANCE" Type="Int32" />
+          <Property Name="driver_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vehicle_number" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="vehicletype_name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="COST" Type="Decimal" Precision="10" Scale="0" />
+          <Property Name="fromaveragereachtimenormal" Type="DateTime" Precision="3" />
+          <Property Name="fromactualreachtimenormal" Type="DateTime" Precision="3" />
+          <Property Name="toaveragereachtimenormal" Type="DateTime" Precision="3" />
+          <Property Name="toactualreachtimenormal" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3675,34 +3699,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TRIPTEMPs">
-            <EntityTypeMapping TypeName="CHALOModel.TRIPTEMP">
-              <MappingFragment StoreEntitySet="TRIPTEMP">
-                <ScalarProperty Name="COST" ColumnName="COST" />
-                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
-                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
-                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
-                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
-                <ScalarProperty Name="seat_availableseats" ColumnName="seat_availableseats" />
-                <ScalarProperty Name="duration" ColumnName="duration" />
-                <ScalarProperty Name="VIA" ColumnName="VIA" />
-                <ScalarProperty Name="startdate" ColumnName="startdate" />
-                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
-                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
-                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
-                <ScalarProperty Name="tollid" ColumnName="tollid" />
-                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
-                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
-                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
-                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
-                <ScalarProperty Name="trip_route_id" ColumnName="trip_route_id" />
-                <ScalarProperty Name="trip_vehicle_id" ColumnName="trip_vehicle_id" />
-                <ScalarProperty Name="trip_name" ColumnName="trip_name" />
-                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
-                <ScalarProperty Name="TRIPTEMP_ID" ColumnName="TRIPTEMP_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="USER_REGISTERTYPE">
             <EntityTypeMapping TypeName="CHALOModel.USER_REGISTERTYPE">
               <MappingFragment StoreEntitySet="USER_REGISTERTYPE">
@@ -3730,6 +3726,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySetMapping Name="USERTRIPS">
             <EntityTypeMapping TypeName="CHALOModel.USERTRIP">
               <MappingFragment StoreEntitySet="USERTRIPS">
+                <ScalarProperty Name="USERTRIP_DROPACTUALTIME" ColumnName="USERTRIP_DROPACTUALTIME" />
+                <ScalarProperty Name="USERTRIP_DROPAVERAGETIME" ColumnName="USERTRIP_DROPAVERAGETIME" />
+                <ScalarProperty Name="USERTRIP_PICKUPACTUALTIME" ColumnName="USERTRIP_PICKUPACTUALTIME" />
+                <ScalarProperty Name="USERTRIP_PICKUPAVERAGETIME" ColumnName="USERTRIP_PICKUPAVERAGETIME" />
                 <ScalarProperty Name="USERTRIP_APPLIEDCOUPONNAME" ColumnName="USERTRIP_APPLIEDCOUPONNAME" />
                 <ScalarProperty Name="USERTRIP_USERID" ColumnName="USERTRIP_USERID" />
                 <ScalarProperty Name="USERTRIP_APPLIEDCOUPON" ColumnName="USERTRIP_APPLIEDCOUPON" />
@@ -3880,6 +3880,38 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               <MappingFragment StoreEntitySet="LOCATIONENTITY">
                 <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
                 <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRIPTEMPs">
+            <EntityTypeMapping TypeName="CHALOModel.TRIPTEMP">
+              <MappingFragment StoreEntitySet="TRIPTEMP">
+                <ScalarProperty Name="toactualreachtimenormal" ColumnName="toactualreachtimenormal" />
+                <ScalarProperty Name="toaveragereachtimenormal" ColumnName="toaveragereachtimenormal" />
+                <ScalarProperty Name="fromactualreachtimenormal" ColumnName="fromactualreachtimenormal" />
+                <ScalarProperty Name="fromaveragereachtimenormal" ColumnName="fromaveragereachtimenormal" />
+                <ScalarProperty Name="COST" ColumnName="COST" />
+                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
+                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
+                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
+                <ScalarProperty Name="DISTANCE" ColumnName="DISTANCE" />
+                <ScalarProperty Name="seat_availableseats" ColumnName="seat_availableseats" />
+                <ScalarProperty Name="duration" ColumnName="duration" />
+                <ScalarProperty Name="VIA" ColumnName="VIA" />
+                <ScalarProperty Name="startdate" ColumnName="startdate" />
+                <ScalarProperty Name="toactualreachtime" ColumnName="toactualreachtime" />
+                <ScalarProperty Name="toaveragereachtime" ColumnName="toaveragereachtime" />
+                <ScalarProperty Name="tolocationname" ColumnName="tolocationname" />
+                <ScalarProperty Name="tollid" ColumnName="tollid" />
+                <ScalarProperty Name="fromaveragereachtime" ColumnName="fromaveragereachtime" />
+                <ScalarProperty Name="fromactualreachtime" ColumnName="fromactualreachtime" />
+                <ScalarProperty Name="fromlocationname" ColumnName="fromlocationname" />
+                <ScalarProperty Name="fromllid" ColumnName="fromllid" />
+                <ScalarProperty Name="trip_route_id" ColumnName="trip_route_id" />
+                <ScalarProperty Name="trip_vehicle_id" ColumnName="trip_vehicle_id" />
+                <ScalarProperty Name="trip_name" ColumnName="trip_name" />
+                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
+                <ScalarProperty Name="TRIPTEMP_ID" ColumnName="TRIPTEMP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -36,5 +36,9 @@ namespace CHALO.Models
         public string vehicle_number { get; set; }
         public string vehicletype_name { get; set; }
         public Nullable<decimal> COST { get; set; }
+        public Nullable<System.DateTime> fromaveragereachtimenormal { get; set; }
+        public Nullable<System.DateTime> fromactualreachtimenormal { get; set; }
+        public Nullable<System.DateTime> toaveragereachtimenormal { get; set; }
+        public Nullable<System.DateTime> toactualreachtimenormal { get; set; }
     }
 }

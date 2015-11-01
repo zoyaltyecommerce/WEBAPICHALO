@@ -39,6 +39,10 @@ namespace CHALO.Models
         public Nullable<int> USERTRIP_APPLIEDCOUPON { get; set; }
         public Nullable<int> USERTRIP_USERID { get; set; }
         public string USERTRIP_APPLIEDCOUPONNAME { get; set; }
+        public Nullable<System.DateTime> USERTRIP_PICKUPAVERAGETIME { get; set; }
+        public Nullable<System.DateTime> USERTRIP_PICKUPACTUALTIME { get; set; }
+        public Nullable<System.DateTime> USERTRIP_DROPAVERAGETIME { get; set; }
+        public Nullable<System.DateTime> USERTRIP_DROPACTUALTIME { get; set; }
     
         public virtual CH_USER CH_USER { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

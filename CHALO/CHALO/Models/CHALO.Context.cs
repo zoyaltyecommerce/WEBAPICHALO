@@ -55,7 +55,6 @@ namespace CHALO.Models
         public virtual DbSet<TRIPLOCATION> TRIPLOCATIONS { get; set; }
         public virtual DbSet<TRIP> TRIPS { get; set; }
         public virtual DbSet<TRIPSTATU> TRIPSTATUS { get; set; }
-        public virtual DbSet<TRIPTEMP> TRIPTEMPs { get; set; }
         public virtual DbSet<USER_REGISTERTYPE> USER_REGISTERTYPE { get; set; }
         public virtual DbSet<USER_STATUS> USER_STATUS { get; set; }
         public virtual DbSet<USERTRIP> USERTRIPS { get; set; }
@@ -65,6 +64,7 @@ namespace CHALO.Models
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
         public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
+        public virtual DbSet<TRIPTEMP> TRIPTEMPs { get; set; }
     
         public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
         {
@@ -96,7 +96,7 @@ namespace CHALO.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USP_SEARCHVEHICLES", dROPLOCATIONParameter, pICKUPLOCATIONParameter);
         }
     
-        public virtual ObjectResult<USP_BOOKCAB_Result> USP_BOOKCAB(Nullable<int> uSER_ID, Nullable<int> uSERTRIP_ID, Nullable<int> uSERTRIP_TRIPID, Nullable<int> uSERTRIP_PICKUPLOC, Nullable<int> uSERTRIP_DROPLOC, string uSERTRIP_VIA, Nullable<int> uSERTRIP_ESTIMATEDDURATION, Nullable<int> uSERTRIP_ACTUALDURATION, Nullable<int> uSERTRIP_DISTANCE, Nullable<decimal> uSERTRIP_ACTUALAMOUNT, Nullable<decimal> uSERTRIP_DISCOUNT, Nullable<decimal> uSERTRIP_TOTALAMOUNT, Nullable<int> uSERTRIP_STATUS, Nullable<int> uSERTRIP_APPLIEDCOUPON, Nullable<int> uSERTRIP_CREATEDBY, Nullable<System.DateTime> uSERTRIP_CREATEDDATE, Nullable<int> uSERTRIP_MODIFIEDBY, Nullable<System.DateTime> uSERTRIP_MODIFIEDDATE, Nullable<int> tRANS_STATUS, Nullable<int> pAYMENTTYPE_ID, string aPPLIEDCOUPONNAME, Nullable<bool> iSONETIME, string oPERATION)
+        public virtual ObjectResult<USP_BOOKCAB_Result> USP_BOOKCAB(Nullable<int> uSER_ID, Nullable<int> uSERTRIP_ID, Nullable<int> uSERTRIP_TRIPID, Nullable<int> uSERTRIP_PICKUPLOC, Nullable<int> uSERTRIP_DROPLOC, string uSERTRIP_VIA, Nullable<int> uSERTRIP_ESTIMATEDDURATION, Nullable<int> uSERTRIP_ACTUALDURATION, Nullable<int> uSERTRIP_DISTANCE, Nullable<decimal> uSERTRIP_ACTUALAMOUNT, Nullable<decimal> uSERTRIP_DISCOUNT, Nullable<decimal> uSERTRIP_TOTALAMOUNT, Nullable<int> uSERTRIP_STATUS, Nullable<int> uSERTRIP_APPLIEDCOUPON, Nullable<int> uSERTRIP_CREATEDBY, Nullable<System.DateTime> uSERTRIP_CREATEDDATE, Nullable<int> uSERTRIP_MODIFIEDBY, Nullable<System.DateTime> uSERTRIP_MODIFIEDDATE, Nullable<int> tRANS_STATUS, Nullable<int> pAYMENTTYPE_ID, string aPPLIEDCOUPONNAME, Nullable<bool> iSONETIME, Nullable<System.DateTime> usertrip_pickupavergetime, Nullable<System.DateTime> usertrip_pickupactualtime, Nullable<System.DateTime> usertrip_dropaveragetime, Nullable<System.DateTime> usertrip_dropactualtime, string oPERATION)
         {
             var uSER_IDParameter = uSER_ID.HasValue ?
                 new ObjectParameter("USER_ID", uSER_ID) :
@@ -186,11 +186,27 @@ namespace CHALO.Models
                 new ObjectParameter("ISONETIME", iSONETIME) :
                 new ObjectParameter("ISONETIME", typeof(bool));
     
+            var usertrip_pickupavergetimeParameter = usertrip_pickupavergetime.HasValue ?
+                new ObjectParameter("usertrip_pickupavergetime", usertrip_pickupavergetime) :
+                new ObjectParameter("usertrip_pickupavergetime", typeof(System.DateTime));
+    
+            var usertrip_pickupactualtimeParameter = usertrip_pickupactualtime.HasValue ?
+                new ObjectParameter("usertrip_pickupactualtime", usertrip_pickupactualtime) :
+                new ObjectParameter("usertrip_pickupactualtime", typeof(System.DateTime));
+    
+            var usertrip_dropaveragetimeParameter = usertrip_dropaveragetime.HasValue ?
+                new ObjectParameter("usertrip_dropaveragetime", usertrip_dropaveragetime) :
+                new ObjectParameter("usertrip_dropaveragetime", typeof(System.DateTime));
+    
+            var usertrip_dropactualtimeParameter = usertrip_dropactualtime.HasValue ?
+                new ObjectParameter("usertrip_dropactualtime", usertrip_dropactualtime) :
+                new ObjectParameter("usertrip_dropactualtime", typeof(System.DateTime));
+    
             var oPERATIONParameter = oPERATION != null ?
                 new ObjectParameter("OPERATION", oPERATION) :
                 new ObjectParameter("OPERATION", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_BOOKCAB_Result>("USP_BOOKCAB", uSER_IDParameter, uSERTRIP_IDParameter, uSERTRIP_TRIPIDParameter, uSERTRIP_PICKUPLOCParameter, uSERTRIP_DROPLOCParameter, uSERTRIP_VIAParameter, uSERTRIP_ESTIMATEDDURATIONParameter, uSERTRIP_ACTUALDURATIONParameter, uSERTRIP_DISTANCEParameter, uSERTRIP_ACTUALAMOUNTParameter, uSERTRIP_DISCOUNTParameter, uSERTRIP_TOTALAMOUNTParameter, uSERTRIP_STATUSParameter, uSERTRIP_APPLIEDCOUPONParameter, uSERTRIP_CREATEDBYParameter, uSERTRIP_CREATEDDATEParameter, uSERTRIP_MODIFIEDBYParameter, uSERTRIP_MODIFIEDDATEParameter, tRANS_STATUSParameter, pAYMENTTYPE_IDParameter, aPPLIEDCOUPONNAMEParameter, iSONETIMEParameter, oPERATIONParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_BOOKCAB_Result>("USP_BOOKCAB", uSER_IDParameter, uSERTRIP_IDParameter, uSERTRIP_TRIPIDParameter, uSERTRIP_PICKUPLOCParameter, uSERTRIP_DROPLOCParameter, uSERTRIP_VIAParameter, uSERTRIP_ESTIMATEDDURATIONParameter, uSERTRIP_ACTUALDURATIONParameter, uSERTRIP_DISTANCEParameter, uSERTRIP_ACTUALAMOUNTParameter, uSERTRIP_DISCOUNTParameter, uSERTRIP_TOTALAMOUNTParameter, uSERTRIP_STATUSParameter, uSERTRIP_APPLIEDCOUPONParameter, uSERTRIP_CREATEDBYParameter, uSERTRIP_CREATEDDATEParameter, uSERTRIP_MODIFIEDBYParameter, uSERTRIP_MODIFIEDDATEParameter, tRANS_STATUSParameter, pAYMENTTYPE_IDParameter, aPPLIEDCOUPONNAMEParameter, iSONETIMEParameter, usertrip_pickupavergetimeParameter, usertrip_pickupactualtimeParameter, usertrip_dropaveragetimeParameter, usertrip_dropactualtimeParameter, oPERATIONParameter);
         }
     
         public virtual ObjectResult<USP_GETLOCS_Result> USP_GETLOCS(Nullable<int> lOCATION_ID, string oPERATION, string fROMLOCATION, string cITY_NAME)
