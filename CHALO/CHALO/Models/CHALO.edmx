@@ -166,6 +166,29 @@
           <Property Name="USERTRIP_DROPAVERAGETIME" Type="varchar" MaxLength="200" />
           <Property Name="USERTRIP_DROPACTUALTIME" Type="varchar" MaxLength="200" />
           <Property Name="STARTDATE" Type="varchar" MaxLength="200" />
+          <Property Name="VEHICLENUMBER" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVERMOBILE" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVERNAME" Type="varchar" MaxLength="200" />
+          <Property Name="DRIVERIMAGE" Type="varchar" MaxLength="200" />
+          <Property Name="STATUS_NAME" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="TripUsersEntity">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="user_firstname" Type="varchar" MaxLength="255" />
+          <Property Name="user_lastname" Type="varchar" MaxLength="255" />
+          <Property Name="user_emailid" Type="varchar" MaxLength="255" />
+          <Property Name="user_mobile" Type="varchar" MaxLength="255" />
+          <Property Name="fromll_id" Type="int" />
+          <Property Name="fromname" Type="varchar" MaxLength="255" />
+          <Property Name="toname" Type="varchar" MaxLength="255" />
+          <Property Name="toll_id" Type="int" />
+          <Property Name="usertrip_discount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="totalamount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="usertrip_pickupactualtime" Type="datetime" />
+          <Property Name="usertrip_dropactualtime" Type="datetime" />
         </EntityType>
         <EntityType Name="USERCOUPONS">
           <Key>
@@ -1341,6 +1364,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="transactions" EntityType="Self.transactions" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONSTATUS" EntityType="Self.TRANSACTIONSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRIPHISTORYENTITY" EntityType="Self.TRIPHISTORYENTITY" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="TripUsersEntity" EntityType="Self.TripUsersEntity" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="USERCOUPONS" EntityType="Self.USERCOUPONS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="WALLET" EntityType="Self.WALLET" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="WALLETADDTYPES" EntityType="Self.WALLETADDTYPES" Schema="CHALOINDIA" store:Type="Tables" />
@@ -1646,6 +1670,55 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="USER_ID" Mode="In" Type="Int32" />
             <Parameter Name="OPERATION" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetDriverTripDetails" ReturnType="Collection(CHALOModel.GetDriverTripDetails_Result)">
+          <Parameter Name="Driver_Id" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="vendors_data">
+            <Parameter Name="VENDOR_ORGANIZATIONNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_ORGANIZATIONMOBILE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_ORGANIZATIONLANDLINE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNFIRSTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNLASTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONFIRSTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONLASTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_EMAILID" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_ADDRESS" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNMOBILE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONMOBILE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNLANDLINE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONLANDLINE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_USERNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_PASSWORD" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_STATUS" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CREATEDBY" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_MODIFIEDBY" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_MODIFIEDDATE" Mode="In" Type="String" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="vendors_details">
+            <Parameter Name="VENDOR_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VENDOR_ORGANIZATIONNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_ORGANIZATIONMOBILE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_ORGANIZATIONLANDLINE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNFIRSTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNLASTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONFIRSTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONLASTNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_EMAILID" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_ADDRESS" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNMOBILE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONMOBILE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_OWNLANDLINE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_CONLANDLINE" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_USERNAME" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_PASSWORD" Mode="In" Type="String" />
+            <Parameter Name="VENDOR_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="VENDOR_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="VENDOR_CREATEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="VENDOR_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="VENDOR_MODIFIEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="APPLIEDCOUPONS" EntityType="CHALOModel.APPLIEDCOUPON" />
           <EntitySet Name="COUPONENTIYPURPOSEs" EntityType="CHALOModel.COUPONENTIYPURPOSE" />
           <EntitySet Name="COUPONS" EntityType="CHALOModel.COUPON" />
@@ -1656,6 +1729,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="TRANSACTIONMODEs" EntityType="CHALOModel.TRANSACTIONMODE" />
           <EntitySet Name="transactions" EntityType="CHALOModel.transaction" />
           <EntitySet Name="TRANSACTIONSTATUS" EntityType="CHALOModel.TRANSACTIONSTATU" />
+          <EntitySet Name="TRIPHISTORYENTITies" EntityType="CHALOModel.TRIPHISTORYENTITY" />
+          <EntitySet Name="TripUsersEntities" EntityType="CHALOModel.TripUsersEntity" />
           <EntitySet Name="USERCOUPONS" EntityType="CHALOModel.USERCOUPON" />
           <EntitySet Name="WALLETs" EntityType="CHALOModel.WALLET" />
           <EntitySet Name="WALLETADDTYPES" EntityType="CHALOModel.WALLETADDTYPE" />
@@ -1876,56 +1951,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
             <End Role="VEHICLE" EntitySet="VEHICLES" />
           </AssociationSet>
-          <FunctionImport Name="GetDriverTripDetails" ReturnType="Collection(CHALOModel.GetDriverTripDetails_Result)">
-          <Parameter Name="Driver_Id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="vendors_data">
-            <Parameter Name="VENDOR_ORGANIZATIONNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_ORGANIZATIONMOBILE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_ORGANIZATIONLANDLINE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNFIRSTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNLASTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONFIRSTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONLASTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_EMAILID" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_ADDRESS" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNMOBILE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONMOBILE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNLANDLINE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONLANDLINE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_USERNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_PASSWORD" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_STATUS" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CREATEDBY" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_MODIFIEDBY" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_MODIFIEDDATE" Mode="In" Type="String" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="vendors_details">
-            <Parameter Name="VENDOR_ID" Mode="In" Type="Int32" />
-            <Parameter Name="VENDOR_ORGANIZATIONNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_ORGANIZATIONMOBILE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_ORGANIZATIONLANDLINE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNFIRSTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNLASTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONFIRSTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONLASTNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_EMAILID" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_ADDRESS" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNMOBILE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONMOBILE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_OWNLANDLINE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_CONLANDLINE" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_USERNAME" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_PASSWORD" Mode="In" Type="String" />
-            <Parameter Name="VENDOR_STATUS" Mode="In" Type="Int32" />
-            <Parameter Name="VENDOR_CREATEDBY" Mode="In" Type="Int32" />
-            <Parameter Name="VENDOR_CREATEDDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="VENDOR_MODIFIEDBY" Mode="In" Type="Int32" />
-            <Parameter Name="VENDOR_MODIFIEDDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="TRIPHISTORYENTITies" EntityType="CHALOModel.TRIPHISTORYENTITY" />
           </EntityContainer>
         <ComplexType Name="USP_BOOKCAB_Result">
           <Property Type="Int32" Name="PAYMENTTYPE_ID" Nullable="false" />
@@ -1998,6 +2023,22 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Type="Int32" Name="USERTRIP_APPLIEDCOUPON" Nullable="true" />
           <Property Type="String" Name="USERTRIP_APPLIEDCOUPONNAME" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="TRIP_NAME" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GetDriverTripDetails_Result">
+          <Property Type="Int32" Name="trip_id" Nullable="false" />
+          <Property Type="Int32" Name="vehicle_id" Nullable="false" />
+          <Property Type="Int32" Name="driver_id" Nullable="false" />
+          <Property Type="Int32" Name="vd_id" Nullable="false" />
+          <Property Type="String" Name="trip_ExpectedstartDate" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="trip_expectedenddate" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="trip_from" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="trip_to" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="trip_via" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="vehicle_number" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="vehicletype_name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="driver_name" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="driver_mobile" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="driver_emailid" Nullable="true" MaxLength="200" />
         </ComplexType>
         <EntityType Name="APPLIEDCOUPON">
           <Key>
@@ -2145,6 +2186,57 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="transactions" Relationship="CHALOModel.FK__transacti__TRANS__6FB49575" FromRole="TRANSACTIONSTATU" ToRole="transaction" />
+        </EntityType>
+        <EntityType Name="TRIPHISTORYENTITY">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USERTRIP_ID" Type="Int32" />
+          <Property Name="PICKUPID" Type="Int32" />
+          <Property Name="PICKUPNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DROPID" Type="Int32" />
+          <Property Name="DROPNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_ACTUALDURATION" Type="Int32" />
+          <Property Name="USERTRIP_DISTANCE" Type="Int32" />
+          <Property Name="USERTRIP_ACTUALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_DISCOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_TOTALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_STATUS" Type="Int32" />
+          <Property Name="USER_ID" Type="Int32" />
+          <Property Name="USER_FIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_APPLIEDCOUPON" Type="Int32" />
+          <Property Name="USER_APPLIEDCOUPONNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_PICKUPAVERAGETIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_PICKUPACTUALTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_DROPAVERAGETIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_DROPACTUALTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STARTDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVERMOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVERNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVERIMAGE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STATUS_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="TripUsersEntity">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="user_firstname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_lastname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_emailid" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="user_mobile" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="fromll_id" Type="Int32" />
+          <Property Name="fromname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="toname" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="toll_id" Type="Int32" />
+          <Property Name="usertrip_discount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="totalamount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="usertrip_pickupactualtime" Type="DateTime" Precision="3" />
+          <Property Name="usertrip_dropactualtime" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="USERCOUPON">
           <Key>
@@ -3280,50 +3372,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GetDriverTripDetails_Result">
-          <Property Type="Int32" Name="trip_id" Nullable="false" />
-          <Property Type="Int32" Name="vehicle_id" Nullable="false" />
-          <Property Type="Int32" Name="driver_id" Nullable="false" />
-          <Property Type="Int32" Name="vd_id" Nullable="false" />
-          <Property Type="String" Name="trip_ExpectedstartDate" Nullable="true" MaxLength="7" />
-          <Property Type="String" Name="trip_expectedenddate" Nullable="true" MaxLength="7" />
-          <Property Type="String" Name="trip_from" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="trip_to" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="trip_via" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="vehicle_number" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="vehicletype_name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="driver_name" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="driver_mobile" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="driver_emailid" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <EntityType Name="TRIPHISTORYENTITY">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="USERTRIP_ID" Type="Int32" />
-          <Property Name="PICKUPID" Type="Int32" />
-          <Property Name="PICKUPNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DROPID" Type="Int32" />
-          <Property Name="DROPNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USERTRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USERTRIP_ACTUALDURATION" Type="Int32" />
-          <Property Name="USERTRIP_DISTANCE" Type="Int32" />
-          <Property Name="USERTRIP_ACTUALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="USERTRIP_DISCOUNT" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="USERTRIP_TOTALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="USERTRIP_STATUS" Type="Int32" />
-          <Property Name="USER_ID" Type="Int32" />
-          <Property Name="USER_FIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USER_APPLIEDCOUPON" Type="Int32" />
-          <Property Name="USER_APPLIEDCOUPONNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="USERTRIP_PICKUPAVERAGETIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USERTRIP_PICKUPACTUALTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USERTRIP_DROPAVERAGETIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="USERTRIP_DROPACTUALTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="STARTDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3428,6 +3476,28 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetDriverTripDetails" FunctionName="CHALOModel.Store.GetDriverTripDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.GetDriverTripDetails_Result">
+                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
+                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
+                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
+                <ScalarProperty Name="vd_id" ColumnName="vd_id" />
+                <ScalarProperty Name="trip_ExpectedstartDate" ColumnName="trip_ExpectedstartDate" />
+                <ScalarProperty Name="trip_expectedenddate" ColumnName="trip_expectedenddate" />
+                <ScalarProperty Name="trip_from" ColumnName="trip_from" />
+                <ScalarProperty Name="trip_to" ColumnName="trip_to" />
+                <ScalarProperty Name="trip_via" ColumnName="trip_via" />
+                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
+                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
+                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
+                <ScalarProperty Name="driver_mobile" ColumnName="driver_mobile" />
+                <ScalarProperty Name="driver_emailid" ColumnName="driver_emailid" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="vendors_data" FunctionName="CHALOModel.Store.vendors_data" />
+          <FunctionImportMapping FunctionImportName="vendors_details" FunctionName="CHALOModel.Store.vendors_details" />
           <EntitySetMapping Name="APPLIEDCOUPONS">
             <EntityTypeMapping TypeName="CHALOModel.APPLIEDCOUPON">
               <MappingFragment StoreEntitySet="APPLIEDCOUPONS">
@@ -3569,6 +3639,59 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
                 <ScalarProperty Name="STATUS_CREATEDBY" ColumnName="STATUS_CREATEDBY" />
                 <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
                 <ScalarProperty Name="STATUS_ID" ColumnName="STATUS_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRIPHISTORYENTITies">
+            <EntityTypeMapping TypeName="CHALOModel.TRIPHISTORYENTITY">
+              <MappingFragment StoreEntitySet="TRIPHISTORYENTITY">
+                <ScalarProperty Name="STATUS_NAME" ColumnName="STATUS_NAME" />
+                <ScalarProperty Name="DRIVERIMAGE" ColumnName="DRIVERIMAGE" />
+                <ScalarProperty Name="DRIVERNAME" ColumnName="DRIVERNAME" />
+                <ScalarProperty Name="DRIVERMOBILE" ColumnName="DRIVERMOBILE" />
+                <ScalarProperty Name="VEHICLENUMBER" ColumnName="VEHICLENUMBER" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
+                <ScalarProperty Name="USERTRIP_DROPACTUALTIME" ColumnName="USERTRIP_DROPACTUALTIME" />
+                <ScalarProperty Name="USERTRIP_DROPAVERAGETIME" ColumnName="USERTRIP_DROPAVERAGETIME" />
+                <ScalarProperty Name="USERTRIP_PICKUPACTUALTIME" ColumnName="USERTRIP_PICKUPACTUALTIME" />
+                <ScalarProperty Name="USERTRIP_PICKUPAVERAGETIME" ColumnName="USERTRIP_PICKUPAVERAGETIME" />
+                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
+                <ScalarProperty Name="USER_APPLIEDCOUPONNAME" ColumnName="USER_APPLIEDCOUPONNAME" />
+                <ScalarProperty Name="USER_APPLIEDCOUPON" ColumnName="USER_APPLIEDCOUPON" />
+                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
+                <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_DISCOUNT" ColumnName="USERTRIP_DISCOUNT" />
+                <ScalarProperty Name="USERTRIP_ACTUALAMOUNT" ColumnName="USERTRIP_ACTUALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_DISTANCE" ColumnName="USERTRIP_DISTANCE" />
+                <ScalarProperty Name="USERTRIP_ACTUALDURATION" ColumnName="USERTRIP_ACTUALDURATION" />
+                <ScalarProperty Name="USERTRIP_VIA" ColumnName="USERTRIP_VIA" />
+                <ScalarProperty Name="DROPNAME" ColumnName="DROPNAME" />
+                <ScalarProperty Name="DROPID" ColumnName="DROPID" />
+                <ScalarProperty Name="PICKUPNAME" ColumnName="PICKUPNAME" />
+                <ScalarProperty Name="PICKUPID" ColumnName="PICKUPID" />
+                <ScalarProperty Name="USERTRIP_ID" ColumnName="USERTRIP_ID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TripUsersEntities">
+            <EntityTypeMapping TypeName="CHALOModel.TripUsersEntity">
+              <MappingFragment StoreEntitySet="TripUsersEntity">
+                <ScalarProperty Name="usertrip_dropactualtime" ColumnName="usertrip_dropactualtime" />
+                <ScalarProperty Name="usertrip_pickupactualtime" ColumnName="usertrip_pickupactualtime" />
+                <ScalarProperty Name="totalamount" ColumnName="totalamount" />
+                <ScalarProperty Name="usertrip_discount" ColumnName="usertrip_discount" />
+                <ScalarProperty Name="toll_id" ColumnName="toll_id" />
+                <ScalarProperty Name="toname" ColumnName="toname" />
+                <ScalarProperty Name="fromname" ColumnName="fromname" />
+                <ScalarProperty Name="fromll_id" ColumnName="fromll_id" />
+                <ScalarProperty Name="user_mobile" ColumnName="user_mobile" />
+                <ScalarProperty Name="user_emailid" ColumnName="user_emailid" />
+                <ScalarProperty Name="user_lastname" ColumnName="user_lastname" />
+                <ScalarProperty Name="user_firstname" ColumnName="user_firstname" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4072,57 +4195,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
                 <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
                 <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetDriverTripDetails" FunctionName="CHALOModel.Store.GetDriverTripDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CHALOModel.GetDriverTripDetails_Result">
-                <ScalarProperty Name="trip_id" ColumnName="trip_id" />
-                <ScalarProperty Name="vehicle_id" ColumnName="vehicle_id" />
-                <ScalarProperty Name="driver_id" ColumnName="driver_id" />
-                <ScalarProperty Name="vd_id" ColumnName="vd_id" />
-                <ScalarProperty Name="trip_ExpectedstartDate" ColumnName="trip_ExpectedstartDate" />
-                <ScalarProperty Name="trip_expectedenddate" ColumnName="trip_expectedenddate" />
-                <ScalarProperty Name="trip_from" ColumnName="trip_from" />
-                <ScalarProperty Name="trip_to" ColumnName="trip_to" />
-                <ScalarProperty Name="trip_via" ColumnName="trip_via" />
-                <ScalarProperty Name="vehicle_number" ColumnName="vehicle_number" />
-                <ScalarProperty Name="vehicletype_name" ColumnName="vehicletype_name" />
-                <ScalarProperty Name="driver_name" ColumnName="driver_name" />
-                <ScalarProperty Name="driver_mobile" ColumnName="driver_mobile" />
-                <ScalarProperty Name="driver_emailid" ColumnName="driver_emailid" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="vendors_data" FunctionName="CHALOModel.Store.vendors_data" />
-          <FunctionImportMapping FunctionImportName="vendors_details" FunctionName="CHALOModel.Store.vendors_details" />
-          <EntitySetMapping Name="TRIPHISTORYENTITies">
-            <EntityTypeMapping TypeName="CHALOModel.TRIPHISTORYENTITY">
-              <MappingFragment StoreEntitySet="TRIPHISTORYENTITY">
-                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
-                <ScalarProperty Name="USERTRIP_DROPACTUALTIME" ColumnName="USERTRIP_DROPACTUALTIME" />
-                <ScalarProperty Name="USERTRIP_DROPAVERAGETIME" ColumnName="USERTRIP_DROPAVERAGETIME" />
-                <ScalarProperty Name="USERTRIP_PICKUPACTUALTIME" ColumnName="USERTRIP_PICKUPACTUALTIME" />
-                <ScalarProperty Name="USERTRIP_PICKUPAVERAGETIME" ColumnName="USERTRIP_PICKUPAVERAGETIME" />
-                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
-                <ScalarProperty Name="USER_APPLIEDCOUPONNAME" ColumnName="USER_APPLIEDCOUPONNAME" />
-                <ScalarProperty Name="USER_APPLIEDCOUPON" ColumnName="USER_APPLIEDCOUPON" />
-                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
-                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-                <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
-                <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
-                <ScalarProperty Name="USERTRIP_DISCOUNT" ColumnName="USERTRIP_DISCOUNT" />
-                <ScalarProperty Name="USERTRIP_ACTUALAMOUNT" ColumnName="USERTRIP_ACTUALAMOUNT" />
-                <ScalarProperty Name="USERTRIP_DISTANCE" ColumnName="USERTRIP_DISTANCE" />
-                <ScalarProperty Name="USERTRIP_ACTUALDURATION" ColumnName="USERTRIP_ACTUALDURATION" />
-                <ScalarProperty Name="USERTRIP_VIA" ColumnName="USERTRIP_VIA" />
-                <ScalarProperty Name="DROPNAME" ColumnName="DROPNAME" />
-                <ScalarProperty Name="DROPID" ColumnName="DROPID" />
-                <ScalarProperty Name="PICKUPNAME" ColumnName="PICKUPNAME" />
-                <ScalarProperty Name="PICKUPID" ColumnName="PICKUPID" />
-                <ScalarProperty Name="USERTRIP_ID" ColumnName="USERTRIP_ID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

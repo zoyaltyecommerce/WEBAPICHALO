@@ -211,6 +211,7 @@
     <Compile Include="Controllers\BookinginfoController.cs" />
     <Compile Include="Controllers\CH_USERController.cs" />
     <Compile Include="Controllers\common.cs" />
+    <Compile Include="Controllers\DetailedhistoryController.cs" />
     <Compile Include="Controllers\GetlocationsController.cs" />
     <Compile Include="Controllers\GetvehiclebytripController.cs" />
     <Compile Include="Controllers\HistoryController.cs" />
@@ -332,6 +333,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TRIPTEMP.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TripUsersEntity.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\USERCOUPON.cs">

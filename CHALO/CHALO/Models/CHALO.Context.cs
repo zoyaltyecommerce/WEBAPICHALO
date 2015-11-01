@@ -37,6 +37,8 @@ namespace CHALO.Models
         public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<TRANSACTIONSTATU> TRANSACTIONSTATUS { get; set; }
+        public virtual DbSet<TRIPHISTORYENTITY> TRIPHISTORYENTITies { get; set; }
+        public virtual DbSet<TripUsersEntity> TripUsersEntities { get; set; }
         public virtual DbSet<USERCOUPON> USERCOUPONS { get; set; }
         public virtual DbSet<WALLET> WALLETs { get; set; }
         public virtual DbSet<WALLETADDTYPE> WALLETADDTYPES { get; set; }
@@ -65,7 +67,6 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
-        public virtual DbSet<TRIPHISTORYENTITY> TRIPHISTORYENTITies { get; set; }
     
         public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
         {

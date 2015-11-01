@@ -37,5 +37,10 @@ namespace CHALO.Models
         public string USERTRIP_DROPAVERAGETIME { get; set; }
         public string USERTRIP_DROPACTUALTIME { get; set; }
         public string STARTDATE { get; set; }
+        public string VEHICLENUMBER { get; set; }
+        public string DRIVERMOBILE { get; set; }
+        public string DRIVERNAME { get; set; }
+        public string DRIVERIMAGE { get; set; }
+        public string STATUS_NAME { get; set; }
     }
 }
