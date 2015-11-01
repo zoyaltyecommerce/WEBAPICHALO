@@ -31,11 +31,12 @@ namespace CHALO.Models
         public virtual DbSet<COUPONENTIYPURPOSE> COUPONENTIYPURPOSEs { get; set; }
         public virtual DbSet<COUPON> COUPONS { get; set; }
         public virtual DbSet<COUPONTYPE> COUPONTYPEs { get; set; }
+        public virtual DbSet<DRIVERTRIPSENTITY> DRIVERTRIPSENTITies { get; set; }
+        public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
         public virtual DbSet<PAYMENTTRIPSTATU> PAYMENTTRIPSTATUS { get; set; }
         public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
         public virtual DbSet<transaction> transactions { get; set; }
         public virtual DbSet<TRANSACTIONSTATU> TRANSACTIONSTATUS { get; set; }
-        public virtual DbSet<TRIPHISTORYENTITY> TRIPHISTORYENTITies { get; set; }
         public virtual DbSet<USERCOUPON> USERCOUPONS { get; set; }
         public virtual DbSet<WALLET> WALLETs { get; set; }
         public virtual DbSet<WALLETADDTYPE> WALLETADDTYPES { get; set; }
@@ -55,6 +56,7 @@ namespace CHALO.Models
         public virtual DbSet<TRIPLOCATION> TRIPLOCATIONS { get; set; }
         public virtual DbSet<TRIP> TRIPS { get; set; }
         public virtual DbSet<TRIPSTATU> TRIPSTATUS { get; set; }
+        public virtual DbSet<TRIPTEMP> TRIPTEMPs { get; set; }
         public virtual DbSet<USER_REGISTERTYPE> USER_REGISTERTYPE { get; set; }
         public virtual DbSet<USER_STATUS> USER_STATUS { get; set; }
         public virtual DbSet<USERTRIP> USERTRIPS { get; set; }
@@ -63,8 +65,7 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
-        public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
-        public virtual DbSet<TRIPTEMP> TRIPTEMPs { get; set; }
+        public virtual DbSet<TRIPHISTORYENTITY> TRIPHISTORYENTITies { get; set; }
     
         public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
         {
@@ -280,6 +281,193 @@ namespace CHALO.Models
                 new ObjectParameter("OPERATION", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_TRIPHISTORY_Result>("USP_TRIPHISTORY", tRIP_IDParameter, uSER_IDParameter, oPERATIONParameter);
+        }
+    
+        public virtual ObjectResult<GetDriverTripDetails_Result> GetDriverTripDetails(Nullable<int> driver_Id)
+        {
+            var driver_IdParameter = driver_Id.HasValue ?
+                new ObjectParameter("Driver_Id", driver_Id) :
+                new ObjectParameter("Driver_Id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetDriverTripDetails_Result>("GetDriverTripDetails", driver_IdParameter);
+        }
+    
+        public virtual int vendors_data(string vENDOR_ORGANIZATIONNAME, string vENDOR_ORGANIZATIONMOBILE, string vENDOR_ORGANIZATIONLANDLINE, string vENDOR_OWNFIRSTNAME, string vENDOR_OWNLASTNAME, string vENDOR_CONFIRSTNAME, string vENDOR_CONLASTNAME, string vENDOR_EMAILID, string vENDOR_ADDRESS, string vENDOR_OWNMOBILE, string vENDOR_CONMOBILE, string vENDOR_OWNLANDLINE, string vENDOR_CONLANDLINE, string vENDOR_USERNAME, string vENDOR_PASSWORD, string vENDOR_STATUS, string vENDOR_CREATEDBY, string vENDOR_MODIFIEDBY, string vENDOR_MODIFIEDDATE, string operation)
+        {
+            var vENDOR_ORGANIZATIONNAMEParameter = vENDOR_ORGANIZATIONNAME != null ?
+                new ObjectParameter("VENDOR_ORGANIZATIONNAME", vENDOR_ORGANIZATIONNAME) :
+                new ObjectParameter("VENDOR_ORGANIZATIONNAME", typeof(string));
+    
+            var vENDOR_ORGANIZATIONMOBILEParameter = vENDOR_ORGANIZATIONMOBILE != null ?
+                new ObjectParameter("VENDOR_ORGANIZATIONMOBILE", vENDOR_ORGANIZATIONMOBILE) :
+                new ObjectParameter("VENDOR_ORGANIZATIONMOBILE", typeof(string));
+    
+            var vENDOR_ORGANIZATIONLANDLINEParameter = vENDOR_ORGANIZATIONLANDLINE != null ?
+                new ObjectParameter("VENDOR_ORGANIZATIONLANDLINE", vENDOR_ORGANIZATIONLANDLINE) :
+                new ObjectParameter("VENDOR_ORGANIZATIONLANDLINE", typeof(string));
+    
+            var vENDOR_OWNFIRSTNAMEParameter = vENDOR_OWNFIRSTNAME != null ?
+                new ObjectParameter("VENDOR_OWNFIRSTNAME", vENDOR_OWNFIRSTNAME) :
+                new ObjectParameter("VENDOR_OWNFIRSTNAME", typeof(string));
+    
+            var vENDOR_OWNLASTNAMEParameter = vENDOR_OWNLASTNAME != null ?
+                new ObjectParameter("VENDOR_OWNLASTNAME", vENDOR_OWNLASTNAME) :
+                new ObjectParameter("VENDOR_OWNLASTNAME", typeof(string));
+    
+            var vENDOR_CONFIRSTNAMEParameter = vENDOR_CONFIRSTNAME != null ?
+                new ObjectParameter("VENDOR_CONFIRSTNAME", vENDOR_CONFIRSTNAME) :
+                new ObjectParameter("VENDOR_CONFIRSTNAME", typeof(string));
+    
+            var vENDOR_CONLASTNAMEParameter = vENDOR_CONLASTNAME != null ?
+                new ObjectParameter("VENDOR_CONLASTNAME", vENDOR_CONLASTNAME) :
+                new ObjectParameter("VENDOR_CONLASTNAME", typeof(string));
+    
+            var vENDOR_EMAILIDParameter = vENDOR_EMAILID != null ?
+                new ObjectParameter("VENDOR_EMAILID", vENDOR_EMAILID) :
+                new ObjectParameter("VENDOR_EMAILID", typeof(string));
+    
+            var vENDOR_ADDRESSParameter = vENDOR_ADDRESS != null ?
+                new ObjectParameter("VENDOR_ADDRESS", vENDOR_ADDRESS) :
+                new ObjectParameter("VENDOR_ADDRESS", typeof(string));
+    
+            var vENDOR_OWNMOBILEParameter = vENDOR_OWNMOBILE != null ?
+                new ObjectParameter("VENDOR_OWNMOBILE", vENDOR_OWNMOBILE) :
+                new ObjectParameter("VENDOR_OWNMOBILE", typeof(string));
+    
+            var vENDOR_CONMOBILEParameter = vENDOR_CONMOBILE != null ?
+                new ObjectParameter("VENDOR_CONMOBILE", vENDOR_CONMOBILE) :
+                new ObjectParameter("VENDOR_CONMOBILE", typeof(string));
+    
+            var vENDOR_OWNLANDLINEParameter = vENDOR_OWNLANDLINE != null ?
+                new ObjectParameter("VENDOR_OWNLANDLINE", vENDOR_OWNLANDLINE) :
+                new ObjectParameter("VENDOR_OWNLANDLINE", typeof(string));
+    
+            var vENDOR_CONLANDLINEParameter = vENDOR_CONLANDLINE != null ?
+                new ObjectParameter("VENDOR_CONLANDLINE", vENDOR_CONLANDLINE) :
+                new ObjectParameter("VENDOR_CONLANDLINE", typeof(string));
+    
+            var vENDOR_USERNAMEParameter = vENDOR_USERNAME != null ?
+                new ObjectParameter("VENDOR_USERNAME", vENDOR_USERNAME) :
+                new ObjectParameter("VENDOR_USERNAME", typeof(string));
+    
+            var vENDOR_PASSWORDParameter = vENDOR_PASSWORD != null ?
+                new ObjectParameter("VENDOR_PASSWORD", vENDOR_PASSWORD) :
+                new ObjectParameter("VENDOR_PASSWORD", typeof(string));
+    
+            var vENDOR_STATUSParameter = vENDOR_STATUS != null ?
+                new ObjectParameter("VENDOR_STATUS", vENDOR_STATUS) :
+                new ObjectParameter("VENDOR_STATUS", typeof(string));
+    
+            var vENDOR_CREATEDBYParameter = vENDOR_CREATEDBY != null ?
+                new ObjectParameter("VENDOR_CREATEDBY", vENDOR_CREATEDBY) :
+                new ObjectParameter("VENDOR_CREATEDBY", typeof(string));
+    
+            var vENDOR_MODIFIEDBYParameter = vENDOR_MODIFIEDBY != null ?
+                new ObjectParameter("VENDOR_MODIFIEDBY", vENDOR_MODIFIEDBY) :
+                new ObjectParameter("VENDOR_MODIFIEDBY", typeof(string));
+    
+            var vENDOR_MODIFIEDDATEParameter = vENDOR_MODIFIEDDATE != null ?
+                new ObjectParameter("VENDOR_MODIFIEDDATE", vENDOR_MODIFIEDDATE) :
+                new ObjectParameter("VENDOR_MODIFIEDDATE", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("vendors_data", vENDOR_ORGANIZATIONNAMEParameter, vENDOR_ORGANIZATIONMOBILEParameter, vENDOR_ORGANIZATIONLANDLINEParameter, vENDOR_OWNFIRSTNAMEParameter, vENDOR_OWNLASTNAMEParameter, vENDOR_CONFIRSTNAMEParameter, vENDOR_CONLASTNAMEParameter, vENDOR_EMAILIDParameter, vENDOR_ADDRESSParameter, vENDOR_OWNMOBILEParameter, vENDOR_CONMOBILEParameter, vENDOR_OWNLANDLINEParameter, vENDOR_CONLANDLINEParameter, vENDOR_USERNAMEParameter, vENDOR_PASSWORDParameter, vENDOR_STATUSParameter, vENDOR_CREATEDBYParameter, vENDOR_MODIFIEDBYParameter, vENDOR_MODIFIEDDATEParameter, operationParameter);
+        }
+    
+        public virtual int vendors_details(Nullable<int> vENDOR_ID, string vENDOR_ORGANIZATIONNAME, string vENDOR_ORGANIZATIONMOBILE, string vENDOR_ORGANIZATIONLANDLINE, string vENDOR_OWNFIRSTNAME, string vENDOR_OWNLASTNAME, string vENDOR_CONFIRSTNAME, string vENDOR_CONLASTNAME, string vENDOR_EMAILID, string vENDOR_ADDRESS, string vENDOR_OWNMOBILE, string vENDOR_CONMOBILE, string vENDOR_OWNLANDLINE, string vENDOR_CONLANDLINE, string vENDOR_USERNAME, string vENDOR_PASSWORD, Nullable<int> vENDOR_STATUS, Nullable<int> vENDOR_CREATEDBY, Nullable<System.DateTime> vENDOR_CREATEDDATE, Nullable<int> vENDOR_MODIFIEDBY, Nullable<System.DateTime> vENDOR_MODIFIEDDATE, string operation)
+        {
+            var vENDOR_IDParameter = vENDOR_ID.HasValue ?
+                new ObjectParameter("VENDOR_ID", vENDOR_ID) :
+                new ObjectParameter("VENDOR_ID", typeof(int));
+    
+            var vENDOR_ORGANIZATIONNAMEParameter = vENDOR_ORGANIZATIONNAME != null ?
+                new ObjectParameter("VENDOR_ORGANIZATIONNAME", vENDOR_ORGANIZATIONNAME) :
+                new ObjectParameter("VENDOR_ORGANIZATIONNAME", typeof(string));
+    
+            var vENDOR_ORGANIZATIONMOBILEParameter = vENDOR_ORGANIZATIONMOBILE != null ?
+                new ObjectParameter("VENDOR_ORGANIZATIONMOBILE", vENDOR_ORGANIZATIONMOBILE) :
+                new ObjectParameter("VENDOR_ORGANIZATIONMOBILE", typeof(string));
+    
+            var vENDOR_ORGANIZATIONLANDLINEParameter = vENDOR_ORGANIZATIONLANDLINE != null ?
+                new ObjectParameter("VENDOR_ORGANIZATIONLANDLINE", vENDOR_ORGANIZATIONLANDLINE) :
+                new ObjectParameter("VENDOR_ORGANIZATIONLANDLINE", typeof(string));
+    
+            var vENDOR_OWNFIRSTNAMEParameter = vENDOR_OWNFIRSTNAME != null ?
+                new ObjectParameter("VENDOR_OWNFIRSTNAME", vENDOR_OWNFIRSTNAME) :
+                new ObjectParameter("VENDOR_OWNFIRSTNAME", typeof(string));
+    
+            var vENDOR_OWNLASTNAMEParameter = vENDOR_OWNLASTNAME != null ?
+                new ObjectParameter("VENDOR_OWNLASTNAME", vENDOR_OWNLASTNAME) :
+                new ObjectParameter("VENDOR_OWNLASTNAME", typeof(string));
+    
+            var vENDOR_CONFIRSTNAMEParameter = vENDOR_CONFIRSTNAME != null ?
+                new ObjectParameter("VENDOR_CONFIRSTNAME", vENDOR_CONFIRSTNAME) :
+                new ObjectParameter("VENDOR_CONFIRSTNAME", typeof(string));
+    
+            var vENDOR_CONLASTNAMEParameter = vENDOR_CONLASTNAME != null ?
+                new ObjectParameter("VENDOR_CONLASTNAME", vENDOR_CONLASTNAME) :
+                new ObjectParameter("VENDOR_CONLASTNAME", typeof(string));
+    
+            var vENDOR_EMAILIDParameter = vENDOR_EMAILID != null ?
+                new ObjectParameter("VENDOR_EMAILID", vENDOR_EMAILID) :
+                new ObjectParameter("VENDOR_EMAILID", typeof(string));
+    
+            var vENDOR_ADDRESSParameter = vENDOR_ADDRESS != null ?
+                new ObjectParameter("VENDOR_ADDRESS", vENDOR_ADDRESS) :
+                new ObjectParameter("VENDOR_ADDRESS", typeof(string));
+    
+            var vENDOR_OWNMOBILEParameter = vENDOR_OWNMOBILE != null ?
+                new ObjectParameter("VENDOR_OWNMOBILE", vENDOR_OWNMOBILE) :
+                new ObjectParameter("VENDOR_OWNMOBILE", typeof(string));
+    
+            var vENDOR_CONMOBILEParameter = vENDOR_CONMOBILE != null ?
+                new ObjectParameter("VENDOR_CONMOBILE", vENDOR_CONMOBILE) :
+                new ObjectParameter("VENDOR_CONMOBILE", typeof(string));
+    
+            var vENDOR_OWNLANDLINEParameter = vENDOR_OWNLANDLINE != null ?
+                new ObjectParameter("VENDOR_OWNLANDLINE", vENDOR_OWNLANDLINE) :
+                new ObjectParameter("VENDOR_OWNLANDLINE", typeof(string));
+    
+            var vENDOR_CONLANDLINEParameter = vENDOR_CONLANDLINE != null ?
+                new ObjectParameter("VENDOR_CONLANDLINE", vENDOR_CONLANDLINE) :
+                new ObjectParameter("VENDOR_CONLANDLINE", typeof(string));
+    
+            var vENDOR_USERNAMEParameter = vENDOR_USERNAME != null ?
+                new ObjectParameter("VENDOR_USERNAME", vENDOR_USERNAME) :
+                new ObjectParameter("VENDOR_USERNAME", typeof(string));
+    
+            var vENDOR_PASSWORDParameter = vENDOR_PASSWORD != null ?
+                new ObjectParameter("VENDOR_PASSWORD", vENDOR_PASSWORD) :
+                new ObjectParameter("VENDOR_PASSWORD", typeof(string));
+    
+            var vENDOR_STATUSParameter = vENDOR_STATUS.HasValue ?
+                new ObjectParameter("VENDOR_STATUS", vENDOR_STATUS) :
+                new ObjectParameter("VENDOR_STATUS", typeof(int));
+    
+            var vENDOR_CREATEDBYParameter = vENDOR_CREATEDBY.HasValue ?
+                new ObjectParameter("VENDOR_CREATEDBY", vENDOR_CREATEDBY) :
+                new ObjectParameter("VENDOR_CREATEDBY", typeof(int));
+    
+            var vENDOR_CREATEDDATEParameter = vENDOR_CREATEDDATE.HasValue ?
+                new ObjectParameter("VENDOR_CREATEDDATE", vENDOR_CREATEDDATE) :
+                new ObjectParameter("VENDOR_CREATEDDATE", typeof(System.DateTime));
+    
+            var vENDOR_MODIFIEDBYParameter = vENDOR_MODIFIEDBY.HasValue ?
+                new ObjectParameter("VENDOR_MODIFIEDBY", vENDOR_MODIFIEDBY) :
+                new ObjectParameter("VENDOR_MODIFIEDBY", typeof(int));
+    
+            var vENDOR_MODIFIEDDATEParameter = vENDOR_MODIFIEDDATE.HasValue ?
+                new ObjectParameter("VENDOR_MODIFIEDDATE", vENDOR_MODIFIEDDATE) :
+                new ObjectParameter("VENDOR_MODIFIEDDATE", typeof(System.DateTime));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("vendors_details", vENDOR_IDParameter, vENDOR_ORGANIZATIONNAMEParameter, vENDOR_ORGANIZATIONMOBILEParameter, vENDOR_ORGANIZATIONLANDLINEParameter, vENDOR_OWNFIRSTNAMEParameter, vENDOR_OWNLASTNAMEParameter, vENDOR_CONFIRSTNAMEParameter, vENDOR_CONLASTNAMEParameter, vENDOR_EMAILIDParameter, vENDOR_ADDRESSParameter, vENDOR_OWNMOBILEParameter, vENDOR_CONMOBILEParameter, vENDOR_OWNLANDLINEParameter, vENDOR_CONLANDLINEParameter, vENDOR_USERNAMEParameter, vENDOR_PASSWORDParameter, vENDOR_STATUSParameter, vENDOR_CREATEDBYParameter, vENDOR_CREATEDDATEParameter, vENDOR_MODIFIEDBYParameter, vENDOR_MODIFIEDDATEParameter, operationParameter);
         }
     }
 }

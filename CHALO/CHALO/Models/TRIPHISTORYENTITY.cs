@@ -21,8 +21,8 @@ namespace CHALO.Models
         public Nullable<int> DROPID { get; set; }
         public string DROPNAME { get; set; }
         public string USERTRIP_VIA { get; set; }
-        public string USERTRIP_ACTUALDURATION { get; set; }
-        public string USERTRIP_DISTANCE { get; set; }
+        public Nullable<int> USERTRIP_ACTUALDURATION { get; set; }
+        public Nullable<int> USERTRIP_DISTANCE { get; set; }
         public Nullable<decimal> USERTRIP_ACTUALAMOUNT { get; set; }
         public Nullable<decimal> USERTRIP_DISCOUNT { get; set; }
         public Nullable<decimal> USERTRIP_TOTALAMOUNT { get; set; }
@@ -32,5 +32,10 @@ namespace CHALO.Models
         public Nullable<int> USER_APPLIEDCOUPON { get; set; }
         public string USER_APPLIEDCOUPONNAME { get; set; }
         public string TRIP_NAME { get; set; }
+        public string USERTRIP_PICKUPAVERAGETIME { get; set; }
+        public string USERTRIP_PICKUPACTUALTIME { get; set; }
+        public string USERTRIP_DROPAVERAGETIME { get; set; }
+        public string USERTRIP_DROPACTUALTIME { get; set; }
+        public string STARTDATE { get; set; }
     }
 }

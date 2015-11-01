@@ -266,7 +266,13 @@
     <Compile Include="Models\DRIVER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DRIVERTRIPSENTITY.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\encryptdecrypt.cs" />
+    <Compile Include="Models\GetDriverTripDetails_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LOCATION.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
