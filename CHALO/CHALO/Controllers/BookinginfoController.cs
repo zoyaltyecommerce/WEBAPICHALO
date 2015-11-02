@@ -39,11 +39,19 @@ namespace CHALO.Controllers
                         objwallet = db.Database.SqlQuery<WALLET>("EXEC CHECKWALLETAMOUNT @USER_ID='" + obj.userid + "'").ToList();
                         if (objwallet[0].WALLET_AVAILABLEMONEY >= obj.totalamount)
                         {
+
                             usertrip=bookride(obj);
+                            try
+                            { 
                             string mobilenumber =usertrip.Split(',')[0];
                            List<CH_USER> users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_id='" + obj.userid + "' and user_status=1").ToList();
                             bool statusnew = common.sendmessage("Thank you for chosing CHALO.Your booking has been confirmed.Vehicle number:"+ obj.vehicle_number +",Driver name:"+ obj.driver_name +" and driver number:"+ mobilenumber +".Please reach boarding point("+ obj.fromlocationname +") at least 5 minutes early.Your pick up time is "+ obj.fromactualreachtime +"if you need any help call us at +91 9900036467 or support@chaloindia.net",users[0].USER_MOBILE);
-                            //StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/registeremail.html")));
+                            }
+                            catch(Exception ex)
+                            {
+
+                            }
+                                //StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/registeremail.html")));
                             //string readFile = reader.ReadToEnd();
                             //string myString = "";
                             //myString = readFile;
