@@ -8,6 +8,7 @@ using CHALO.Models;
 using System.Security.Cryptography;
 using System.Text;
 using CHALO.Controllers;
+using System.IO;
 
 namespace CHALO.Controllers
 {
@@ -75,7 +76,16 @@ namespace CHALO.Controllers
                         bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), code, Convert.ToString(listcoupons[0].COUPON_USERID),listcoupons[0].COUPON_ID);
 
                         List<CH_USER> result = db.Database.SqlQuery<CH_USER>("select * from ch_user where USER_ID=" + objuser.USER_ID + "").ToList();
-                    return Ok(result);
+                        bool statusnew = common.sendmessage("Welcome to Chalo. Thanks for signing up!We are excited to have you join us and start riding.Refer your friend with the code "+ objusercoupon.COUPON_NAME +" and get 100 RS credit in your CHALO wallet", "" + objuser.USER_MOBILE + "");
+                        StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/registeremail.html")));
+                        string readFile = reader.ReadToEnd();
+                        string myString = "";
+                        myString = readFile;
+                        myString = myString.Replace("$$NAME$$", objuser.USER_FIRSTNAME);
+                        myString = myString.Replace("$$CODE$$", objusercoupon.COUPON_NAME);
+                        bool statusemail = common.sendemail(myString, "Welcome to CHALO", "support@chaloindia.net", objuser.USER_EMAILID);
+
+                        return Ok(result);
                     }
                     else
                     {
@@ -96,6 +106,16 @@ namespace CHALO.Controllers
                     bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), "","",0);
 
                     List<CH_USER> result = db.Database.SqlQuery<CH_USER>("select * from ch_user where USER_ID="+ objuser.USER_ID +"").ToList();
+                    bool statusnew = common.sendmessage("Welcome to Chalo. Thanks for signing up!We are excited to have you join us and start riding.Refer your friend with the code " + objusercoupon.COUPON_NAME + " and get 100 RS credit in your CHALO wallet", "" + objuser.USER_MOBILE + "");
+                    StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/registeremail.html")));
+                    string readFile = reader.ReadToEnd();
+                    string myString = "";
+                    myString = readFile;
+                    myString = myString.Replace("$$NAME$$", objuser.USER_FIRSTNAME);
+                    myString = myString.Replace("$$CODE$$", objusercoupon.COUPON_NAME);
+                    bool statusemail = common.sendemail(myString, "Welcome to CHALO", "support@chaloindia.net", objuser.USER_EMAILID);
+
+                   
                     return Ok(result);
                 }
 

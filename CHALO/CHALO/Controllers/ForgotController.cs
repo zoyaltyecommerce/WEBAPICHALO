@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using CHALO.Models;
 using CHALO.Controllers;
+using System.IO;
 
 namespace CHALO.Controllers
 {
@@ -34,7 +35,14 @@ namespace CHALO.Controllers
                 db.Entry(objuser).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
-                bool status=common.sendmessage("As per your request, Your CHALO password has been changed. "+ pasword +" is your new password, Have a happily CHALO. ",""+ list[0].USER_MOBILE +"");
+                bool status=common.sendmessage("As per your request, Your CHALO password has been changed. "+ pasword +" is your new password,Happily CHALO. ",""+ list[0].USER_MOBILE +"");
+                StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/forgotemail.html")));
+                string readFile = reader.ReadToEnd();
+                string myString = "";
+                myString = readFile;
+                myString = myString.Replace("$$EMAIL$$", list[0].USER_EMAILID);
+                myString = myString.Replace("$$PASSWORD$$", pasword);
+                bool statusemail = common.sendemail(myString,"Your CHALO password has been reset","support@chaloindia.net",list[0].USER_EMAILID);
 
             }
             else

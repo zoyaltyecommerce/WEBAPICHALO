@@ -402,6 +402,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="DRIVERIMAGES\santhosh.jpg" />
+    <Content Include="Emails\forgotemail.html" />
+    <Content Include="Emails\registeremail.html" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -481,7 +483,6 @@
     <Content Include="Models\CHALO.edmx.diagram">
       <DependentUpon>CHALO.edmx</DependentUpon>
     </Content>
-    <Content Include="Images\coupon.psd" />
     <None Include="Properties\PublishProfiles\CHALOAPI.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
