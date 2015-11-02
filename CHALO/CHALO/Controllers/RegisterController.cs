@@ -16,7 +16,7 @@ namespace CHALO.Controllers
     {
         private CHALOEntities db = new CHALOEntities();
 
-        public IHttpActionResult Register(string Firstname, string Email, string Pass, string Mobile, string code,string regtype,string socialid)
+        public IHttpActionResult GetRegister(string Firstname, string Email, string Pass, string Mobile, string code,string regtype,string socialid)
         {
             common objcommon = new common();
             CH_USER user = new CH_USER();
