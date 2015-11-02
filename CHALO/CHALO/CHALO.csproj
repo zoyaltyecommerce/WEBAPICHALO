@@ -405,6 +405,18 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Images\cash.png" />
+    <Content Include="Images\coupon.png" />
+    <Content Include="Images\Dummy.jpg" />
+    <Content Include="Images\dummyicon.png" />
+    <Content Include="Images\ebank.png" />
+    <Content Include="Images\effect.png" />
+    <Content Include="Images\header-profile.png" />
+    <Content Include="Images\historypic.png" />
+    <Content Include="Images\logo-final.png" />
+    <Content Include="Images\pay.png" />
+    <Content Include="Images\ride.png" />
+    <Content Include="Images\wallet.png" />
     <Content Include="img\android.png" />
     <Content Include="img\apple.jpg" />
     <Content Include="img\apple.png" />
@@ -469,6 +481,7 @@
     <Content Include="Models\CHALO.edmx.diagram">
       <DependentUpon>CHALO.edmx</DependentUpon>
     </Content>
+    <Content Include="Images\coupon.psd" />
     <None Include="Properties\PublishProfiles\CHALOAPI.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
