@@ -223,6 +223,7 @@
     <Compile Include="Controllers\RegisterController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SEARCHVIAController.cs" />
+    <Compile Include="Controllers\SignupController.cs" />
     <Compile Include="Controllers\SupportController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Controllers\WalletController.cs" />
