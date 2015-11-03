@@ -64,7 +64,7 @@ namespace CHALO.Controllers
                         }
                         else
                         {
-                            return Json(new { nowallet = "you have " + objwallet[0].WALLET_AVAILABLEMONEY + " RS in your wallet whish is not sufficient to book your cab" });
+                            return Json(new { nowallet = "you have " + objwallet[0].WALLET_AVAILABLEMONEY + " RS in your wallet which is not sufficient to book your cab" });
                         }
                     }
                     else if(obj.paymenttype=="2")
