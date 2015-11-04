@@ -45,7 +45,7 @@ namespace CHALO.Controllers
                             { 
                             string mobilenumber =usertrip.Split('$')[1];
                            List<CH_USER> users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_id='" + obj.userid + "' and user_status=1").ToList();
-                            bool statusnew = common.sendmessage("Thank you for choosing CHALO.Your booking has been confirmed.Vehicle number:"+ obj.vehicle_number +", Driver name:"+ obj.driver_name +" ("+ mobilenumber +").Please reach Pickup point("+ obj.fromlocationname +") at least 5 minutes before.Your pick up time is "+ obj.fromactualreachtime +"for any assistance call us at +91 9900036467 or care@chaloindia.net",users[0].USER_MOBILE);
+                            bool statusnew = common.sendmessage("Thank you for choosing CHALO. Your booking has been confirmed. Vehicle number:"+ obj.vehicle_number +", Driver name:"+ obj.driver_name +" ("+ mobilenumber +"). Please reach Pickup point("+ obj.fromlocationname +") 5 minutes before. Your pick up time is "+ obj.fromactualreachtime +". For any assistance call us at 9900036467 or care@chaloindia.net",users[0].USER_MOBILE);
                             }
                             catch(Exception ex)
                             {
@@ -74,7 +74,7 @@ namespace CHALO.Controllers
                         {
                             string mobilenumber = usertrip.Split('$')[1];
                             List<CH_USER> users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_id='" + obj.userid + "' and user_status=1").ToList();
-                            bool statusnew = common.sendmessage("Thank you for choosing CHALO.Your booking has been confirmed.Vehicle number:" + obj.vehicle_number + ", Driver name:" + obj.driver_name + " (" + mobilenumber + ").Please reach Pickup point(" + obj.fromlocationname + ") at least 5 minutes before.Your pick up time is " + obj.fromactualreachtime + "for any assistance call us at +91 9900036467 or care@chaloindia.net", users[0].USER_MOBILE);
+                            bool statusnew = common.sendmessage("Thank you for choosing CHALO. Your booking has been confirmed. Vehicle number:" + obj.vehicle_number + ", Driver name:" + obj.driver_name + " (" + mobilenumber + "). Please reach Pickup point(" + obj.fromlocationname + ") 5 minutes before. Your pick up time is " + obj.fromactualreachtime + ". For any assistance call us at 9900036467 or care@chaloindia.net", users[0].USER_MOBILE);
                         }
                         catch (Exception ex)
                         {

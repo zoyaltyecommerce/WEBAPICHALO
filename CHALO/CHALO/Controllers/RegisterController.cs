@@ -55,7 +55,7 @@ namespace CHALO.Controllers
                 if (code != null && code != "")
                 {
                    
-                    List<USERCOUPON> listcoupons = db.USERCOUPONS.Where(c => c.COUPON_NAME == code.Trim()).ToList();
+                    List<USERCOUPON> listcoupons = db.Database.SqlQuery<USERCOUPON>("select * from ch_user where coupon_name='" + code.Trim() + "'").ToList();
 
 
 
@@ -76,7 +76,7 @@ namespace CHALO.Controllers
                         bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), code, Convert.ToString(listcoupons[0].COUPON_USERID),listcoupons[0].COUPON_ID);
 
                         List<CH_USER> result = db.Database.SqlQuery<CH_USER>("select * from ch_user where USER_ID=" + objuser.USER_ID + "").ToList();
-                        bool statusnew = common.sendmessage("Welcome to Chalo. Thanks for signing up!We are excited to have you join us and start riding.Refer your friend with the code "+ objusercoupon.COUPON_NAME +" and get 100 RS credit in your CHALO wallet", "" + objuser.USER_MOBILE + "");
+                        bool statusnew = common.sendmessage("Welcome to Chalo.Thanks for installing our app!We are delighted with your presence, Have a great ride. Refer your friend with the code " + objusercoupon.COUPON_NAME + " and get 100 RS in your CHALO wallet. For any assistance call us at 9900036467 or email at care@chaloindia.net", "" + objuser.USER_MOBILE + "");
                         StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/registeremail.html")));
                         string readFile = reader.ReadToEnd();
                         string myString = "";
@@ -106,7 +106,7 @@ namespace CHALO.Controllers
                     bool status = common.FIRSTUSER100RS(objuser.USER_ID.ToString(), "","",0);
 
                     List<CH_USER> result = db.Database.SqlQuery<CH_USER>("select * from ch_user where USER_ID="+ objuser.USER_ID +"").ToList();
-                    bool statusnew = common.sendmessage("Welcome to Chalo. Thanks for signing up!We are excited to have you join us and start riding.Refer your friend with the code " + objusercoupon.COUPON_NAME + " and get 100 RS credit in your CHALO wallet", "" + objuser.USER_MOBILE + "");
+                     bool statusnew = common.sendmessage("Welcome to Chalo.Thanks for installing our app!We are delighted with your presence, Have a great ride. Refer your friend with the code "+ objusercoupon.COUPON_NAME + " and get 100 RS in your CHALO wallet. For any assistance call us at 9900036467 or email at care@chaloindia.net", "" + objuser.USER_MOBILE + "");
                     StreamReader reader = new StreamReader(Path.Combine(System.Web.HttpContext.Current.Server.MapPath(@"~/Emails/registeremail.html")));
                     string readFile = reader.ReadToEnd();
                     string myString = "";

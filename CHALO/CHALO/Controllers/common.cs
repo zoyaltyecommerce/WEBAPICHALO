@@ -56,8 +56,8 @@ namespace CHALO.Controllers
             //coupon applied status
             CH_USER objuser=new CH_USER();
             int pareseduser=Int32.Parse(USERID);
-            objuser = db.CH_USER.Where(s => s.USER_ID == pareseduser).FirstOrDefault<CH_USER>();
-            
+            objuser = db.Database.SqlQuery<CH_USER>("select top 1 * from ch_user where user_id='" + pareseduser + "' and user_status=1").FirstOrDefault<CH_USER>();
+
             objuser.USER_COUPONAPPLIED=true;
            
                 objuser.USER_REFEREDBY=COUPONUSERID;
@@ -111,50 +111,50 @@ namespace CHALO.Controllers
             
 
 
-            //l00rswalletdeposittransaction
-            transaction OBJTRANS=new transaction();
-            OBJTRANS.TRANS_AMOUNT=decimal.Parse("100.00");
-            OBJTRANS.TRANS_CREATEDBY=1;
-            OBJTRANS.TRANS_CRETEATEDDATE=getdate();
-            OBJTRANS.TRANS_MODE=1;
-            OBJTRANS.TRANS_MODENAME="wallet";
-            OBJTRANS.TRANS_MODIFIEDBY=1;
-            OBJTRANS.TRANS_MODIFIEDDATE=getdate();
-            OBJTRANS.TRANS_NAME="CHALO WALLET FIRST TIME USER 100RS";
-           OBJTRANS.TRANS_STATUS=1;
-           OBJTRANS.TRANS_USERID = Convert.ToInt32(USERID);
-           OBJTRANS.TRANS_CREDIT = true;
-           OBJTRANS.TRANS_DEBIT = false;
+           // //l00rswalletdeposittransaction
+           // transaction OBJTRANS=new transaction();
+           // OBJTRANS.TRANS_AMOUNT=decimal.Parse("100.00");
+           // OBJTRANS.TRANS_CREATEDBY=1;
+           // OBJTRANS.TRANS_CRETEATEDDATE=getdate();
+           // OBJTRANS.TRANS_MODE=1;
+           // OBJTRANS.TRANS_MODENAME="wallet";
+           // OBJTRANS.TRANS_MODIFIEDBY=1;
+           // OBJTRANS.TRANS_MODIFIEDDATE=getdate();
+           // OBJTRANS.TRANS_NAME="CHALO WALLET FIRST TIME USER 100RS";
+           //OBJTRANS.TRANS_STATUS=1;
+           //OBJTRANS.TRANS_USERID = Convert.ToInt32(USERID);
+           //OBJTRANS.TRANS_CREDIT = true;
+           //OBJTRANS.TRANS_DEBIT = false;
            
-            OBJTRANS=ADDTRANS(OBJTRANS);
-            db.SaveChanges();
+           // OBJTRANS=ADDTRANS(OBJTRANS);
+           // db.SaveChanges();
 
             //
             //ADDING WALLET TRANS
             
             
 
-            WALLETTRANSACTION OBJWALLETTRANS=new WALLETTRANSACTION();
-            OBJWALLETTRANS.TRANS_COMMENT="CHALOWALLET FIRSTTIME USER 100";
-            OBJWALLETTRANS.TRANS_COUPONAPPLIEDID=objcoupon.APPLIED_ID;
-            OBJWALLETTRANS.TRANS_CREATEDBY=1;
-            OBJWALLETTRANS.TRANS_CREATEDDATE=getdate();
-            OBJWALLETTRANS.TRANS_ID=OBJTRANS.TRANS_ID;
-            OBJWALLETTRANS.TRANS_MODIFIEDBY=1;
-            OBJWALLETTRANS.TRANS_MODIFIEDDATE=getdate();
-            OBJWALLETTRANS.TRANS_STATUS=1;
-           OBJWALLETTRANS.TRANS_TRANSACTIONID=OBJTRANS.TRANS_ID;
-            OBJWALLETTRANS.TRANS_WALLETID=OBJWALLET.WALLET_ID;
-            OBJWALLETTRANS.TRANS_WALLETSTATUS=1;
-            OBJWALLETTRANS.TRANS_WALLETTYPE=1;
-           OBJWALLETTRANS=db.WALLETTRANSACTIONS.Add(OBJWALLETTRANS);
-             db.SaveChanges();
+           // WALLETTRANSACTION OBJWALLETTRANS=new WALLETTRANSACTION();
+           // OBJWALLETTRANS.TRANS_COMMENT="CHALOWALLET FIRSTTIME USER 100";
+           // OBJWALLETTRANS.TRANS_COUPONAPPLIEDID=objcoupon.APPLIED_ID;
+           // OBJWALLETTRANS.TRANS_CREATEDBY=1;
+           // OBJWALLETTRANS.TRANS_CREATEDDATE=getdate();
+           // OBJWALLETTRANS.TRANS_ID=OBJTRANS.TRANS_ID;
+           // OBJWALLETTRANS.TRANS_MODIFIEDBY=1;
+           // OBJWALLETTRANS.TRANS_MODIFIEDDATE=getdate();
+           // OBJWALLETTRANS.TRANS_STATUS=1;
+           //OBJWALLETTRANS.TRANS_TRANSACTIONID=OBJTRANS.TRANS_ID;
+           // OBJWALLETTRANS.TRANS_WALLETID=OBJWALLET.WALLET_ID;
+           // OBJWALLETTRANS.TRANS_WALLETSTATUS=1;
+           // OBJWALLETTRANS.TRANS_WALLETTYPE=1;
+           //OBJWALLETTRANS=db.WALLETTRANSACTIONS.Add(OBJWALLETTRANS);
+           //  db.SaveChanges();
 
             //adding 100 to wallet
-             OBJWALLET = db.WALLETs.Where(s => s.WALLET_ID == OBJWALLET.WALLET_ID).FirstOrDefault<WALLET>();
-            OBJWALLET.WALLET_AVAILABLEMONEY=decimal.Parse("100.00");
-             db.Entry(OBJWALLET).State = System.Data.Entity.EntityState.Modified; 
-             db.SaveChanges();
+            // OBJWALLET = db.WALLETs.Where(s => s.WALLET_ID == OBJWALLET.WALLET_ID).FirstOrDefault<WALLET>();
+            //OBJWALLET.WALLET_AVAILABLEMONEY=decimal.Parse("100.00");
+            // db.Entry(OBJWALLET).State = System.Data.Entity.EntityState.Modified; 
+            // db.SaveChanges();
 
             //addingwallettoreferredperson
             if(couponuserid!=null && couponuserid!="")
@@ -211,11 +211,11 @@ namespace CHALO.Controllers
                 OBJWALLETTRANSref.TRANS_COUPONAPPLIEDID = objcouponref.APPLIED_ID;
                 OBJWALLETTRANSref.TRANS_CREATEDBY = 1;
                 OBJWALLETTRANSref.TRANS_CREATEDDATE = getdate();
-                OBJWALLETTRANSref.TRANS_ID = OBJTRANS.TRANS_ID;
+                OBJWALLETTRANSref.TRANS_ID = OBJTRANSref.TRANS_ID;
                 OBJWALLETTRANSref.TRANS_MODIFIEDBY = 1;
                 OBJWALLETTRANSref.TRANS_MODIFIEDDATE = getdate();
                 OBJWALLETTRANSref.TRANS_STATUS = 1;
-                OBJWALLETTRANSref.TRANS_TRANSACTIONID = OBJTRANS.TRANS_ID;
+                OBJWALLETTRANSref.TRANS_TRANSACTIONID = OBJTRANSref.TRANS_ID;
                 OBJWALLETTRANSref.TRANS_WALLETID = objwalletref.WALLET_ID;
                 OBJWALLETTRANSref.TRANS_WALLETSTATUS = 1;
                 OBJWALLETTRANSref.TRANS_WALLETTYPE = 1;
@@ -223,7 +223,7 @@ namespace CHALO.Controllers
                 db.SaveChanges();
 
            
-            WALLET OBJWALLETREFERRED = db.WALLETs.Where(s => s.WALLET_USERID == cid).FirstOrDefault<WALLET>();
+            WALLET OBJWALLETREFERRED = db.Database.SqlQuery<WALLET>("select * from wallet where wallet_userid=" + cid + "").FirstOrDefault<WALLET>();
             OBJWALLETREFERRED.WALLET_AVAILABLEMONEY = OBJWALLETREFERRED.WALLET_AVAILABLEMONEY+decimal.Parse("100.00");
             db.Entry(OBJWALLETREFERRED).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
