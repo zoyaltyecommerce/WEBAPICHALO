@@ -40,7 +40,7 @@ namespace CHALO.Controllers
                         if (objwallet[0].WALLET_AVAILABLEMONEY >= obj.totalamount)
                         {
 
-                            usertrip=bookride(obj);
+                            usertrip=bookride(obj,objwallet[0].WALLET_ID);
                             try
                             { 
                             string mobilenumber =usertrip.Split('$')[1];
@@ -69,7 +69,7 @@ namespace CHALO.Controllers
                     }
                     else if(obj.paymenttype=="2")
                     {
-                         usertrip = bookride(obj);
+                         usertrip = bookride(obj,0);
                         try
                         {
                             string mobilenumber = usertrip.Split('$')[1];
@@ -103,7 +103,7 @@ namespace CHALO.Controllers
            
         }
 
-        internal string bookride(bookinglist obj)
+        internal string bookride(bookinglist obj,int walletid)
         {
             CHALOEntities db = new CHALOEntities();
             List<bookeddetails> USERTRIPs = new List<bookeddetails>();
@@ -111,7 +111,8 @@ namespace CHALO.Controllers
            // List<USERTRIP> USERTRIPs = new List<USERTRIP>();
             try
             {
-                USERTRIPs = db.Database.SqlQuery<bookeddetails>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB',@usertrip_pickupavergetime='"+ obj.fromaveragereachtimenormal + "',@usertrip_pickupactualtime='"+ obj.fromactualreachtimenormal + "',@usertrip_dropaveragetime='"+ obj.toactualreachtimenormal + "',@usertrip_dropactualtime='"+ obj.toactualreachtimenormal +"'").ToList();
+                string proc = "EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB',@usertrip_pickupavergetime='" + obj.fromaveragereachtimenormal + "',@usertrip_pickupactualtime='" + obj.fromactualreachtimenormal + "',@usertrip_dropaveragetime='" + obj.toactualreachtimenormal + "',@usertrip_dropactualtime='" + obj.toactualreachtimenormal + "'";
+                USERTRIPs = db.Database.SqlQuery<bookeddetails>("EXEC USP_BOOKCAB @USER_ID='" + obj.userid + "' ,@USERTRIP_TRIPID='" + obj.trip_id + "',@USERTRIP_PICKUPLOC='" + obj.fromllid + "',@USERTRIP_DROPLOC='" + obj.tollid + "',@USERTRIP_VIA='" + obj.VIA + "',@USERTRIP_ESTIMATEDDURATION='" + obj.duration + "',@USERTRIP_ACTUALDURATION='" + obj.duration + "' ,@USERTRIP_DISTANCE='" + obj.DISTANCE + "',@USERTRIP_ACTUALAMOUNT='" + obj.COST + "',@USERTRIP_DISCOUNT='" + obj.discount + "',@USERTRIP_TOTALAMOUNT='" + obj.totalamount + "',@USERTRIP_STATUS=1,@USERTRIP_APPLIEDCOUPON='" + obj.appliedcoupon + "',@TRANS_STATUS=1 ,@PAYMENTTYPE_ID='" + obj.paymenttype + "' ,@APPLIEDCOUPONNAME ='" + obj.APPLIEDCOUPONNAME + "',@ISONETIME='" + obj.ISONETIME + "',@OPERATION ='BOOKCAB',@usertrip_pickupavergetime='"+ obj.fromaveragereachtimenormal + "',@usertrip_pickupactualtime='"+ obj.fromactualreachtimenormal + "',@usertrip_dropaveragetime='"+ obj.toactualreachtimenormal + "',@usertrip_dropactualtime='"+ obj.toactualreachtimenormal +"',@WALLET_ID="+ walletid +"").ToList();
                 if(USERTRIPs.Count>0)
                 {
                     result = USERTRIPs[0].SUCCESS;

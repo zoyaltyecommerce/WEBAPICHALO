@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplycouponController.cs" />
     <Compile Include="Controllers\BookinginfoController.cs" />
+    <Compile Include="Controllers\CancelController.cs" />
     <Compile Include="Controllers\CH_USERController.cs" />
     <Compile Include="Controllers\common.cs" />
     <Compile Include="Controllers\DetailedhistoryController.cs" />
