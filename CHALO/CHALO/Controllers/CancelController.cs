@@ -21,9 +21,12 @@ namespace CHALO.Controllers
             objtrip.USERTRIP_STATUS = 4;
             db.Entry(objtrip).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
-            
+
+            List<CH_USER>users = db.Database.SqlQuery<CH_USER>("select * from ch_user where user_id="+ userid +"").ToList();
+
+
             List<TRIPHISTORYENTITY> listtripd = db.Database.SqlQuery<TRIPHISTORYENTITY>("exec USP_TRIPHISTORY @OPERATION='GETALLTRIPSBYTRIPID',@TRIP_ID=" + tripid + "").ToList();
-            bool statusnew = common.sendmessage("As per your request, Your booking has been cancelled. Vehicle number:" + listtripd[0].VEHICLENUMBER + ", Driver name:" + listtripd[0].DRIVERNAME + " (" + listtripd[0].DRIVERMOBILE + ") @" + listtripd[0].USERTRIP_PICKUPACTUALTIME + ". For any assistance call us at 9900036467 or care@chaloindia.net", listtripd[0].DRIVERMOBILE);
+            bool statusnew = common.sendmessage("As per your request, Your booking has been cancelled. Vehicle number:" + listtripd[0].VEHICLENUMBER + ", Driver name:" + listtripd[0].DRIVERNAME + " (" + listtripd[0].DRIVERMOBILE + ") @" + listtripd[0].USERTRIP_PICKUPACTUALTIME + ". For any assistance call us at 9900036467 or care@chaloindia.net", users[0].USER_MOBILE);
             PAYMENTHISTORY objhistory = new PAYMENTHISTORY();
             objhistory = db.PAYMENTHISTORies.Where(s => s.PAYMENTHISTORY_USERTRIPID == trip).FirstOrDefault<PAYMENTHISTORY>();
             string message = "";

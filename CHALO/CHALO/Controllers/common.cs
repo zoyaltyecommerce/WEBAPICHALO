@@ -308,5 +308,11 @@ namespace CHALO.Controllers
             return status;
 
         }
+
+        internal static int generateotp()
+        {
+            Random r = new Random();
+            return r.Next(10000, 99999);
+        }
     }
 }
