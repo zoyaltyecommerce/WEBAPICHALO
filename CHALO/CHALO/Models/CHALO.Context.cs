@@ -31,7 +31,6 @@ namespace CHALO.Models
         public virtual DbSet<COUPONENTIYPURPOSE> COUPONENTIYPURPOSEs { get; set; }
         public virtual DbSet<COUPON> COUPONS { get; set; }
         public virtual DbSet<COUPONTYPE> COUPONTYPEs { get; set; }
-        public virtual DbSet<DRIVERTRIPSENTITY> DRIVERTRIPSENTITies { get; set; }
         public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
         public virtual DbSet<PAYMENTTRIPSTATU> PAYMENTTRIPSTATUS { get; set; }
         public virtual DbSet<SUPPORT> SUPPORTs { get; set; }
@@ -68,6 +67,10 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
+        public virtual DbSet<CITy1> CITy1 { get; set; }
+        public virtual DbSet<DRIVERTRIPSREWRITE> DRIVERTRIPSREWRITEs { get; set; }
+        public virtual DbSet<LOCATION1> LOCATION1 { get; set; }
+        public virtual DbSet<DRIVERTRIPSENTITY> DRIVERTRIPSENTITies { get; set; }
     
         public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
         {
@@ -99,7 +102,7 @@ namespace CHALO.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("USP_SEARCHVEHICLES", dROPLOCATIONParameter, pICKUPLOCATIONParameter);
         }
     
-        public virtual ObjectResult<USP_BOOKCAB_Result> USP_BOOKCAB(Nullable<int> uSER_ID, Nullable<int> uSERTRIP_ID, Nullable<int> uSERTRIP_TRIPID, Nullable<int> uSERTRIP_PICKUPLOC, Nullable<int> uSERTRIP_DROPLOC, string uSERTRIP_VIA, Nullable<int> uSERTRIP_ESTIMATEDDURATION, Nullable<int> uSERTRIP_ACTUALDURATION, Nullable<int> uSERTRIP_DISTANCE, Nullable<decimal> uSERTRIP_ACTUALAMOUNT, Nullable<decimal> uSERTRIP_DISCOUNT, Nullable<decimal> uSERTRIP_TOTALAMOUNT, Nullable<int> uSERTRIP_STATUS, Nullable<int> uSERTRIP_APPLIEDCOUPON, Nullable<int> uSERTRIP_CREATEDBY, Nullable<System.DateTime> uSERTRIP_CREATEDDATE, Nullable<int> uSERTRIP_MODIFIEDBY, Nullable<System.DateTime> uSERTRIP_MODIFIEDDATE, Nullable<int> tRANS_STATUS, Nullable<int> pAYMENTTYPE_ID, string aPPLIEDCOUPONNAME, Nullable<bool> iSONETIME, Nullable<System.DateTime> usertrip_pickupavergetime, Nullable<System.DateTime> usertrip_pickupactualtime, Nullable<System.DateTime> usertrip_dropaveragetime, Nullable<System.DateTime> usertrip_dropactualtime, string oPERATION)
+        public virtual ObjectResult<USP_BOOKCAB_Result> USP_BOOKCAB(Nullable<int> uSER_ID, Nullable<int> uSERTRIP_ID, Nullable<int> uSERTRIP_TRIPID, Nullable<int> uSERTRIP_PICKUPLOC, Nullable<int> uSERTRIP_DROPLOC, string uSERTRIP_VIA, Nullable<int> uSERTRIP_ESTIMATEDDURATION, Nullable<int> uSERTRIP_ACTUALDURATION, Nullable<int> uSERTRIP_DISTANCE, Nullable<decimal> uSERTRIP_ACTUALAMOUNT, Nullable<decimal> uSERTRIP_DISCOUNT, Nullable<decimal> uSERTRIP_TOTALAMOUNT, Nullable<int> uSERTRIP_STATUS, Nullable<int> uSERTRIP_APPLIEDCOUPON, Nullable<int> uSERTRIP_CREATEDBY, Nullable<System.DateTime> uSERTRIP_CREATEDDATE, Nullable<int> uSERTRIP_MODIFIEDBY, Nullable<System.DateTime> uSERTRIP_MODIFIEDDATE, Nullable<int> tRANS_STATUS, Nullable<int> pAYMENTTYPE_ID, string aPPLIEDCOUPONNAME, Nullable<bool> iSONETIME, Nullable<System.DateTime> usertrip_pickupavergetime, Nullable<System.DateTime> usertrip_pickupactualtime, Nullable<System.DateTime> usertrip_dropaveragetime, Nullable<System.DateTime> usertrip_dropactualtime, string oPERATION, Nullable<int> wALLET_ID)
         {
             var uSER_IDParameter = uSER_ID.HasValue ?
                 new ObjectParameter("USER_ID", uSER_ID) :
@@ -209,7 +212,11 @@ namespace CHALO.Models
                 new ObjectParameter("OPERATION", oPERATION) :
                 new ObjectParameter("OPERATION", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_BOOKCAB_Result>("USP_BOOKCAB", uSER_IDParameter, uSERTRIP_IDParameter, uSERTRIP_TRIPIDParameter, uSERTRIP_PICKUPLOCParameter, uSERTRIP_DROPLOCParameter, uSERTRIP_VIAParameter, uSERTRIP_ESTIMATEDDURATIONParameter, uSERTRIP_ACTUALDURATIONParameter, uSERTRIP_DISTANCEParameter, uSERTRIP_ACTUALAMOUNTParameter, uSERTRIP_DISCOUNTParameter, uSERTRIP_TOTALAMOUNTParameter, uSERTRIP_STATUSParameter, uSERTRIP_APPLIEDCOUPONParameter, uSERTRIP_CREATEDBYParameter, uSERTRIP_CREATEDDATEParameter, uSERTRIP_MODIFIEDBYParameter, uSERTRIP_MODIFIEDDATEParameter, tRANS_STATUSParameter, pAYMENTTYPE_IDParameter, aPPLIEDCOUPONNAMEParameter, iSONETIMEParameter, usertrip_pickupavergetimeParameter, usertrip_pickupactualtimeParameter, usertrip_dropaveragetimeParameter, usertrip_dropactualtimeParameter, oPERATIONParameter);
+            var wALLET_IDParameter = wALLET_ID.HasValue ?
+                new ObjectParameter("WALLET_ID", wALLET_ID) :
+                new ObjectParameter("WALLET_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_BOOKCAB_Result>("USP_BOOKCAB", uSER_IDParameter, uSERTRIP_IDParameter, uSERTRIP_TRIPIDParameter, uSERTRIP_PICKUPLOCParameter, uSERTRIP_DROPLOCParameter, uSERTRIP_VIAParameter, uSERTRIP_ESTIMATEDDURATIONParameter, uSERTRIP_ACTUALDURATIONParameter, uSERTRIP_DISTANCEParameter, uSERTRIP_ACTUALAMOUNTParameter, uSERTRIP_DISCOUNTParameter, uSERTRIP_TOTALAMOUNTParameter, uSERTRIP_STATUSParameter, uSERTRIP_APPLIEDCOUPONParameter, uSERTRIP_CREATEDBYParameter, uSERTRIP_CREATEDDATEParameter, uSERTRIP_MODIFIEDBYParameter, uSERTRIP_MODIFIEDDATEParameter, tRANS_STATUSParameter, pAYMENTTYPE_IDParameter, aPPLIEDCOUPONNAMEParameter, iSONETIMEParameter, usertrip_pickupavergetimeParameter, usertrip_pickupactualtimeParameter, usertrip_dropaveragetimeParameter, usertrip_dropactualtimeParameter, oPERATIONParameter, wALLET_IDParameter);
         }
     
         public virtual ObjectResult<USP_GETLOCS_Result> USP_GETLOCS(Nullable<int> lOCATION_ID, string oPERATION, string fROMLOCATION, string cITY_NAME)
@@ -470,6 +477,210 @@ namespace CHALO.Models
                 new ObjectParameter("operation", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("vendors_details", vENDOR_IDParameter, vENDOR_ORGANIZATIONNAMEParameter, vENDOR_ORGANIZATIONMOBILEParameter, vENDOR_ORGANIZATIONLANDLINEParameter, vENDOR_OWNFIRSTNAMEParameter, vENDOR_OWNLASTNAMEParameter, vENDOR_CONFIRSTNAMEParameter, vENDOR_CONLASTNAMEParameter, vENDOR_EMAILIDParameter, vENDOR_ADDRESSParameter, vENDOR_OWNMOBILEParameter, vENDOR_CONMOBILEParameter, vENDOR_OWNLANDLINEParameter, vENDOR_CONLANDLINEParameter, vENDOR_USERNAMEParameter, vENDOR_PASSWORDParameter, vENDOR_STATUSParameter, vENDOR_CREATEDBYParameter, vENDOR_CREATEDDATEParameter, vENDOR_MODIFIEDBYParameter, vENDOR_MODIFIEDDATEParameter, operationParameter);
+        }
+    
+        public virtual int city_data(Nullable<int> id, string city_name, string operation)
+        {
+            var idParameter = id.HasValue ?
+                new ObjectParameter("id", id) :
+                new ObjectParameter("id", typeof(int));
+    
+            var city_nameParameter = city_name != null ?
+                new ObjectParameter("city_name", city_name) :
+                new ObjectParameter("city_name", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("city_data", idParameter, city_nameParameter, operationParameter);
+        }
+    
+        public virtual ObjectResult<GetUserDetailsforTrip_Result> GetUserDetailsforTrip(Nullable<int> trip_ID)
+        {
+            var trip_IDParameter = trip_ID.HasValue ?
+                new ObjectParameter("Trip_ID", trip_ID) :
+                new ObjectParameter("Trip_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserDetailsforTrip_Result>("GetUserDetailsforTrip", trip_IDParameter);
+        }
+    
+        public virtual int locations_data(Nullable<int> loc_id, string loc_name, Nullable<int> city_id, string operation)
+        {
+            var loc_idParameter = loc_id.HasValue ?
+                new ObjectParameter("loc_id", loc_id) :
+                new ObjectParameter("loc_id", typeof(int));
+    
+            var loc_nameParameter = loc_name != null ?
+                new ObjectParameter("loc_name", loc_name) :
+                new ObjectParameter("loc_name", typeof(string));
+    
+            var city_idParameter = city_id.HasValue ?
+                new ObjectParameter("city_id", city_id) :
+                new ObjectParameter("city_id", typeof(int));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("locations_data", loc_idParameter, loc_nameParameter, city_idParameter, operationParameter);
+        }
+    
+        public virtual ObjectResult<masterstatus_data_Result> masterstatus_data(Nullable<int> sTATUS_ID, string sATUS_NAME, Nullable<int> sTATUS_CREATEDBY, Nullable<System.DateTime> sTATUS_CREATEDDATE, Nullable<int> sTATUS_MODIFIEDBY, Nullable<System.DateTime> sTATUS_MODIFIEDDATE, string operation)
+        {
+            var sTATUS_IDParameter = sTATUS_ID.HasValue ?
+                new ObjectParameter("STATUS_ID", sTATUS_ID) :
+                new ObjectParameter("STATUS_ID", typeof(int));
+    
+            var sATUS_NAMEParameter = sATUS_NAME != null ?
+                new ObjectParameter("SATUS_NAME", sATUS_NAME) :
+                new ObjectParameter("SATUS_NAME", typeof(string));
+    
+            var sTATUS_CREATEDBYParameter = sTATUS_CREATEDBY.HasValue ?
+                new ObjectParameter("STATUS_CREATEDBY", sTATUS_CREATEDBY) :
+                new ObjectParameter("STATUS_CREATEDBY", typeof(int));
+    
+            var sTATUS_CREATEDDATEParameter = sTATUS_CREATEDDATE.HasValue ?
+                new ObjectParameter("STATUS_CREATEDDATE", sTATUS_CREATEDDATE) :
+                new ObjectParameter("STATUS_CREATEDDATE", typeof(System.DateTime));
+    
+            var sTATUS_MODIFIEDBYParameter = sTATUS_MODIFIEDBY.HasValue ?
+                new ObjectParameter("STATUS_MODIFIEDBY", sTATUS_MODIFIEDBY) :
+                new ObjectParameter("STATUS_MODIFIEDBY", typeof(int));
+    
+            var sTATUS_MODIFIEDDATEParameter = sTATUS_MODIFIEDDATE.HasValue ?
+                new ObjectParameter("STATUS_MODIFIEDDATE", sTATUS_MODIFIEDDATE) :
+                new ObjectParameter("STATUS_MODIFIEDDATE", typeof(System.DateTime));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<masterstatus_data_Result>("masterstatus_data", sTATUS_IDParameter, sATUS_NAMEParameter, sTATUS_CREATEDBYParameter, sTATUS_CREATEDDATEParameter, sTATUS_MODIFIEDBYParameter, sTATUS_MODIFIEDDATEParameter, operationParameter);
+        }
+    
+        public virtual ObjectResult<USP_DRIVERSAPP_Result> USP_DRIVERSAPP(string oPERATION, Nullable<int> dRIVER_ID)
+        {
+            var oPERATIONParameter = oPERATION != null ?
+                new ObjectParameter("OPERATION", oPERATION) :
+                new ObjectParameter("OPERATION", typeof(string));
+    
+            var dRIVER_IDParameter = dRIVER_ID.HasValue ?
+                new ObjectParameter("DRIVER_ID", dRIVER_ID) :
+                new ObjectParameter("DRIVER_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_DRIVERSAPP_Result>("USP_DRIVERSAPP", oPERATIONParameter, dRIVER_IDParameter);
+        }
+    
+        public virtual ObjectResult<vehicles_data_Result> vehicles_data(Nullable<int> vEHICLE_ID, Nullable<int> vEHICLE_TYPE, Nullable<int> vEHICLE_VENDORID, string operation)
+        {
+            var vEHICLE_IDParameter = vEHICLE_ID.HasValue ?
+                new ObjectParameter("VEHICLE_ID", vEHICLE_ID) :
+                new ObjectParameter("VEHICLE_ID", typeof(int));
+    
+            var vEHICLE_TYPEParameter = vEHICLE_TYPE.HasValue ?
+                new ObjectParameter("VEHICLE_TYPE", vEHICLE_TYPE) :
+                new ObjectParameter("VEHICLE_TYPE", typeof(int));
+    
+            var vEHICLE_VENDORIDParameter = vEHICLE_VENDORID.HasValue ?
+                new ObjectParameter("VEHICLE_VENDORID", vEHICLE_VENDORID) :
+                new ObjectParameter("VEHICLE_VENDORID", typeof(int));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vehicles_data_Result>("vehicles_data", vEHICLE_IDParameter, vEHICLE_TYPEParameter, vEHICLE_VENDORIDParameter, operationParameter);
+        }
+    
+        public virtual int VEHICLES_DETAILS(Nullable<int> vEHICLE_VENDORID, string vEHICLE_NUMBER, Nullable<int> vEHICLE_TYPE, Nullable<int> vEHICLE_SEATS, string vEHICLE_REGISTERNO, string vEHICLE_INSURANCENUMBER, string vEHICLE_POLLUTIONCHECK, Nullable<System.DateTime> vEHICLE_EXPIRYDATE, Nullable<System.DateTime> vEHICLE_INSURANCEEXPIRY, Nullable<System.DateTime> vEHICLE_POLLUTIONEXPIRY, Nullable<System.DateTime> vEHICLE_MAINTANANCEEXPIRY, Nullable<int> vEHICLE_CREATEDBY, Nullable<System.DateTime> vEHICLE_CREATEDDATE, Nullable<int> vEHICLE_MODIFIEDBY, Nullable<System.DateTime> vEHICLE_MODIFIEDDATE, Nullable<int> vEHICLE_STATUS, string oPERATION)
+        {
+            var vEHICLE_VENDORIDParameter = vEHICLE_VENDORID.HasValue ?
+                new ObjectParameter("VEHICLE_VENDORID", vEHICLE_VENDORID) :
+                new ObjectParameter("VEHICLE_VENDORID", typeof(int));
+    
+            var vEHICLE_NUMBERParameter = vEHICLE_NUMBER != null ?
+                new ObjectParameter("VEHICLE_NUMBER", vEHICLE_NUMBER) :
+                new ObjectParameter("VEHICLE_NUMBER", typeof(string));
+    
+            var vEHICLE_TYPEParameter = vEHICLE_TYPE.HasValue ?
+                new ObjectParameter("VEHICLE_TYPE", vEHICLE_TYPE) :
+                new ObjectParameter("VEHICLE_TYPE", typeof(int));
+    
+            var vEHICLE_SEATSParameter = vEHICLE_SEATS.HasValue ?
+                new ObjectParameter("VEHICLE_SEATS", vEHICLE_SEATS) :
+                new ObjectParameter("VEHICLE_SEATS", typeof(int));
+    
+            var vEHICLE_REGISTERNOParameter = vEHICLE_REGISTERNO != null ?
+                new ObjectParameter("VEHICLE_REGISTERNO", vEHICLE_REGISTERNO) :
+                new ObjectParameter("VEHICLE_REGISTERNO", typeof(string));
+    
+            var vEHICLE_INSURANCENUMBERParameter = vEHICLE_INSURANCENUMBER != null ?
+                new ObjectParameter("VEHICLE_INSURANCENUMBER", vEHICLE_INSURANCENUMBER) :
+                new ObjectParameter("VEHICLE_INSURANCENUMBER", typeof(string));
+    
+            var vEHICLE_POLLUTIONCHECKParameter = vEHICLE_POLLUTIONCHECK != null ?
+                new ObjectParameter("VEHICLE_POLLUTIONCHECK", vEHICLE_POLLUTIONCHECK) :
+                new ObjectParameter("VEHICLE_POLLUTIONCHECK", typeof(string));
+    
+            var vEHICLE_EXPIRYDATEParameter = vEHICLE_EXPIRYDATE.HasValue ?
+                new ObjectParameter("VEHICLE_EXPIRYDATE", vEHICLE_EXPIRYDATE) :
+                new ObjectParameter("VEHICLE_EXPIRYDATE", typeof(System.DateTime));
+    
+            var vEHICLE_INSURANCEEXPIRYParameter = vEHICLE_INSURANCEEXPIRY.HasValue ?
+                new ObjectParameter("VEHICLE_INSURANCEEXPIRY", vEHICLE_INSURANCEEXPIRY) :
+                new ObjectParameter("VEHICLE_INSURANCEEXPIRY", typeof(System.DateTime));
+    
+            var vEHICLE_POLLUTIONEXPIRYParameter = vEHICLE_POLLUTIONEXPIRY.HasValue ?
+                new ObjectParameter("VEHICLE_POLLUTIONEXPIRY", vEHICLE_POLLUTIONEXPIRY) :
+                new ObjectParameter("VEHICLE_POLLUTIONEXPIRY", typeof(System.DateTime));
+    
+            var vEHICLE_MAINTANANCEEXPIRYParameter = vEHICLE_MAINTANANCEEXPIRY.HasValue ?
+                new ObjectParameter("VEHICLE_MAINTANANCEEXPIRY", vEHICLE_MAINTANANCEEXPIRY) :
+                new ObjectParameter("VEHICLE_MAINTANANCEEXPIRY", typeof(System.DateTime));
+    
+            var vEHICLE_CREATEDBYParameter = vEHICLE_CREATEDBY.HasValue ?
+                new ObjectParameter("VEHICLE_CREATEDBY", vEHICLE_CREATEDBY) :
+                new ObjectParameter("VEHICLE_CREATEDBY", typeof(int));
+    
+            var vEHICLE_CREATEDDATEParameter = vEHICLE_CREATEDDATE.HasValue ?
+                new ObjectParameter("VEHICLE_CREATEDDATE", vEHICLE_CREATEDDATE) :
+                new ObjectParameter("VEHICLE_CREATEDDATE", typeof(System.DateTime));
+    
+            var vEHICLE_MODIFIEDBYParameter = vEHICLE_MODIFIEDBY.HasValue ?
+                new ObjectParameter("VEHICLE_MODIFIEDBY", vEHICLE_MODIFIEDBY) :
+                new ObjectParameter("VEHICLE_MODIFIEDBY", typeof(int));
+    
+            var vEHICLE_MODIFIEDDATEParameter = vEHICLE_MODIFIEDDATE.HasValue ?
+                new ObjectParameter("VEHICLE_MODIFIEDDATE", vEHICLE_MODIFIEDDATE) :
+                new ObjectParameter("VEHICLE_MODIFIEDDATE", typeof(System.DateTime));
+    
+            var vEHICLE_STATUSParameter = vEHICLE_STATUS.HasValue ?
+                new ObjectParameter("VEHICLE_STATUS", vEHICLE_STATUS) :
+                new ObjectParameter("VEHICLE_STATUS", typeof(int));
+    
+            var oPERATIONParameter = oPERATION != null ?
+                new ObjectParameter("OPERATION", oPERATION) :
+                new ObjectParameter("OPERATION", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("VEHICLES_DETAILS", vEHICLE_VENDORIDParameter, vEHICLE_NUMBERParameter, vEHICLE_TYPEParameter, vEHICLE_SEATSParameter, vEHICLE_REGISTERNOParameter, vEHICLE_INSURANCENUMBERParameter, vEHICLE_POLLUTIONCHECKParameter, vEHICLE_EXPIRYDATEParameter, vEHICLE_INSURANCEEXPIRYParameter, vEHICLE_POLLUTIONEXPIRYParameter, vEHICLE_MAINTANANCEEXPIRYParameter, vEHICLE_CREATEDBYParameter, vEHICLE_CREATEDDATEParameter, vEHICLE_MODIFIEDBYParameter, vEHICLE_MODIFIEDDATEParameter, vEHICLE_STATUSParameter, oPERATIONParameter);
+        }
+    
+        public virtual ObjectResult<vehicletype_data_Result> vehicletype_data(Nullable<int> vEHICLETYPE_ID, string vEHICLETYPE_NAME, string operation)
+        {
+            var vEHICLETYPE_IDParameter = vEHICLETYPE_ID.HasValue ?
+                new ObjectParameter("VEHICLETYPE_ID", vEHICLETYPE_ID) :
+                new ObjectParameter("VEHICLETYPE_ID", typeof(int));
+    
+            var vEHICLETYPE_NAMEParameter = vEHICLETYPE_NAME != null ?
+                new ObjectParameter("VEHICLETYPE_NAME", vEHICLETYPE_NAME) :
+                new ObjectParameter("VEHICLETYPE_NAME", typeof(string));
+    
+            var operationParameter = operation != null ?
+                new ObjectParameter("operation", operation) :
+                new ObjectParameter("operation", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<vehicletype_data_Result>("vehicletype_data", vEHICLETYPE_IDParameter, vEHICLETYPE_NAMEParameter, operationParameter);
         }
     }
 }

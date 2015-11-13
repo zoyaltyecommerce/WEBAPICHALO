@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'F:\chalo latest\CHALOAPI\CHALO\CHALO\Models\CHALO.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\c2n123\Desktop\chalo latest\chalo latest\CHALOAPI\CHALO\CHALO\Models\CHALO.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

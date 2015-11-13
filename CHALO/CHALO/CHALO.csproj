@@ -213,6 +213,7 @@
     <Compile Include="Controllers\CH_USERController.cs" />
     <Compile Include="Controllers\common.cs" />
     <Compile Include="Controllers\DetailedhistoryController.cs" />
+    <Compile Include="Controllers\DrivertripsController.cs" />
     <Compile Include="Controllers\ForgotController.cs" />
     <Compile Include="Controllers\GenerateOTPController.cs" />
     <Compile Include="Controllers\GetlocationsController.cs" />
@@ -261,6 +262,9 @@
     <Compile Include="Models\CITy.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CITy1.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\COUPON.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -276,18 +280,30 @@
     <Compile Include="Models\DRIVERTRIPSENTITY.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DRIVERTRIPSREWRITE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\encryptdecrypt.cs" />
     <Compile Include="Models\GetDriverTripDetails_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GetUserDetailsforTrip_Result.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LOCATION.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\LOCATION1.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\LOCATIONENTITY.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MASTERSTATU.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\masterstatus_data_Result.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\NOOFSEAT.cs">
@@ -365,6 +381,9 @@
     <Compile Include="Models\USP_CHECKFORCOUPON_Result.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\USP_DRIVERSAPP_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\USP_GETLOCS_Result.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
@@ -377,7 +396,13 @@
     <Compile Include="Models\VEHICLEDRIVER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vehicles_data_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\VEHICLETYPE.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vehicletype_data_Result.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VENDOR.cs">

@@ -12,7 +12,7 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class DRIVERTRIPSENTITY
+    public partial class DRIVERTRIPSREWRITE
     {
         public int TRIP_ID { get; set; }
         public string STARTTIME { get; set; }

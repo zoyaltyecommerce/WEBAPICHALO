@@ -9,7 +9,6 @@
         <EntityTypeShape EntityType="CHALOModel.COUPONENTIYPURPOSE" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="CHALOModel.COUPON" Width="1.5" PointX="8.25" PointY="26.25" />
         <EntityTypeShape EntityType="CHALOModel.COUPONTYPE" Width="1.5" PointX="3" PointY="21.25" />
-        <EntityTypeShape EntityType="CHALOModel.DRIVERTRIPSENTITY" Width="1.5" PointX="2.75" PointY="0.75" />
         <EntityTypeShape EntityType="CHALOModel.LOCATIONENTITY" Width="1.5" PointX="4.75" PointY="0.75" />
         <EntityTypeShape EntityType="CHALOModel.PAYMENTTRIPSTATU" Width="1.5" PointX="15" PointY="43.375" />
         <EntityTypeShape EntityType="CHALOModel.SUPPORT" Width="1.5" PointX="5.75" PointY="3.75" />
@@ -94,6 +93,14 @@
         <AssociationConnector Association="CHALOModel.FK__VEHICLEDR__VD_VE__2B0A656D" />
         <AssociationConnector Association="CHALOModel.FK__VEHICLES__VEHICL__6383C8BA" />
         <AssociationConnector Association="CHALOModel.FK__VEHICLES__VEHICL__6477ECF3" />
+        <EntityTypeShape EntityType="CHALOModel.CITy1" Width="1.5" PointX="5.25" PointY="53" />
+        <EntityTypeShape EntityType="CHALOModel.DRIVERTRIPSREWRITE" Width="3.25" PointX="12.375" PointY="0.75" />
+        <EntityTypeShape EntityType="CHALOModel.LOCATION1" Width="1.5" PointX="7.5" PointY="43.25" />
+        <AssociationConnector Association="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2" />
+        <AssociationConnector Association="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB" />
+        <AssociationConnector Association="CHALOModel.FK__LOCATIONS__LOCAT__038683F8" />
+        <AssociationConnector Association="CHALOModel.FK__LOCATIONS__LOCAT__047AA831" />
+        <EntityTypeShape EntityType="CHALOModel.DRIVERTRIPSENTITY" Width="1.5" PointX="12.375" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
