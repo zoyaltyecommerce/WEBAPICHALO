@@ -28,10 +28,15 @@ namespace CHALO.Models
         }
     
         public virtual DbSet<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
+        public virtual DbSet<CITy> CITIES { get; set; }
         public virtual DbSet<COUPONENTIYPURPOSE> COUPONENTIYPURPOSEs { get; set; }
         public virtual DbSet<COUPON> COUPONS { get; set; }
         public virtual DbSet<COUPONTYPE> COUPONTYPEs { get; set; }
+        public virtual DbSet<DRIVERTRIPSENTITY> DRIVERTRIPSENTITies { get; set; }
+        public virtual DbSet<DRIVERTRIPSREWRITE> DRIVERTRIPSREWRITEs { get; set; }
         public virtual DbSet<LOCATIONENTITY> LOCATIONENTITies { get; set; }
+        public virtual DbSet<LOCATION> LOCATIONS { get; set; }
+        public virtual DbSet<PASSENGERSENTITY> PASSENGERSENTITies { get; set; }
         public virtual DbSet<PAYMENTTRIPSTATU> PAYMENTTRIPSTATUS { get; set; }
         public virtual DbSet<SUPPORT> SUPPORTs { get; set; }
         public virtual DbSet<TRANSACTIONMODE> TRANSACTIONMODEs { get; set; }
@@ -45,9 +50,9 @@ namespace CHALO.Models
         public virtual DbSet<WALLETTRANSACTION> WALLETTRANSACTIONS { get; set; }
         public virtual DbSet<WALLETTRANSACTIONSSTATU> WALLETTRANSACTIONSSTATUS { get; set; }
         public virtual DbSet<CH_USER> CH_USER { get; set; }
-        public virtual DbSet<CITy> CITIES { get; set; }
+        public virtual DbSet<CITIES1> CITIES1 { get; set; }
         public virtual DbSet<DRIVER> DRIVERS { get; set; }
-        public virtual DbSet<LOCATION> LOCATIONS { get; set; }
+        public virtual DbSet<LOCATIONS1> LOCATIONS1 { get; set; }
         public virtual DbSet<MASTERSTATU> MASTERSTATUS { get; set; }
         public virtual DbSet<NOOFSEAT> NOOFSEATS { get; set; }
         public virtual DbSet<PAYMENTHISTORY> PAYMENTHISTORies { get; set; }
@@ -67,10 +72,6 @@ namespace CHALO.Models
         public virtual DbSet<VEHICLETYPE> VEHICLETYPEs { get; set; }
         public virtual DbSet<VENDOR> VENDORS { get; set; }
         public virtual DbSet<Query> Queries { get; set; }
-        public virtual DbSet<CITy1> CITy1 { get; set; }
-        public virtual DbSet<DRIVERTRIPSREWRITE> DRIVERTRIPSREWRITEs { get; set; }
-        public virtual DbSet<LOCATION1> LOCATION1 { get; set; }
-        public virtual DbSet<DRIVERTRIPSENTITY> DRIVERTRIPSENTITies { get; set; }
     
         public virtual int USP_GETVEHICLEBYTRIP(string dROPLOCATION, string pICKUPLOCATION, Nullable<int> tRIP_ID)
         {
@@ -559,7 +560,7 @@ namespace CHALO.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<masterstatus_data_Result>("masterstatus_data", sTATUS_IDParameter, sATUS_NAMEParameter, sTATUS_CREATEDBYParameter, sTATUS_CREATEDDATEParameter, sTATUS_MODIFIEDBYParameter, sTATUS_MODIFIEDDATEParameter, operationParameter);
         }
     
-        public virtual ObjectResult<USP_DRIVERSAPP_Result> USP_DRIVERSAPP(string oPERATION, Nullable<int> dRIVER_ID)
+        public virtual ObjectResult<USP_DRIVERSAPP_Result> USP_DRIVERSAPP(string oPERATION, Nullable<int> dRIVER_ID, Nullable<int> tRIP_ID)
         {
             var oPERATIONParameter = oPERATION != null ?
                 new ObjectParameter("OPERATION", oPERATION) :
@@ -569,7 +570,11 @@ namespace CHALO.Models
                 new ObjectParameter("DRIVER_ID", dRIVER_ID) :
                 new ObjectParameter("DRIVER_ID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_DRIVERSAPP_Result>("USP_DRIVERSAPP", oPERATIONParameter, dRIVER_IDParameter);
+            var tRIP_IDParameter = tRIP_ID.HasValue ?
+                new ObjectParameter("TRIP_ID", tRIP_ID) :
+                new ObjectParameter("TRIP_ID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<USP_DRIVERSAPP_Result>("USP_DRIVERSAPP", oPERATIONParameter, dRIVER_IDParameter, tRIP_IDParameter);
         }
     
         public virtual ObjectResult<vehicles_data_Result> vehicles_data(Nullable<int> vEHICLE_ID, Nullable<int> vEHICLE_TYPE, Nullable<int> vEHICLE_VENDORID, string operation)

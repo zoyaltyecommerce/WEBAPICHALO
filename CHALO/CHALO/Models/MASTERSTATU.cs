@@ -18,21 +18,21 @@ namespace CHALO.Models
         public MASTERSTATU()
         {
             this.APPLIEDCOUPONS = new HashSet<APPLIEDCOUPON>();
+            this.CITIES = new HashSet<CITy>();
             this.COUPONS = new HashSet<COUPON>();
             this.COUPONTYPEs = new HashSet<COUPONTYPE>();
+            this.LOCATIONS = new HashSet<LOCATION>();
             this.USERCOUPONS = new HashSet<USERCOUPON>();
             this.WALLETs = new HashSet<WALLET>();
             this.WALLETADDTYPES = new HashSet<WALLETADDTYPE>();
             this.WALLETTRANSACTIONS = new HashSet<WALLETTRANSACTION>();
-            this.CITIES = new HashSet<CITy>();
+            this.CITIES1 = new HashSet<CITIES1>();
             this.DRIVERS = new HashSet<DRIVER>();
-            this.LOCATIONS = new HashSet<LOCATION>();
+            this.LOCATIONS1 = new HashSet<LOCATIONS1>();
             this.ROUTES = new HashSet<ROUTE>();
             this.STATEs = new HashSet<STATE>();
             this.VEHICLES = new HashSet<VEHICLE>();
             this.VENDORS = new HashSet<VENDOR>();
-            this.CITIES1 = new HashSet<CITy1>();
-            this.LOCATIONS1 = new HashSet<LOCATION1>();
         }
     
         public int STATUS_ID { get; set; }
@@ -45,9 +45,13 @@ namespace CHALO.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<APPLIEDCOUPON> APPLIEDCOUPONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CITy> CITIES { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COUPON> COUPONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<COUPONTYPE> COUPONTYPEs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOCATION> LOCATIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<USERCOUPON> USERCOUPONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -57,11 +61,11 @@ namespace CHALO.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WALLETTRANSACTION> WALLETTRANSACTIONS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CITy> CITIES { get; set; }
+        public virtual ICollection<CITIES1> CITIES1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DRIVER> DRIVERS { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOCATION> LOCATIONS { get; set; }
+        public virtual ICollection<LOCATIONS1> LOCATIONS1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ROUTE> ROUTES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -70,9 +74,5 @@ namespace CHALO.Models
         public virtual ICollection<VEHICLE> VEHICLES { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<VENDOR> VENDORS { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CITy1> CITIES1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOCATION1> LOCATIONS1 { get; set; }
     }
 }

@@ -12,12 +12,12 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CITy1
+    public partial class CITIES1
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CITy1()
+        public CITIES1()
         {
-            this.LOCATIONS = new HashSet<LOCATION1>();
+            this.LOCATIONS1 = new HashSet<LOCATIONS1>();
         }
     
         public int CITY_ID { get; set; }
@@ -32,6 +32,6 @@ namespace CHALO.Models
         public virtual STATE STATE { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOCATION1> LOCATIONS { get; set; }
+        public virtual ICollection<LOCATIONS1> LOCATIONS1 { get; set; }
     }
 }

@@ -221,6 +221,7 @@
     <Compile Include="Controllers\HistoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PassengersController.cs" />
     <Compile Include="Controllers\profileController.cs" />
     <Compile Include="Controllers\PromotionsController.cs" />
     <Compile Include="Controllers\RegisterController.cs" />
@@ -259,10 +260,10 @@
     <Compile Include="Models\CH_USER.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CITy.cs">
+    <Compile Include="Models\CITIES1.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\CITy1.cs">
+    <Compile Include="Models\CITy.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\COUPON.cs">
@@ -294,10 +295,10 @@
     <Compile Include="Models\LOCATION.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LOCATION1.cs">
+    <Compile Include="Models\LOCATIONENTITY.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\LOCATIONENTITY.cs">
+    <Compile Include="Models\LOCATIONS1.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MASTERSTATU.cs">
@@ -310,6 +311,9 @@
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\noofseatsavailability_Result.cs">
+      <DependentUpon>CHALO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PASSENGERSENTITY.cs">
       <DependentUpon>CHALO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PAYMENTHISTORY.cs">
@@ -510,6 +514,7 @@
     </EntityDeploy>
     <Content Include="Models\CHALO.edmx.diagram">
       <DependentUpon>CHALO.edmx</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <None Include="Properties\PublishProfiles\CHALOAPI.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />

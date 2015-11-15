@@ -12,7 +12,7 @@ namespace CHALO.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class LOCATION1
+    public partial class LOCATIONS1
     {
         public int LOCATION_ID { get; set; }
         public Nullable<int> LOCATION_CITYID { get; set; }
@@ -25,7 +25,7 @@ namespace CHALO.Models
         public Nullable<System.DateTime> LOCATION_MODIFIEDDATE { get; set; }
         public Nullable<int> LOCATION_STATUS { get; set; }
     
-        public virtual CITy1 CITy { get; set; }
+        public virtual CITIES1 CITIES1 { get; set; }
         public virtual MASTERSTATU MASTERSTATU { get; set; }
     }
 }

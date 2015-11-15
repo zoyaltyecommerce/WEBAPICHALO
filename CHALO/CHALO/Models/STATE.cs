@@ -18,7 +18,7 @@ namespace CHALO.Models
         public STATE()
         {
             this.CITIES = new HashSet<CITy>();
-            this.CITIES1 = new HashSet<CITy1>();
+            this.CITIES1 = new HashSet<CITIES1>();
         }
     
         public int STATE_ID { get; set; }
@@ -31,8 +31,8 @@ namespace CHALO.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CITy> CITIES { get; set; }
-        public virtual MASTERSTATU MASTERSTATU { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CITy1> CITIES1 { get; set; }
+        public virtual ICollection<CITIES1> CITIES1 { get; set; }
+        public virtual MASTERSTATU MASTERSTATU { get; set; }
     }
 }

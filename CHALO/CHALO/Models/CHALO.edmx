@@ -136,6 +136,26 @@
           <Property Name="LOCATION_MODIFIEDDATE" Type="datetime" />
           <Property Name="LOCATION_STATUS" Type="int" />
         </EntityType>
+        <EntityType Name="PASSENGERSENTITY">
+          <Key>
+            <PropertyRef Name="USERTRIP_ID" />
+          </Key>
+          <Property Name="USERTRIP_ID" Type="int" Nullable="false" />
+          <Property Name="USERTRIP_TRIPID" Type="int" />
+          <Property Name="USERTRIP_PICKUPLOC" Type="int" />
+          <Property Name="USERTRIP_DROPLOC" Type="int" />
+          <Property Name="USERTRIP_VIA" Type="varchar" MaxLength="200" />
+          <Property Name="USERTRIP_TOTALAMOUNT" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_STATUS" Type="int" />
+          <Property Name="USERTRIP_USERID" Type="int" />
+          <Property Name="USER_FIRSTNAME" Type="varchar" MaxLength="200" />
+          <Property Name="USER_EMAILID" Type="varchar" MaxLength="200" />
+          <Property Name="USER_MOBILE" Type="varchar" MaxLength="200" />
+          <Property Name="ll_sortorder" Type="int" />
+          <Property Name="fromloc" Type="varchar" MaxLength="200" />
+          <Property Name="toloc" Type="varchar" MaxLength="200" />
+          <Property Name="actualstarttime" Type="varchar" MaxLength="200" />
+        </EntityType>
         <EntityType Name="PAYMENTTRIPSTATUS">
           <Key>
             <PropertyRef Name="STATUS_ID" />
@@ -1422,6 +1442,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
         <Function Name="USP_DRIVERSAPP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
           <Parameter Name="OPERATION" Type="varchar" Mode="In" />
           <Parameter Name="DRIVER_ID" Type="int" Mode="In" />
+          <Parameter Name="TRIP_ID" Type="int" Mode="In" />
         </Function>
         <Function Name="USP_GETLOCS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="CHALOINDIA">
           <Parameter Name="LOCATION_ID" Type="int" Mode="In" />
@@ -1529,6 +1550,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="DRIVERTRIPSREWRITE" EntityType="Self.DRIVERTRIPSREWRITE" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="LOCATIONENTITY" EntityType="Self.LOCATIONENTITY" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="LOCATIONS" EntityType="Self.LOCATIONS" Schema="CHALOINDIA" store:Type="Tables" />
+          <EntitySet Name="PASSENGERSENTITY" EntityType="Self.PASSENGERSENTITY" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="Self.PAYMENTTRIPSTATUS" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="SUPPORT" EntityType="Self.SUPPORT" Schema="CHALOINDIA" store:Type="Tables" />
           <EntitySet Name="TRANSACTIONMODE" EntityType="Self.TRANSACTIONMODE" Schema="CHALOINDIA" store:Type="Tables" />
@@ -1907,11 +1929,74 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <Parameter Name="VENDOR_MODIFIEDDATE" Mode="In" Type="DateTime" />
             <Parameter Name="operation" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="city_data">
+            <Parameter Name="id" Mode="In" Type="Int32" />
+            <Parameter Name="city_name" Mode="In" Type="String" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetUserDetailsforTrip" ReturnType="Collection(CHALOModel.GetUserDetailsforTrip_Result)">
+          <Parameter Name="Trip_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="locations_data">
+            <Parameter Name="loc_id" Mode="In" Type="Int32" />
+            <Parameter Name="loc_name" Mode="In" Type="String" />
+            <Parameter Name="city_id" Mode="In" Type="Int32" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="masterstatus_data" ReturnType="Collection(CHALOModel.masterstatus_data_Result)">
+            <Parameter Name="STATUS_ID" Mode="In" Type="Int32" />
+            <Parameter Name="SATUS_NAME" Mode="In" Type="String" />
+            <Parameter Name="STATUS_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="STATUS_CREATEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="STATUS_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="STATUS_MODIFIEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="USP_DRIVERSAPP" ReturnType="Collection(CHALOModel.USP_DRIVERSAPP_Result)">
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+            <Parameter Name="DRIVER_ID" Mode="In" Type="Int32" />
+            <Parameter Name="TRIP_ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="vehicles_data" ReturnType="Collection(CHALOModel.vehicles_data_Result)">
+            <Parameter Name="VEHICLE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_TYPE" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_VENDORID" Mode="In" Type="Int32" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="VEHICLES_DETAILS">
+            <Parameter Name="VEHICLE_VENDORID" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_NUMBER" Mode="In" Type="String" />
+            <Parameter Name="VEHICLE_TYPE" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_SEATS" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_REGISTERNO" Mode="In" Type="String" />
+            <Parameter Name="VEHICLE_INSURANCENUMBER" Mode="In" Type="String" />
+            <Parameter Name="VEHICLE_POLLUTIONCHECK" Mode="In" Type="String" />
+            <Parameter Name="VEHICLE_EXPIRYDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="VEHICLE_INSURANCEEXPIRY" Mode="In" Type="DateTime" />
+            <Parameter Name="VEHICLE_POLLUTIONEXPIRY" Mode="In" Type="DateTime" />
+            <Parameter Name="VEHICLE_MAINTANANCEEXPIRY" Mode="In" Type="DateTime" />
+            <Parameter Name="VEHICLE_CREATEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_CREATEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="VEHICLE_MODIFIEDBY" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLE_MODIFIEDDATE" Mode="In" Type="DateTime" />
+            <Parameter Name="VEHICLE_STATUS" Mode="In" Type="Int32" />
+            <Parameter Name="OPERATION" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="vehicletype_data" ReturnType="Collection(CHALOModel.vehicletype_data_Result)">
+            <Parameter Name="VEHICLETYPE_ID" Mode="In" Type="Int32" />
+            <Parameter Name="VEHICLETYPE_NAME" Mode="In" Type="String" />
+            <Parameter Name="operation" Mode="In" Type="String" />
+          </FunctionImport>
           <EntitySet Name="APPLIEDCOUPONS" EntityType="CHALOModel.APPLIEDCOUPON" />
+          <EntitySet Name="CITIES" EntityType="CHALOModel.CITy" />
           <EntitySet Name="COUPONENTIYPURPOSEs" EntityType="CHALOModel.COUPONENTIYPURPOSE" />
           <EntitySet Name="COUPONS" EntityType="CHALOModel.COUPON" />
           <EntitySet Name="COUPONTYPEs" EntityType="CHALOModel.COUPONTYPE" />
+          <EntitySet Name="DRIVERTRIPSENTITies" EntityType="CHALOModel.DRIVERTRIPSENTITY" />
+          <EntitySet Name="DRIVERTRIPSREWRITEs" EntityType="CHALOModel.DRIVERTRIPSREWRITE" />
           <EntitySet Name="LOCATIONENTITies" EntityType="CHALOModel.LOCATIONENTITY" />
+          <EntitySet Name="LOCATIONS" EntityType="CHALOModel.LOCATION" />
+          <EntitySet Name="PASSENGERSENTITies" EntityType="CHALOModel.PASSENGERSENTITY" />
           <EntitySet Name="PAYMENTTRIPSTATUS" EntityType="CHALOModel.PAYMENTTRIPSTATU" />
           <EntitySet Name="SUPPORTs" EntityType="CHALOModel.SUPPORT" />
           <EntitySet Name="TRANSACTIONMODEs" EntityType="CHALOModel.TRANSACTIONMODE" />
@@ -1925,9 +2010,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <EntitySet Name="WALLETTRANSACTIONS" EntityType="CHALOModel.WALLETTRANSACTION" />
           <EntitySet Name="WALLETTRANSACTIONSSTATUS" EntityType="CHALOModel.WALLETTRANSACTIONSSTATU" />
           <EntitySet Name="CH_USER" EntityType="CHALOModel.CH_USER" />
-          <EntitySet Name="CITIES" EntityType="CHALOModel.CITy" />
+          <EntitySet Name="CITIES1" EntityType="CHALOModel.CITIES1" />
           <EntitySet Name="DRIVERS" EntityType="CHALOModel.DRIVER" />
-          <EntitySet Name="LOCATIONS" EntityType="CHALOModel.LOCATION" />
+          <EntitySet Name="LOCATIONS1" EntityType="CHALOModel.LOCATIONS1" />
           <EntitySet Name="MASTERSTATUS" EntityType="CHALOModel.MASTERSTATU" />
           <EntitySet Name="NOOFSEATS" EntityType="CHALOModel.NOOFSEAT" />
           <EntitySet Name="PAYMENTHISTORies" EntityType="CHALOModel.PAYMENTHISTORY" />
@@ -1955,6 +2040,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
             <End Role="APPLIEDCOUPON" EntitySet="APPLIEDCOUPONS" />
           </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__7DCDAAA2" Association="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2">
+            <End Role="STATE" EntitySet="STATEs" />
+            <End Role="CITy" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CITIES__CITY_STA__7EC1CEDB" Association="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="CITy" EntitySet="CITIES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__038683F8" Association="CHALOModel.FK__LOCATIONS__LOCAT__038683F8">
+            <End Role="CITy" EntitySet="CITIES" />
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
+          </AssociationSet>
           <AssociationSet Name="FK__COUPONS__COUPON___4C6B5938" Association="CHALOModel.FK__COUPONS__COUPON___4C6B5938">
             <End Role="COUPONTYPE" EntitySet="COUPONTYPEs" />
             <End Role="COUPON" EntitySet="COUPONS" />
@@ -1970,6 +2067,10 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <AssociationSet Name="FK__USERCOUPO__COUPO__3F115E1A" Association="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A">
             <End Role="COUPONTYPE" EntitySet="COUPONTYPEs" />
             <End Role="USERCOUPON" EntitySet="USERCOUPONS" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOCATIONS__LOCAT__047AA831" Association="CHALOModel.FK__LOCATIONS__LOCAT__047AA831">
+            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
+            <End Role="LOCATION" EntitySet="LOCATIONS" />
           </AssociationSet>
           <AssociationSet Name="FK__PAYMENTHI__PAYME__7C1A6C5A" Association="CHALOModel.FK__PAYMENTHI__PAYME__7C1A6C5A">
             <End Role="PAYMENTTRIPSTATU" EntitySet="PAYMENTTRIPSTATUS" />
@@ -2037,15 +2138,15 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </AssociationSet>
           <AssociationSet Name="FK__CITIES__CITY_STA__44FF419A" Association="CHALOModel.FK__CITIES__CITY_STA__44FF419A">
             <End Role="STATE" EntitySet="STATEs" />
-            <End Role="CITy" EntitySet="CITIES" />
+            <End Role="CITIES1" EntitySet="CITIES1" />
           </AssociationSet>
           <AssociationSet Name="FK__CITIES__CITY_STA__45F365D3" Association="CHALOModel.FK__CITIES__CITY_STA__45F365D3">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
-            <End Role="CITy" EntitySet="CITIES" />
+            <End Role="CITIES1" EntitySet="CITIES1" />
           </AssociationSet>
           <AssociationSet Name="FK__LOCATIONS__LOCAT__4AB81AF0" Association="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0">
-            <End Role="CITy" EntitySet="CITIES" />
-            <End Role="LOCATION" EntitySet="LOCATIONS" />
+            <End Role="CITIES1" EntitySet="CITIES1" />
+            <End Role="LOCATIONS1" EntitySet="LOCATIONS1" />
           </AssociationSet>
           <AssociationSet Name="FK__DRIVERS__DRIVER___34C8D9D1" Association="CHALOModel.FK__DRIVERS__DRIVER___34C8D9D1">
             <End Role="VENDOR" EntitySet="VENDORS" />
@@ -2061,7 +2162,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </AssociationSet>
           <AssociationSet Name="FK__LOCATIONS__LOCAT__4BAC3F29" Association="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
-            <End Role="LOCATION" EntitySet="LOCATIONS" />
+            <End Role="LOCATIONS1" EntitySet="LOCATIONS1" />
           </AssociationSet>
           <AssociationSet Name="FK__ROUTES__ROUTE_ST__5070F446" Association="CHALOModel.FK__ROUTES__ROUTE_ST__5070F446">
             <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
@@ -2139,83 +2240,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             <End Role="VEHICLETYPE" EntitySet="VEHICLETYPEs" />
             <End Role="VEHICLE" EntitySet="VEHICLES" />
           </AssociationSet>
-          <EntitySet Name="CITy1" EntityType="CHALOModel.CITy1" />
-          <EntitySet Name="DRIVERTRIPSREWRITEs" EntityType="CHALOModel.DRIVERTRIPSREWRITE" />
-          <EntitySet Name="LOCATION1" EntityType="CHALOModel.LOCATION1" />
-          <AssociationSet Name="FK__CITIES__CITY_STA__7DCDAAA2" Association="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2">
-            <End Role="STATE" EntitySet="STATEs" />
-            <End Role="CITy1" EntitySet="CITy1" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CITIES__CITY_STA__7EC1CEDB" Association="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB">
-            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
-            <End Role="CITy1" EntitySet="CITy1" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__038683F8" Association="CHALOModel.FK__LOCATIONS__LOCAT__038683F8">
-            <End Role="CITy1" EntitySet="CITy1" />
-            <End Role="LOCATION1" EntitySet="LOCATION1" />
-          </AssociationSet>
-          <AssociationSet Name="FK__LOCATIONS__LOCAT__047AA831" Association="CHALOModel.FK__LOCATIONS__LOCAT__047AA831">
-            <End Role="MASTERSTATU" EntitySet="MASTERSTATUS" />
-            <End Role="LOCATION1" EntitySet="LOCATION1" />
-          </AssociationSet>
-          <FunctionImport Name="city_data">
-            <Parameter Name="id" Mode="In" Type="Int32" />
-            <Parameter Name="city_name" Mode="In" Type="String" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="GetUserDetailsforTrip" ReturnType="Collection(CHALOModel.GetUserDetailsforTrip_Result)">
-          <Parameter Name="Trip_ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="locations_data">
-            <Parameter Name="loc_id" Mode="In" Type="Int32" />
-            <Parameter Name="loc_name" Mode="In" Type="String" />
-            <Parameter Name="city_id" Mode="In" Type="Int32" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="masterstatus_data" ReturnType="Collection(CHALOModel.masterstatus_data_Result)">
-            <Parameter Name="STATUS_ID" Mode="In" Type="Int32" />
-            <Parameter Name="SATUS_NAME" Mode="In" Type="String" />
-            <Parameter Name="STATUS_CREATEDBY" Mode="In" Type="Int32" />
-            <Parameter Name="STATUS_CREATEDDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="STATUS_MODIFIEDBY" Mode="In" Type="Int32" />
-            <Parameter Name="STATUS_MODIFIEDDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="USP_DRIVERSAPP" ReturnType="Collection(CHALOModel.USP_DRIVERSAPP_Result)">
-            <Parameter Name="OPERATION" Mode="In" Type="String" />
-            <Parameter Name="DRIVER_ID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="vehicles_data" ReturnType="Collection(CHALOModel.vehicles_data_Result)">
-            <Parameter Name="VEHICLE_ID" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_TYPE" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_VENDORID" Mode="In" Type="Int32" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="VEHICLES_DETAILS">
-            <Parameter Name="VEHICLE_VENDORID" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_NUMBER" Mode="In" Type="String" />
-            <Parameter Name="VEHICLE_TYPE" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_SEATS" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_REGISTERNO" Mode="In" Type="String" />
-            <Parameter Name="VEHICLE_INSURANCENUMBER" Mode="In" Type="String" />
-            <Parameter Name="VEHICLE_POLLUTIONCHECK" Mode="In" Type="String" />
-            <Parameter Name="VEHICLE_EXPIRYDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="VEHICLE_INSURANCEEXPIRY" Mode="In" Type="DateTime" />
-            <Parameter Name="VEHICLE_POLLUTIONEXPIRY" Mode="In" Type="DateTime" />
-            <Parameter Name="VEHICLE_MAINTANANCEEXPIRY" Mode="In" Type="DateTime" />
-            <Parameter Name="VEHICLE_CREATEDBY" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_CREATEDDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="VEHICLE_MODIFIEDBY" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLE_MODIFIEDDATE" Mode="In" Type="DateTime" />
-            <Parameter Name="VEHICLE_STATUS" Mode="In" Type="Int32" />
-            <Parameter Name="OPERATION" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="vehicletype_data" ReturnType="Collection(CHALOModel.vehicletype_data_Result)">
-            <Parameter Name="VEHICLETYPE_ID" Mode="In" Type="Int32" />
-            <Parameter Name="VEHICLETYPE_NAME" Mode="In" Type="String" />
-            <Parameter Name="operation" Mode="In" Type="String" />
-          </FunctionImport>
-          <EntitySet Name="DRIVERTRIPSENTITies" EntityType="CHALOModel.DRIVERTRIPSENTITY" />
           </EntityContainer>
         <ComplexType Name="USP_BOOKCAB_Result">
           <Property Type="Int32" Name="PAYMENTTYPE_ID" Nullable="false" />
@@ -2305,6 +2329,50 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Type="String" Name="driver_mobile" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="driver_emailid" Nullable="true" MaxLength="200" />
         </ComplexType>
+        <ComplexType Name="GetUserDetailsforTrip_Result">
+          <Property Type="Int32" Name="user_id" Nullable="false" />
+          <Property Type="String" Name="user_firstname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="user_lastname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="user_emailid" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="user_mobile" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="fromll_id" Nullable="false" />
+          <Property Type="String" Name="fromname" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="toname" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="toll_id" Nullable="false" />
+          <Property Type="Decimal" Name="usertrip_discount" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="Decimal" Name="totalamount" Nullable="true" Precision="10" Scale="2" />
+          <Property Type="DateTime" Name="usertrip_pickupactualtime" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="usertrip_dropactualtime" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="masterstatus_data_Result">
+          <Property Type="Int32" Name="status_id" Nullable="false" />
+          <Property Type="String" Name="satus_name" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="USP_DRIVERSAPP_Result">
+          <Property Type="Int32" Name="TRIP_ID" Nullable="false" />
+          <Property Type="String" Name="STARTTIME" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="ENDTIME" Nullable="true" MaxLength="7" />
+          <Property Type="String" Name="STARTDATE" Nullable="true" />
+          <Property Type="String" Name="ENDDATE" Nullable="true" />
+          <Property Type="String" Name="TRIP_FROM" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="TRIP_TO" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="TRIP_VIA" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="TRIP_ROUTE_ID" Nullable="true" />
+          <Property Type="String" Name="TRIP_NAME" Nullable="true" />
+          <Property Type="String" Name="VEHICLE_NUMBER" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="DRIVER_NAME" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="DRIVER_MOBILE" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="DRIVER_EMAILID" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="DRIVER_ALTERNATENUMBER" Nullable="true" MaxLength="200" />
+        </ComplexType>
+        <ComplexType Name="vehicles_data_Result">
+          <Property Type="Int32" Name="VEHICLE_ID" Nullable="false" />
+          <Property Type="Int32" Name="VEHICLE_TYPE" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="vehicletype_data_Result">
+          <Property Type="Int32" Name="VEHICLETYPE_ID" Nullable="false" />
+          <Property Type="String" Name="VEHICLETYPE_NAME" Nullable="true" MaxLength="200" />
+        </ComplexType>
         <EntityType Name="APPLIEDCOUPON">
           <Key>
             <PropertyRef Name="APPLIED_ID" />
@@ -2324,6 +2392,22 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="APPLIED_REFERRALBONUS" Type="Boolean" />
           <NavigationProperty Name="CH_USER" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__51300E55" FromRole="APPLIEDCOUPON" ToRole="CH_USER" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" FromRole="APPLIEDCOUPON" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="CITy">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CITY_STATEID" Type="Int32" />
+          <Property Name="CITY_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CITY_CREATEDBY" Type="Int32" />
+          <Property Name="CITY_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="CITY_MODIFIEDBY" Type="Int32" />
+          <Property Name="CITY_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="CITY_STATUS" Type="Int32" />
+          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2" FromRole="CITy" ToRole="STATE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB" FromRole="CITy" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__038683F8" FromRole="CITy" ToRole="LOCATION" />
         </EntityType>
         <EntityType Name="COUPONENTIYPURPOSE">
           <Key>
@@ -2368,12 +2452,89 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__COUPONTYP__COUPO__32AB8735" FromRole="COUPONTYPE" ToRole="MASTERSTATU" />
           <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__3F115E1A" FromRole="COUPONTYPE" ToRole="USERCOUPON" />
         </EntityType>
+        <EntityType Name="DRIVERTRIPSENTITY">
+          <Key>
+            <PropertyRef Name="TRIP_ID" />
+          </Key>
+          <Property Name="TRIP_ID" Type="Int32" Nullable="false" />
+          <Property Name="STARTTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ENDTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STARTDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ENDDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TRIP_FROM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_TO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_ROUTE_ID" Type="Int32" />
+          <Property Name="TRIP_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_NUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_ALTERNATENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="DRIVERTRIPSREWRITE">
+          <Key>
+            <PropertyRef Name="TRIP_ID" />
+          </Key>
+          <Property Name="TRIP_ID" Type="Int32" Nullable="false" />
+          <Property Name="STARTTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ENDTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="STARTDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ENDDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TRIP_FROM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_TO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="TRIP_ROUTE_ID" Type="Int32" />
+          <Property Name="TRIP_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="VEHICLE_NUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="DRIVER_ALTERNATENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="LOCATIONENTITY">
           <Key>
             <PropertyRef Name="LOCATION_ID" />
           </Key>
           <Property Name="LOCATION_ID" Type="Int32" Nullable="false" />
           <Property Name="LOCATION_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="LOCATION">
+          <Key>
+            <PropertyRef Name="LOCATION_ID" />
+          </Key>
+          <Property Name="LOCATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LOCATION_CITYID" Type="Int32" />
+          <Property Name="LOCATION_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LOCATION_LATITUDE" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LOCATION_LONGITUDE" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="LOCATION_CREATEDBY" Type="Int32" />
+          <Property Name="LOCATION_CREATEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LOCATION_MODIFIEDBY" Type="Int32" />
+          <Property Name="LOCATION_MODIFIEDDATE" Type="DateTime" Precision="3" />
+          <Property Name="LOCATION_STATUS" Type="Int32" />
+          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__038683F8" FromRole="LOCATION" ToRole="CITy" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__047AA831" FromRole="LOCATION" ToRole="MASTERSTATU" />
+        </EntityType>
+        <EntityType Name="PASSENGERSENTITY">
+          <Key>
+            <PropertyRef Name="USERTRIP_ID" />
+          </Key>
+          <Property Name="USERTRIP_ID" Type="Int32" Nullable="false" />
+          <Property Name="USERTRIP_TRIPID" Type="Int32" />
+          <Property Name="USERTRIP_PICKUPLOC" Type="Int32" />
+          <Property Name="USERTRIP_DROPLOC" Type="Int32" />
+          <Property Name="USERTRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USERTRIP_TOTALAMOUNT" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="USERTRIP_STATUS" Type="Int32" />
+          <Property Name="USERTRIP_USERID" Type="Int32" />
+          <Property Name="USER_FIRSTNAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="USER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="ll_sortorder" Type="Int32" />
+          <Property Name="fromloc" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="toloc" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="actualstarttime" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="PAYMENTTRIPSTATU">
           <Key>
@@ -2606,7 +2767,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="USER_STATUS1" Relationship="CHALOModel.FK__CH_USER__USER_ST__1DE57479" FromRole="CH_USER" ToRole="USER_STATUS" />
           <NavigationProperty Name="USERTRIPS" Relationship="CHALOModel.FK__USERTRIPS__USERT__19AACF41" FromRole="CH_USER" ToRole="USERTRIP" />
         </EntityType>
-        <EntityType Name="CITy">
+        <EntityType Name="CITIES1">
           <Key>
             <PropertyRef Name="CITY_ID" />
           </Key>
@@ -2618,9 +2779,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="CITY_MODIFIEDBY" Type="Int32" />
           <Property Name="CITY_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="CITY_STATUS" Type="Int32" />
-          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__44FF419A" FromRole="CITy" ToRole="STATE" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__45F365D3" FromRole="CITy" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="CITy" ToRole="LOCATION" />
+          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__44FF419A" FromRole="CITIES1" ToRole="STATE" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__45F365D3" FromRole="CITIES1" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="LOCATIONS1" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="CITIES1" ToRole="LOCATIONS1" />
         </EntityType>
         <EntityType Name="DRIVER">
           <Key>
@@ -2647,7 +2808,7 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__DRIVERS__DRIVER___35BCFE0A" FromRole="DRIVER" ToRole="MASTERSTATU" />
           <NavigationProperty Name="VEHICLEDRIVERS" Relationship="CHALOModel.FK__VEHICLEDR__VD_DR__2A164134" FromRole="DRIVER" ToRole="VEHICLEDRIVER" />
         </EntityType>
-        <EntityType Name="LOCATION">
+        <EntityType Name="LOCATIONS1">
           <Key>
             <PropertyRef Name="LOCATION_ID" />
           </Key>
@@ -2661,8 +2822,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="LOCATION_MODIFIEDBY" Type="Int32" />
           <Property Name="LOCATION_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="LOCATION_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="LOCATION" ToRole="CITy" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="LOCATION" ToRole="MASTERSTATU" />
+          <NavigationProperty Name="CITIES1" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4AB81AF0" FromRole="LOCATIONS1" ToRole="CITIES1" />
+          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="LOCATIONS1" ToRole="MASTERSTATU" />
         </EntityType>
         <EntityType Name="MASTERSTATU">
           <Key>
@@ -2675,21 +2836,21 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATUS_MODIFIEDBY" Type="Int32" />
           <Property Name="STATUS_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <NavigationProperty Name="APPLIEDCOUPONS" Relationship="CHALOModel.FK__APPLIEDCO__APPLI__59C55456" FromRole="MASTERSTATU" ToRole="APPLIEDCOUPON" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB" FromRole="MASTERSTATU" ToRole="CITy" />
           <NavigationProperty Name="COUPONS" Relationship="CHALOModel.FK__COUPONS__COUPON___57DD0BE4" FromRole="MASTERSTATU" ToRole="COUPON" />
           <NavigationProperty Name="COUPONTYPEs" Relationship="CHALOModel.FK__COUPONTYP__COUPO__32AB8735" FromRole="MASTERSTATU" ToRole="COUPONTYPE" />
+          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__047AA831" FromRole="MASTERSTATU" ToRole="LOCATION" />
           <NavigationProperty Name="USERCOUPONS" Relationship="CHALOModel.FK__USERCOUPO__COUPO__58D1301D" FromRole="MASTERSTATU" ToRole="USERCOUPON" />
           <NavigationProperty Name="WALLETs" Relationship="CHALOModel.FK__WALLET__WALLET_S__5AB9788F" FromRole="MASTERSTATU" ToRole="WALLET" />
           <NavigationProperty Name="WALLETADDTYPES" Relationship="CHALOModel.FK__WALLETADD__WALLE__5BAD9CC8" FromRole="MASTERSTATU" ToRole="WALLETADDTYPE" />
           <NavigationProperty Name="WALLETTRANSACTIONS" Relationship="CHALOModel.FK__WALLETTRA__WALLE__5CA1C101" FromRole="MASTERSTATU" ToRole="WALLETTRANSACTION" />
-          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__45F365D3" FromRole="MASTERSTATU" ToRole="CITy" />
+          <NavigationProperty Name="CITIES1" Relationship="CHALOModel.FK__CITIES__CITY_STA__45F365D3" FromRole="MASTERSTATU" ToRole="CITIES1" />
           <NavigationProperty Name="DRIVERS" Relationship="CHALOModel.FK__DRIVERS__DRIVER___35BCFE0A" FromRole="MASTERSTATU" ToRole="DRIVER" />
-          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="MASTERSTATU" ToRole="LOCATION" />
+          <NavigationProperty Name="LOCATIONS1" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__4BAC3F29" FromRole="MASTERSTATU" ToRole="LOCATIONS1" />
           <NavigationProperty Name="ROUTES" Relationship="CHALOModel.FK__ROUTES__ROUTE_ST__5070F446" FromRole="MASTERSTATU" ToRole="ROUTE" />
           <NavigationProperty Name="STATEs" Relationship="CHALOModel.FK__STATE__STATE_STA__403A8C7D" FromRole="MASTERSTATU" ToRole="STATE" />
           <NavigationProperty Name="VEHICLES" Relationship="CHALOModel.FK__VEHICLES__VEHICL__656C112C" FromRole="MASTERSTATU" ToRole="VEHICLE" />
           <NavigationProperty Name="VENDORS" Relationship="CHALOModel.FK__VENDORS__VENDOR___300424B4" FromRole="MASTERSTATU" ToRole="VENDOR" />
-          <NavigationProperty Name="CITIES1" Relationship="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB" FromRole="MASTERSTATU" ToRole="CITy1" />
-          <NavigationProperty Name="LOCATIONS1" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__047AA831" FromRole="MASTERSTATU" ToRole="LOCATION1" />
         </EntityType>
         <EntityType Name="NOOFSEAT">
           <Key>
@@ -2769,9 +2930,9 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           <Property Name="STATE_MODIFIEDBY" Type="Int32" />
           <Property Name="STATE_MODIFIEDDATE" Type="DateTime" Precision="3" />
           <Property Name="STATE_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__44FF419A" FromRole="STATE" ToRole="CITy" />
+          <NavigationProperty Name="CITIES" Relationship="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2" FromRole="STATE" ToRole="CITy" />
+          <NavigationProperty Name="CITIES1" Relationship="CHALOModel.FK__CITIES__CITY_STA__44FF419A" FromRole="STATE" ToRole="CITIES1" />
           <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__STATE__STATE_STA__403A8C7D" FromRole="STATE" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="CITIES1" Relationship="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2" FromRole="STATE" ToRole="CITy1" />
         </EntityType>
         <EntityType Name="temptrip">
           <Key>
@@ -3081,6 +3242,42 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__CITIES__CITY_STA__7DCDAAA2">
+          <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="STATE">
+              <PropertyRef Name="STATE_ID" />
+            </Principal>
+            <Dependent Role="CITy">
+              <PropertyRef Name="CITY_STATEID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CITIES__CITY_STA__7EC1CEDB">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="CITy">
+              <PropertyRef Name="CITY_STATUS" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCATIONS__LOCAT__038683F8">
+          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITy">
+              <PropertyRef Name="CITY_ID" />
+            </Principal>
+            <Dependent Role="LOCATION">
+              <PropertyRef Name="LOCATION_CITYID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK__COUPONS__COUPON___4C6B5938">
           <End Type="CHALOModel.COUPONTYPE" Role="COUPONTYPE" Multiplicity="0..1" />
           <End Type="CHALOModel.COUPON" Role="COUPON" Multiplicity="*" />
@@ -3126,6 +3323,18 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Principal>
             <Dependent Role="USERCOUPON">
               <PropertyRef Name="COUPON_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOCATIONS__LOCAT__047AA831">
+          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MASTERSTATU">
+              <PropertyRef Name="STATUS_ID" />
+            </Principal>
+            <Dependent Role="LOCATION">
+              <PropertyRef Name="LOCATION_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3323,36 +3532,36 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
         </Association>
         <Association Name="FK__CITIES__CITY_STA__44FF419A">
           <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
-          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
+          <End Type="CHALOModel.CITIES1" Role="CITIES1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="STATE">
               <PropertyRef Name="STATE_ID" />
             </Principal>
-            <Dependent Role="CITy">
+            <Dependent Role="CITIES1">
               <PropertyRef Name="CITY_STATEID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__CITIES__CITY_STA__45F365D3">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
-          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="*" />
+          <End Type="CHALOModel.CITIES1" Role="CITIES1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="CITy">
+            <Dependent Role="CITIES1">
               <PropertyRef Name="CITY_STATUS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__LOCATIONS__LOCAT__4AB81AF0">
-          <End Type="CHALOModel.CITy" Role="CITy" Multiplicity="0..1" />
-          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
+          <End Type="CHALOModel.CITIES1" Role="CITIES1" Multiplicity="0..1" />
+          <End Type="CHALOModel.LOCATIONS1" Role="LOCATIONS1" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="CITy">
+            <Principal Role="CITIES1">
               <PropertyRef Name="CITY_ID" />
             </Principal>
-            <Dependent Role="LOCATION">
+            <Dependent Role="LOCATIONS1">
               <PropertyRef Name="LOCATION_CITYID" />
             </Dependent>
           </ReferentialConstraint>
@@ -3395,12 +3604,12 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
         </Association>
         <Association Name="FK__LOCATIONS__LOCAT__4BAC3F29">
           <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
-          <End Type="CHALOModel.LOCATION" Role="LOCATION" Multiplicity="*" />
+          <End Type="CHALOModel.LOCATIONS1" Role="LOCATIONS1" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MASTERSTATU">
               <PropertyRef Name="STATUS_ID" />
             </Principal>
-            <Dependent Role="LOCATION">
+            <Dependent Role="LOCATIONS1">
               <PropertyRef Name="LOCATION_STATUS" />
             </Dependent>
           </ReferentialConstraint>
@@ -3633,171 +3842,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="CITy1">
-          <Key>
-            <PropertyRef Name="CITY_ID" />
-          </Key>
-          <Property Name="CITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CITY_STATEID" Type="Int32" />
-          <Property Name="CITY_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="CITY_CREATEDBY" Type="Int32" />
-          <Property Name="CITY_CREATEDDATE" Type="DateTime" Precision="3" />
-          <Property Name="CITY_MODIFIEDBY" Type="Int32" />
-          <Property Name="CITY_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <Property Name="CITY_STATUS" Type="Int32" />
-          <NavigationProperty Name="STATE" Relationship="CHALOModel.FK__CITIES__CITY_STA__7DCDAAA2" FromRole="CITy1" ToRole="STATE" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__CITIES__CITY_STA__7EC1CEDB" FromRole="CITy1" ToRole="MASTERSTATU" />
-          <NavigationProperty Name="LOCATIONS" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__038683F8" FromRole="CITy1" ToRole="LOCATION1" />
-        </EntityType>
-        <EntityType Name="DRIVERTRIPSREWRITE">
-          <Key>
-            <PropertyRef Name="TRIP_ID" />
-          </Key>
-          <Property Name="TRIP_ID" Type="Int32" Nullable="false" />
-          <Property Name="STARTTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ENDTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="STARTDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ENDDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="TRIP_FROM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_TO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_ROUTE_ID" Type="Int32" />
-          <Property Name="TRIP_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="VEHICLE_NUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_ALTERNATENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="LOCATION1">
-          <Key>
-            <PropertyRef Name="LOCATION_ID" />
-          </Key>
-          <Property Name="LOCATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="LOCATION_CITYID" Type="Int32" />
-          <Property Name="LOCATION_NAME" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="LOCATION_LATITUDE" Type="Decimal" Precision="10" Scale="7" />
-          <Property Name="LOCATION_LONGITUDE" Type="Decimal" Precision="10" Scale="7" />
-          <Property Name="LOCATION_CREATEDBY" Type="Int32" />
-          <Property Name="LOCATION_CREATEDDATE" Type="DateTime" Precision="3" />
-          <Property Name="LOCATION_MODIFIEDBY" Type="Int32" />
-          <Property Name="LOCATION_MODIFIEDDATE" Type="DateTime" Precision="3" />
-          <Property Name="LOCATION_STATUS" Type="Int32" />
-          <NavigationProperty Name="CITy" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__038683F8" FromRole="LOCATION1" ToRole="CITy1" />
-          <NavigationProperty Name="MASTERSTATU" Relationship="CHALOModel.FK__LOCATIONS__LOCAT__047AA831" FromRole="LOCATION1" ToRole="MASTERSTATU" />
-        </EntityType>
-        <Association Name="FK__CITIES__CITY_STA__7DCDAAA2">
-          <End Type="CHALOModel.STATE" Role="STATE" Multiplicity="0..1" />
-          <End Type="CHALOModel.CITy1" Role="CITy1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="STATE">
-              <PropertyRef Name="STATE_ID" />
-            </Principal>
-            <Dependent Role="CITy1">
-              <PropertyRef Name="CITY_STATEID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CITIES__CITY_STA__7EC1CEDB">
-          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
-          <End Type="CHALOModel.CITy1" Role="CITy1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MASTERSTATU">
-              <PropertyRef Name="STATUS_ID" />
-            </Principal>
-            <Dependent Role="CITy1">
-              <PropertyRef Name="CITY_STATUS" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__LOCATIONS__LOCAT__038683F8">
-          <End Type="CHALOModel.CITy1" Role="CITy1" Multiplicity="0..1" />
-          <End Type="CHALOModel.LOCATION1" Role="LOCATION1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CITy1">
-              <PropertyRef Name="CITY_ID" />
-            </Principal>
-            <Dependent Role="LOCATION1">
-              <PropertyRef Name="LOCATION_CITYID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__LOCATIONS__LOCAT__047AA831">
-          <End Type="CHALOModel.MASTERSTATU" Role="MASTERSTATU" Multiplicity="0..1" />
-          <End Type="CHALOModel.LOCATION1" Role="LOCATION1" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="MASTERSTATU">
-              <PropertyRef Name="STATUS_ID" />
-            </Principal>
-            <Dependent Role="LOCATION1">
-              <PropertyRef Name="LOCATION_STATUS" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="GetUserDetailsforTrip_Result">
-          <Property Type="Int32" Name="user_id" Nullable="false" />
-          <Property Type="String" Name="user_firstname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="user_lastname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="user_emailid" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="user_mobile" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="fromll_id" Nullable="false" />
-          <Property Type="String" Name="fromname" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="toname" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="toll_id" Nullable="false" />
-          <Property Type="Decimal" Name="usertrip_discount" Nullable="true" Precision="10" Scale="2" />
-          <Property Type="Decimal" Name="totalamount" Nullable="true" Precision="10" Scale="2" />
-          <Property Type="DateTime" Name="usertrip_pickupactualtime" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="usertrip_dropactualtime" Nullable="true" Precision="23" />
-        </ComplexType>
-        <ComplexType Name="masterstatus_data_Result">
-          <Property Type="Int32" Name="status_id" Nullable="false" />
-          <Property Type="String" Name="satus_name" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="USP_DRIVERSAPP_Result">
-          <Property Type="Int32" Name="TRIP_ID" Nullable="false" />
-          <Property Type="String" Name="STARTTIME" Nullable="true" MaxLength="7" />
-          <Property Type="String" Name="ENDTIME" Nullable="true" MaxLength="7" />
-          <Property Type="String" Name="STARTDATE" Nullable="true" />
-          <Property Type="String" Name="ENDDATE" Nullable="true" />
-          <Property Type="String" Name="TRIP_FROM" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="TRIP_TO" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="TRIP_VIA" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="TRIP_ROUTE_ID" Nullable="true" />
-          <Property Type="String" Name="TRIP_NAME" Nullable="true" />
-          <Property Type="String" Name="VEHICLE_NUMBER" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="DRIVER_NAME" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="DRIVER_MOBILE" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="DRIVER_EMAILID" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="DRIVER_ALTERNATENUMBER" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <ComplexType Name="vehicles_data_Result">
-          <Property Type="Int32" Name="VEHICLE_ID" Nullable="false" />
-          <Property Type="Int32" Name="VEHICLE_TYPE" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="vehicletype_data_Result">
-          <Property Type="Int32" Name="VEHICLETYPE_ID" Nullable="false" />
-          <Property Type="String" Name="VEHICLETYPE_NAME" Nullable="true" MaxLength="200" />
-        </ComplexType>
-        <EntityType Name="DRIVERTRIPSENTITY">
-          <Key>
-            <PropertyRef Name="TRIP_ID" />
-          </Key>
-          <Property Name="TRIP_ID" Type="Int32" Nullable="false" />
-          <Property Name="STARTTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="ENDTIME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="STARTDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ENDDATE" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="TRIP_FROM" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_TO" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_VIA" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="TRIP_ROUTE_ID" Type="Int32" />
-          <Property Name="TRIP_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="VEHICLE_NUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_NAME" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_MOBILE" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_EMAILID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-          <Property Name="DRIVER_ALTERNATENUMBER" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
-        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3924,6 +3968,73 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="vendors_data" FunctionName="CHALOModel.Store.vendors_data" />
           <FunctionImportMapping FunctionImportName="vendors_details" FunctionName="CHALOModel.Store.vendors_details" />
+          <FunctionImportMapping FunctionImportName="city_data" FunctionName="CHALOModel.Store.city_data" />
+          <FunctionImportMapping FunctionImportName="GetUserDetailsforTrip" FunctionName="CHALOModel.Store.GetUserDetailsforTrip">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.GetUserDetailsforTrip_Result">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="user_firstname" ColumnName="user_firstname" />
+                <ScalarProperty Name="user_lastname" ColumnName="user_lastname" />
+                <ScalarProperty Name="user_emailid" ColumnName="user_emailid" />
+                <ScalarProperty Name="user_mobile" ColumnName="user_mobile" />
+                <ScalarProperty Name="fromll_id" ColumnName="fromll_id" />
+                <ScalarProperty Name="fromname" ColumnName="fromname" />
+                <ScalarProperty Name="toname" ColumnName="toname" />
+                <ScalarProperty Name="toll_id" ColumnName="toll_id" />
+                <ScalarProperty Name="usertrip_discount" ColumnName="usertrip_discount" />
+                <ScalarProperty Name="totalamount" ColumnName="totalamount" />
+                <ScalarProperty Name="usertrip_pickupactualtime" ColumnName="usertrip_pickupactualtime" />
+                <ScalarProperty Name="usertrip_dropactualtime" ColumnName="usertrip_dropactualtime" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="locations_data" FunctionName="CHALOModel.Store.locations_data" />
+          <FunctionImportMapping FunctionImportName="masterstatus_data" FunctionName="CHALOModel.Store.masterstatus_data">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.masterstatus_data_Result">
+                <ScalarProperty Name="status_id" ColumnName="status_id" />
+                <ScalarProperty Name="satus_name" ColumnName="satus_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="USP_DRIVERSAPP" FunctionName="CHALOModel.Store.USP_DRIVERSAPP">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.USP_DRIVERSAPP_Result">
+                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
+                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
+                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
+                <ScalarProperty Name="ENDDATE" ColumnName="ENDDATE" />
+                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
+                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
+                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
+                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
+                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
+                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
+                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
+                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
+                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
+                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="vehicles_data" FunctionName="CHALOModel.Store.vehicles_data">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.vehicles_data_Result">
+                <ScalarProperty Name="VEHICLE_ID" ColumnName="VEHICLE_ID" />
+                <ScalarProperty Name="VEHICLE_TYPE" ColumnName="VEHICLE_TYPE" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="VEHICLES_DETAILS" FunctionName="CHALOModel.Store.VEHICLES_DETAILS" />
+          <FunctionImportMapping FunctionImportName="vehicletype_data" FunctionName="CHALOModel.Store.vehicletype_data">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CHALOModel.vehicletype_data_Result">
+                <ScalarProperty Name="VEHICLETYPE_ID" ColumnName="VEHICLETYPE_ID" />
+                <ScalarProperty Name="VEHICLETYPE_NAME" ColumnName="VEHICLETYPE_NAME" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
           <EntitySetMapping Name="APPLIEDCOUPONS">
             <EntityTypeMapping TypeName="CHALOModel.APPLIEDCOUPON">
               <MappingFragment StoreEntitySet="APPLIEDCOUPONS">
@@ -3940,6 +4051,20 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
                 <ScalarProperty Name="APPLIED_COUPONID" ColumnName="APPLIED_COUPONID" />
                 <ScalarProperty Name="APPLIED_USERID" ColumnName="APPLIED_USERID" />
                 <ScalarProperty Name="APPLIED_ID" ColumnName="APPLIED_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CITIES">
+            <EntityTypeMapping TypeName="CHALOModel.CITy">
+              <MappingFragment StoreEntitySet="CITIES">
+                <ScalarProperty Name="CITY_STATUS" ColumnName="CITY_STATUS" />
+                <ScalarProperty Name="CITY_MODIFIEDDATE" ColumnName="CITY_MODIFIEDDATE" />
+                <ScalarProperty Name="CITY_MODIFIEDBY" ColumnName="CITY_MODIFIEDBY" />
+                <ScalarProperty Name="CITY_CREATEDDATE" ColumnName="CITY_CREATEDDATE" />
+                <ScalarProperty Name="CITY_CREATEDBY" ColumnName="CITY_CREATEDBY" />
+                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
+                <ScalarProperty Name="CITY_STATEID" ColumnName="CITY_STATEID" />
+                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -3984,11 +4109,90 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DRIVERTRIPSENTITies">
+            <EntityTypeMapping TypeName="CHALOModel.DRIVERTRIPSENTITY">
+              <MappingFragment StoreEntitySet="DRIVERTRIPSENTITY">
+                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
+                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
+                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
+                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
+                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
+                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
+                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
+                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
+                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
+                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
+                <ScalarProperty Name="ENDDATE" ColumnName="ENDDATE" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
+                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
+                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
+                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DRIVERTRIPSREWRITEs">
+            <EntityTypeMapping TypeName="CHALOModel.DRIVERTRIPSREWRITE">
+              <MappingFragment StoreEntitySet="DRIVERTRIPSREWRITE">
+                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
+                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
+                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
+                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
+                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
+                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
+                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
+                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
+                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
+                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
+                <ScalarProperty Name="ENDDATE" ColumnName="ENDDATE" />
+                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
+                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
+                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
+                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="LOCATIONENTITies">
             <EntityTypeMapping TypeName="CHALOModel.LOCATIONENTITY">
               <MappingFragment StoreEntitySet="LOCATIONENTITY">
                 <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
                 <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOCATIONS">
+            <EntityTypeMapping TypeName="CHALOModel.LOCATION">
+              <MappingFragment StoreEntitySet="LOCATIONS">
+                <ScalarProperty Name="LOCATION_STATUS" ColumnName="LOCATION_STATUS" />
+                <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
+                <ScalarProperty Name="LOCATION_MODIFIEDBY" ColumnName="LOCATION_MODIFIEDBY" />
+                <ScalarProperty Name="LOCATION_CREATEDDATE" ColumnName="LOCATION_CREATEDDATE" />
+                <ScalarProperty Name="LOCATION_CREATEDBY" ColumnName="LOCATION_CREATEDBY" />
+                <ScalarProperty Name="LOCATION_LONGITUDE" ColumnName="LOCATION_LONGITUDE" />
+                <ScalarProperty Name="LOCATION_LATITUDE" ColumnName="LOCATION_LATITUDE" />
+                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
+                <ScalarProperty Name="LOCATION_CITYID" ColumnName="LOCATION_CITYID" />
+                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PASSENGERSENTITies">
+            <EntityTypeMapping TypeName="CHALOModel.PASSENGERSENTITY">
+              <MappingFragment StoreEntitySet="PASSENGERSENTITY">
+                <ScalarProperty Name="actualstarttime" ColumnName="actualstarttime" />
+                <ScalarProperty Name="toloc" ColumnName="toloc" />
+                <ScalarProperty Name="fromloc" ColumnName="fromloc" />
+                <ScalarProperty Name="ll_sortorder" ColumnName="ll_sortorder" />
+                <ScalarProperty Name="USER_MOBILE" ColumnName="USER_MOBILE" />
+                <ScalarProperty Name="USER_EMAILID" ColumnName="USER_EMAILID" />
+                <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
+                <ScalarProperty Name="USERTRIP_USERID" ColumnName="USERTRIP_USERID" />
+                <ScalarProperty Name="USERTRIP_STATUS" ColumnName="USERTRIP_STATUS" />
+                <ScalarProperty Name="USERTRIP_TOTALAMOUNT" ColumnName="USERTRIP_TOTALAMOUNT" />
+                <ScalarProperty Name="USERTRIP_VIA" ColumnName="USERTRIP_VIA" />
+                <ScalarProperty Name="USERTRIP_DROPLOC" ColumnName="USERTRIP_DROPLOC" />
+                <ScalarProperty Name="USERTRIP_PICKUPLOC" ColumnName="USERTRIP_PICKUPLOC" />
+                <ScalarProperty Name="USERTRIP_TRIPID" ColumnName="USERTRIP_TRIPID" />
+                <ScalarProperty Name="USERTRIP_ID" ColumnName="USERTRIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -4210,8 +4414,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CITIES">
-            <EntityTypeMapping TypeName="CHALOModel.CITy">
+          <EntitySetMapping Name="CITIES1">
+            <EntityTypeMapping TypeName="CHALOModel.CITIES1">
               <MappingFragment StoreEntitySet="CITIES1">
                 <ScalarProperty Name="CITY_STATUS" ColumnName="CITY_STATUS" />
                 <ScalarProperty Name="CITY_MODIFIEDDATE" ColumnName="CITY_MODIFIEDDATE" />
@@ -4247,8 +4451,8 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LOCATIONS">
-            <EntityTypeMapping TypeName="CHALOModel.LOCATION">
+          <EntitySetMapping Name="LOCATIONS1">
+            <EntityTypeMapping TypeName="CHALOModel.LOCATIONS1">
               <MappingFragment StoreEntitySet="LOCATIONS1">
                 <ScalarProperty Name="LOCATION_STATUS" ColumnName="LOCATION_STATUS" />
                 <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
@@ -4614,145 +4818,6 @@ warning 6002: The table/view 'CHALOINDIA.dbo.Query' does not have a primary key 
                 <ScalarProperty Name="USER_LASTNAME" ColumnName="USER_LASTNAME" />
                 <ScalarProperty Name="USER_FIRSTNAME" ColumnName="USER_FIRSTNAME" />
                 <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CITy1">
-            <EntityTypeMapping TypeName="CHALOModel.CITy1">
-              <MappingFragment StoreEntitySet="CITIES">
-                <ScalarProperty Name="CITY_STATUS" ColumnName="CITY_STATUS" />
-                <ScalarProperty Name="CITY_MODIFIEDDATE" ColumnName="CITY_MODIFIEDDATE" />
-                <ScalarProperty Name="CITY_MODIFIEDBY" ColumnName="CITY_MODIFIEDBY" />
-                <ScalarProperty Name="CITY_CREATEDDATE" ColumnName="CITY_CREATEDDATE" />
-                <ScalarProperty Name="CITY_CREATEDBY" ColumnName="CITY_CREATEDBY" />
-                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
-                <ScalarProperty Name="CITY_STATEID" ColumnName="CITY_STATEID" />
-                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DRIVERTRIPSREWRITEs">
-            <EntityTypeMapping TypeName="CHALOModel.DRIVERTRIPSREWRITE">
-              <MappingFragment StoreEntitySet="DRIVERTRIPSREWRITE">
-                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
-                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
-                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
-                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
-                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
-                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
-                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
-                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
-                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
-                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
-                <ScalarProperty Name="ENDDATE" ColumnName="ENDDATE" />
-                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
-                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
-                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
-                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="LOCATION1">
-            <EntityTypeMapping TypeName="CHALOModel.LOCATION1">
-              <MappingFragment StoreEntitySet="LOCATIONS">
-                <ScalarProperty Name="LOCATION_STATUS" ColumnName="LOCATION_STATUS" />
-                <ScalarProperty Name="LOCATION_MODIFIEDDATE" ColumnName="LOCATION_MODIFIEDDATE" />
-                <ScalarProperty Name="LOCATION_MODIFIEDBY" ColumnName="LOCATION_MODIFIEDBY" />
-                <ScalarProperty Name="LOCATION_CREATEDDATE" ColumnName="LOCATION_CREATEDDATE" />
-                <ScalarProperty Name="LOCATION_CREATEDBY" ColumnName="LOCATION_CREATEDBY" />
-                <ScalarProperty Name="LOCATION_LONGITUDE" ColumnName="LOCATION_LONGITUDE" />
-                <ScalarProperty Name="LOCATION_LATITUDE" ColumnName="LOCATION_LATITUDE" />
-                <ScalarProperty Name="LOCATION_NAME" ColumnName="LOCATION_NAME" />
-                <ScalarProperty Name="LOCATION_CITYID" ColumnName="LOCATION_CITYID" />
-                <ScalarProperty Name="LOCATION_ID" ColumnName="LOCATION_ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="city_data" FunctionName="CHALOModel.Store.city_data" />
-          <FunctionImportMapping FunctionImportName="GetUserDetailsforTrip" FunctionName="CHALOModel.Store.GetUserDetailsforTrip">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CHALOModel.GetUserDetailsforTrip_Result">
-                <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="user_firstname" ColumnName="user_firstname" />
-                <ScalarProperty Name="user_lastname" ColumnName="user_lastname" />
-                <ScalarProperty Name="user_emailid" ColumnName="user_emailid" />
-                <ScalarProperty Name="user_mobile" ColumnName="user_mobile" />
-                <ScalarProperty Name="fromll_id" ColumnName="fromll_id" />
-                <ScalarProperty Name="fromname" ColumnName="fromname" />
-                <ScalarProperty Name="toname" ColumnName="toname" />
-                <ScalarProperty Name="toll_id" ColumnName="toll_id" />
-                <ScalarProperty Name="usertrip_discount" ColumnName="usertrip_discount" />
-                <ScalarProperty Name="totalamount" ColumnName="totalamount" />
-                <ScalarProperty Name="usertrip_pickupactualtime" ColumnName="usertrip_pickupactualtime" />
-                <ScalarProperty Name="usertrip_dropactualtime" ColumnName="usertrip_dropactualtime" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="locations_data" FunctionName="CHALOModel.Store.locations_data" />
-          <FunctionImportMapping FunctionImportName="masterstatus_data" FunctionName="CHALOModel.Store.masterstatus_data">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CHALOModel.masterstatus_data_Result">
-                <ScalarProperty Name="status_id" ColumnName="status_id" />
-                <ScalarProperty Name="satus_name" ColumnName="satus_name" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="USP_DRIVERSAPP" FunctionName="CHALOModel.Store.USP_DRIVERSAPP">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CHALOModel.USP_DRIVERSAPP_Result">
-                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
-                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
-                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
-                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
-                <ScalarProperty Name="ENDDATE" ColumnName="ENDDATE" />
-                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
-                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
-                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
-                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
-                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
-                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
-                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
-                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
-                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
-                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="vehicles_data" FunctionName="CHALOModel.Store.vehicles_data">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CHALOModel.vehicles_data_Result">
-                <ScalarProperty Name="VEHICLE_ID" ColumnName="VEHICLE_ID" />
-                <ScalarProperty Name="VEHICLE_TYPE" ColumnName="VEHICLE_TYPE" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="VEHICLES_DETAILS" FunctionName="CHALOModel.Store.VEHICLES_DETAILS" />
-          <FunctionImportMapping FunctionImportName="vehicletype_data" FunctionName="CHALOModel.Store.vehicletype_data">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="CHALOModel.vehicletype_data_Result">
-                <ScalarProperty Name="VEHICLETYPE_ID" ColumnName="VEHICLETYPE_ID" />
-                <ScalarProperty Name="VEHICLETYPE_NAME" ColumnName="VEHICLETYPE_NAME" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="DRIVERTRIPSENTITies">
-            <EntityTypeMapping TypeName="CHALOModel.DRIVERTRIPSENTITY">
-              <MappingFragment StoreEntitySet="DRIVERTRIPSENTITY">
-                <ScalarProperty Name="DRIVER_ALTERNATENUMBER" ColumnName="DRIVER_ALTERNATENUMBER" />
-                <ScalarProperty Name="DRIVER_EMAILID" ColumnName="DRIVER_EMAILID" />
-                <ScalarProperty Name="DRIVER_MOBILE" ColumnName="DRIVER_MOBILE" />
-                <ScalarProperty Name="DRIVER_NAME" ColumnName="DRIVER_NAME" />
-                <ScalarProperty Name="VEHICLE_NUMBER" ColumnName="VEHICLE_NUMBER" />
-                <ScalarProperty Name="TRIP_NAME" ColumnName="TRIP_NAME" />
-                <ScalarProperty Name="TRIP_ROUTE_ID" ColumnName="TRIP_ROUTE_ID" />
-                <ScalarProperty Name="TRIP_VIA" ColumnName="TRIP_VIA" />
-                <ScalarProperty Name="TRIP_TO" ColumnName="TRIP_TO" />
-                <ScalarProperty Name="TRIP_FROM" ColumnName="TRIP_FROM" />
-                <ScalarProperty Name="ENDDATE" ColumnName="ENDDATE" />
-                <ScalarProperty Name="STARTDATE" ColumnName="STARTDATE" />
-                <ScalarProperty Name="ENDTIME" ColumnName="ENDTIME" />
-                <ScalarProperty Name="STARTTIME" ColumnName="STARTTIME" />
-                <ScalarProperty Name="TRIP_ID" ColumnName="TRIP_ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
